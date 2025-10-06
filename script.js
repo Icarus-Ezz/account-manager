@@ -6,38 +6,53 @@ const GITHUB_TOKEN = "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";          // <--
 const DATA_FILENAME = "data.json";
 const AUTO_PUSH = true;                  // auto push khi có thay đổi (true/false)
 
-async function refreshFromGitHub(showAlert = true) {
+// =============================
+// Cấu hình GitHub (raw)
+const GITHUB_RAW_URL = "https://raw.githubusercontent.com/Icarus-Ezz/account-manager/main/data.json";
+
+// =============================
+// Hàm tải dữ liệu từ GitHub (raw)
+async function loadFromRawGitHub() {
   try {
-    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/data.json`, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-        Accept: "application/vnd.github.v3+json",
-      },
-    });
+    const res = await fetch(GITHUB_RAW_URL);
+    if (!res.ok) {
+      throw new Error("Không lấy được từ GitHub Raw: " + res.status);
+    }
+    const jsonData = await res.json();  // parse trực tiếp
+    // jsonData có thể chứa cả data & platforms, hoặc chỉ data tùy cấu trúc file
 
-    if (!res.ok) throw new Error("Không thể tải file từ GitHub!");
-
-    const data = await res.json();
-    const decoded = atob(data.content);
-    const jsonData = JSON.parse(decoded);
-
-    // Cập nhật localStorage
+    // Lưu vào localStorage
     localStorage.setItem("accountData", JSON.stringify(jsonData));
 
-    // Cập nhật giao diện
-    loadPlatformsFromLocal();
-
-    if (showAlert) alert("✅ Đã tải dữ liệu mới nhất từ GitHub!");
+    // Render lại giao diện
+    loadPlatformsFromLocal();  // hàm bạn dùng để load từ localStorage + render
+    console.log("✅ Đã load dữ liệu từ GitHub Raw");
+    return true;
   } catch (err) {
-    console.error(err);
-    if (showAlert) alert("❌ Lỗi khi tải dữ liệu từ GitHub!");
+    console.warn("❌ Lỗi khi load từ GitHub Raw:", err);
+    return false;
   }
 }
 
-// 🎯 Gắn sự kiện cho nút Refresh
-document.getElementById("refreshBtn").addEventListener("click", () => {
-  refreshFromGitHub();
+// =============================
+// Khi trang load
+window.addEventListener("load", async () => {
+  const ok = await loadFromRawGitHub();
+  if (!ok) {
+    // Nếu lỗi thì load dữ liệu cục bộ nếu có
+    console.log("Dùng dữ liệu từ localStorage nếu có.");
+    loadPlatformsFromLocal();
+  }
 });
+
+// =============================
+// Nút Refresh gọi lại hàm loadFromRawGitHub
+document.getElementById("refreshBtn").addEventListener("click", async () => {
+  const ok = await loadFromRawGitHub();
+  if (ok) alert("✅ Đã tải dữ liệu mới nhất từ GitHub!");
+  else alert("❌ Không thể tải dữ liệu từ GitHub, vẫn dùng dữ liệu local.");
+});
+
 // ============================
 // State & Helpers
 // ============================
