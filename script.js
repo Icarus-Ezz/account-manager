@@ -1,103 +1,114 @@
-let accounts = { Tiktok: [], Face: [], IG: [] };
+let accounts = {};
 
-function addAccount(type) {
-  const name = prompt(`Tên tài khoản ${type}:`);
-  const mail = prompt(`Email:`);
-  const mk = prompt(`Mật khẩu:`);
-  const fa = prompt(`2FA:`);
+const icons = {
+  TikTok: "fab fa-tiktok",
+  Face: "fab fa-facebook",
+  IG: "fab fa-instagram",
+  Twitter: "fab fa-twitter",
+  Threads: "fas fa-at",
+  YouTube: "fab fa-youtube"
+};
 
-  if (!name || !mail || !mk) {
-    alert("Thiếu thông tin, không thể thêm!");
-    return;
-  }
+function renderPlatforms() {
+  const container = document.getElementById("platformList");
+  container.innerHTML = "";
 
-  accounts[type].push({ name, mail, mk, "2fa": fa });
-  renderAccounts();
+  Object.keys(accounts).forEach(plat => {
+    const card = document.createElement("div");
+    card.className = "platform-card";
+    const icon = icons[plat] ? `<i class="${icons[plat]}"></i>` : "💠";
+    card.innerHTML = `${icon}<br>${plat} (${accounts[plat].length})`;
+    card.onclick = () => openPlatform(plat);
+    container.appendChild(card);
+  });
 }
 
-function renderAccounts() {
+function addPlatform() {
+  const name = prompt("Nhập tên nền tảng mới:");
+  if (!name) return;
+  if (accounts[name]) return alert("Nền tảng đã tồn tại!");
+  accounts[name] = [];
+  renderPlatforms();
+}
+
+function openPlatform(name) {
   const div = document.getElementById("accounts");
-  div.innerHTML = "";
+  div.innerHTML = `<h2><i class="${icons[name] || "fab fa-hashtag"}"></i> ${name}</h2>`;
 
-  for (let type in accounts) {
-    if (accounts[type].length > 0) {
-      const title = document.createElement("h3");
-      title.innerText = type;
-      div.appendChild(title);
+  accounts[name].forEach((acc, i) => {
+    const a = document.createElement("div");
+    a.className = "account";
+    a.innerHTML = `
+      <b>${acc.name}</b><br>
+      📧 ${acc.mail}<br>
+      🔑 ${acc.mk}<br>
+      🔒 2FA: ${acc["2fa"] || "Không có"}<br>
+      <button onclick="deleteAccount('${name}', ${i})">Xóa</button>
+    `;
+    div.appendChild(a);
+  });
 
-      accounts[type].forEach((acc, i) => {
-        const a = document.createElement("div");
-        a.className = "account";
-        a.innerHTML = `
-          <b>${acc.name}</b><br>
-          📧 ${acc.mail}<br>
-          🔑 ${acc.mk}<br>
-          🔒 2FA: ${acc["2fa"] || "Không có"}<br>
-          <button onclick="deleteAccount('${type}', ${i})">Xóa</button>
-        `;
-        div.appendChild(a);
-      });
-    }
-  }
+  const addBtn = document.createElement("button");
+  addBtn.className = "add-btn";
+  addBtn.innerHTML = `<i class="fas fa-user-plus"></i> Thêm tài khoản ${name}`;
+  addBtn.onclick = () => addAccount(name);
+  div.appendChild(addBtn);
 }
 
-function deleteAccount(type, index) {
-  if (confirm("Bạn có chắc muốn xóa tài khoản này không?")) {
-    accounts[type].splice(index, 1);
-    renderAccounts();
+function addAccount(plat) {
+  const name = prompt("Tên tài khoản:");
+  const mail = prompt("Email:");
+  const mk = prompt("Mật khẩu:");
+  const fa = prompt("2FA:");
+  if (!name || !mail || !mk) return alert("Thiếu thông tin!");
+  accounts[plat].push({ name, mail, mk, "2fa": fa });
+  openPlatform(plat);
+  renderPlatforms();
+}
+
+function deleteAccount(plat, i) {
+  if (confirm("Xóa tài khoản này?")) {
+    accounts[plat].splice(i, 1);
+    openPlatform(plat);
+    renderPlatforms();
   }
 }
 
 async function saveToGitHub() {
   const token = document.getElementById("token").value.trim();
   const repo = document.getElementById("repo").value.trim();
-  if (!token || !repo) return alert("Nhập token & repo!");
+  if (!token || !repo) return alert("Nhập token và repo!");
 
-  const path = "accounts.json";
-  const api = `https://api.github.com/repos/${repo}/contents/${path}`;
+  const api = `https://api.github.com/repos/${repo}/contents/accounts.json`;
   let sha = null;
+  const check = await fetch(api, { headers: { Authorization: `token ${token}` } });
+  if (check.status === 200) sha = (await check.json()).sha;
 
-  // Kiểm tra file có tồn tại chưa
-  const res = await fetch(api, { headers: { Authorization: `token ${token}` } });
-  if (res.status === 200) {
-    const data = await res.json();
-    sha = data.sha;
-  }
-
-  // Ghi file mới
   const body = {
     message: "update accounts.json",
     content: btoa(JSON.stringify(accounts, null, 2)),
-    sha: sha || undefined
+    sha
   };
 
-  const save = await fetch(api, {
+  const res = await fetch(api, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `token ${token}`
-    },
+    headers: { "Content-Type": "application/json", Authorization: `token ${token}` },
     body: JSON.stringify(body)
   });
 
-  if (save.ok) alert("✅ Lưu thành công lên GitHub!");
-  else alert("❌ Lỗi khi lưu: " + save.status);
+  alert(res.ok ? "✅ Lưu thành công!" : "❌ Lỗi khi lưu!");
 }
 
 async function loadFromGitHub() {
   const token = document.getElementById("token").value.trim();
   const repo = document.getElementById("repo").value.trim();
-  if (!token || !repo) return alert("Nhập token & repo!");
+  if (!token || !repo) return alert("Nhập token và repo!");
 
-  const path = "accounts.json";
-  const api = `https://api.github.com/repos/${repo}/contents/${path}`;
-
+  const api = `https://api.github.com/repos/${repo}/contents/accounts.json`;
   const res = await fetch(api, { headers: { Authorization: `token ${token}` } });
-  if (res.status !== 200) return alert("Không tìm thấy file trên GitHub!");
+  if (res.status !== 200) return alert("❌ Không tìm thấy file!");
   const data = await res.json();
-
-  const content = JSON.parse(atob(data.content));
-  accounts = content;
-  renderAccounts();
-  alert("✅ Đã tải dữ liệu từ GitHub!");
+  accounts = JSON.parse(atob(data.content));
+  renderPlatforms();
+  alert("✅ Đã tải dữ liệu!");
 }
