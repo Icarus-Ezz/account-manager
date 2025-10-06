@@ -8,7 +8,7 @@ const AUTO_PUSH = true;                  // auto push khi có thay đổi (true/
 
 // =============================
 // Cấu hình GitHub (raw)
-const GITHUB_RAW_URL = "https://raw.githubusercontent.com/Icarus-Ezz/account-manager/main/data.json";
+const GITHUB_RAW_URL = "https://raw.githubusercontent.com/Icarus-Ezz/account-manager/refs/heads/main/data.json";
 
 // =============================
 // Hàm tải dữ liệu từ GitHub (raw)
