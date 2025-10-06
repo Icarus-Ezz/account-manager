@@ -9,50 +9,79 @@ const AUTO_PUSH = true;                  // auto push khi có thay đổi (true/
 // =============================
 // Cấu hình GitHub (raw)
 const GITHUB_RAW_URL = "https://raw.githubusercontent.com/Icarus-Ezz/account-manager/refs/heads/main/data.json";
+function loadPlatformsFromLocal() {
+  const json = localStorage.getItem("accountData");
+  if (!json) {
+    console.warn("⚠️ Không có dữ liệu trong localStorage.");
+    return;
+  }
 
-// =============================
-// Hàm tải dữ liệu từ GitHub (raw)
-async function loadFromRawGitHub() {
   try {
-    const res = await fetch(GITHUB_RAW_URL);
-    if (!res.ok) {
-      throw new Error("Không lấy được từ GitHub Raw: " + res.status);
+    const data = JSON.parse(json);
+
+    // Giả sử cấu trúc:
+    // {
+    //   "platforms": [
+    //      { "name": "Tiktok", "color": "#ff0050", "icon": "link" }
+    //   ],
+    //   "accounts": {
+    //      "Tiktok": [ { name, mail, pass, 2fa } ]
+    //   }
+    // }
+
+    // Cập nhật danh sách nền tảng
+    const platformList = document.getElementById("platformList");
+    platformList.innerHTML = "";
+
+    if (data.platforms && Array.isArray(data.platforms)) {
+      data.platforms.forEach((plat, i) => {
+        const item = document.createElement("div");
+        item.className = "platform-item";
+        item.style.borderLeft = `4px solid ${plat.color || "#3b82f6"}`;
+        item.innerHTML = `
+          <img src="${plat.icon || "https://cdn-icons-png.flaticon.com/512/565/565547.png"}" 
+               alt="${plat.name}" class="platform-icon">
+          <span>${plat.name}</span>
+        `;
+        item.onclick = () => showAccounts(plat.name, data.accounts?.[plat.name] || []);
+        platformList.appendChild(item);
+      });
     }
-    const jsonData = await res.json();  // parse trực tiếp
-    // jsonData có thể chứa cả data & platforms, hoặc chỉ data tùy cấu trúc file
 
-    // Lưu vào localStorage
-    localStorage.setItem("accountData", JSON.stringify(jsonData));
+    // Nếu có platform đầu tiên thì hiển thị luôn
+    if (data.platforms && data.platforms.length > 0) {
+      const first = data.platforms[0];
+      showAccounts(first.name, data.accounts?.[first.name] || []);
+    }
 
-    // Render lại giao diện
-    loadPlatformsFromLocal();  // hàm bạn dùng để load từ localStorage + render
-    console.log("✅ Đã load dữ liệu từ GitHub Raw");
-    return true;
   } catch (err) {
-    console.warn("❌ Lỗi khi load từ GitHub Raw:", err);
-    return false;
+    console.error("❌ Lỗi khi parse dữ liệu localStorage:", err);
   }
 }
 
 // =============================
-// Khi trang load
-window.addEventListener("load", async () => {
-  const ok = await loadFromRawGitHub();
-  if (!ok) {
-    // Nếu lỗi thì load dữ liệu cục bộ nếu có
-    console.log("Dùng dữ liệu từ localStorage nếu có.");
-    loadPlatformsFromLocal();
-  }
-});
+// Hàm hiển thị tài khoản của 1 nền tảng
+function showAccounts(platformName, list) {
+  const title = document.getElementById("currentPlatformTitle");
+  const summary = document.getElementById("platformSummary");
+  const grid = document.getElementById("accountGrid");
 
-// =============================
-// Nút Refresh gọi lại hàm loadFromRawGitHub
-document.getElementById("refreshBtn").addEventListener("click", async () => {
-  const ok = await loadFromRawGitHub();
-  if (ok) alert("✅ Đã tải dữ liệu mới nhất từ GitHub!");
-  else alert("❌ Không thể tải dữ liệu từ GitHub, vẫn dùng dữ liệu local.");
-});
+  title.textContent = platformName;
+  summary.textContent = `${list.length} tài khoản`;
 
+  grid.innerHTML = "";
+  list.forEach(acc => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h3>${acc.name}</h3>
+      <p><b>Email:</b> ${acc.mail}</p>
+      <p><b>Mật khẩu:</b> ${acc.pass}</p>
+      <p><b>2FA:</b> ${acc["2fa"] || ""}</p>
+    `;
+    grid.appendChild(card);
+  });
+}
 // ============================
 // State & Helpers
 // ============================
