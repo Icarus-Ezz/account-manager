@@ -1,0 +1,28 @@
+{
+  "data": {
+    "TikTok": [
+      {
+        "name": "chaitaigaixiu",
+        "mail": "khongminh1836@gmail.com",
+        "mk": "PAbc123!",
+        "2fa": "LWSK7ZBZJNPTNCKLPNAOHMTQGGKAICGW"
+      }
+    ],
+    "Facebook": [],
+    "Instagram": []
+  },
+  "platforms": {
+    "TikTok": {
+      "icon": "",
+      "color": "#ff0050"
+    },
+    "Facebook": {
+      "icon": "",
+      "color": "#1877f2"
+    },
+    "Instagram": {
+      "icon": "",
+      "color": "#ec4899"
+    }
+  }
+}
