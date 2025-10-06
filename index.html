@@ -3,31 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý tài khoản mạng xã hội</title>
+  <title>🌈 Quản lý tài khoản MXH</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/545/545682.png">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <h1>🔐 Quản lý tài khoản</h1>
+  <div class="container">
+    <h1>🌈 Quản lý tài khoản MXH</h1>
 
-  <div class="input-box">
-    <label>GitHub Token:</label>
-    <input type="password" id="token" placeholder="Nhập token của bạn...">
+    <div class="token-box">
+      <label><i class="fas fa-key"></i> GitHub Token:</label>
+      <input type="password" id="token" placeholder="Nhập token GitHub...">
 
-    <label>Repo (username/repo):</label>
-    <input type="text" id="repo" placeholder="vd: phatdepzai/mydata">
+      <label><i class="fas fa-database"></i> Repo (username/repo):</label>
+      <input type="text" id="repo" placeholder="vd: phathung2008/data-store">
+
+      <div class="github-btns">
+        <button onclick="loadFromGitHub()"><i class="fas fa-download"></i> Tải từ GitHub</button>
+        <button onclick="saveToGitHub()"><i class="fas fa-save"></i> Lưu lên GitHub</button>
+      </div>
+    </div>
+
+    <div class="platforms">
+      <h2><i class="fas fa-users"></i> Nền tảng đã có</h2>
+      <div id="platformList" class="platform-list"></div>
+      <button id="addPlatformBtn" class="add-btn" onclick="addPlatform()"><i class="fas fa-plus-circle"></i> Thêm nền tảng</button>
+    </div>
+
+    <div id="accounts"></div>
   </div>
-
-  <hr>
-
-  <div class="buttons">
-    <button onclick="addAccount('Tiktok')">+ TikTok</button>
-    <button onclick="addAccount('Face')">+ Facebook</button>
-    <button onclick="addAccount('IG')">+ Instagram</button>
-    <button id="saveBtn" onclick="saveToGitHub()">💾 Lưu lên GitHub</button>
-    <button id="loadBtn" onclick="loadFromGitHub()">⬇️ Tải từ GitHub</button>
-  </div>
-
-  <div id="accounts"></div>
 
   <script src="script.js"></script>
 </body>
