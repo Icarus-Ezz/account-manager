@@ -7,6 +7,9 @@
   --shadow: 0 6px 24px rgba(15,23,36,0.06);
   --radius: 12px;
 }
+.btn.ghost i {
+  margin-right: 6px;
+}
 
 /* dark theme variables */
 :root[data-theme="dark"]{
