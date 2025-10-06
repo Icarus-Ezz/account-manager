@@ -275,26 +275,64 @@ platformListEl.addEventListener("click", e => {
 // GitHub Sync + Refresh
 // ============================
 async function tryPush() {
-  if (!GITHUB_TOKEN || !GITHUB_REPO) { console.warn("GitHub: chưa cấu hình"); return; }
+  // Nếu chưa có repo, dừng
+  if (!GITHUB_REPO) {
+    console.warn("⚠️ GitHub: chưa cấu hình repo");
+    return;
+  }
+
+  // Nếu không có token → chỉ lưu local
+  if (!GITHUB_TOKEN) {
+    console.warn("⚠️ Repo public, không có token — chỉ lưu localStorage");
+    saveToLocal();
+    alert("💾 Dữ liệu đã lưu local (repo public, không có token để push).");
+    return;
+  }
+
   const api = `https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILENAME}`;
   try {
+    // Lấy SHA nếu file đã tồn tại
     let sha = null;
-    const check = await fetch(api, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
-    if (check.status === 200) sha = (await check.json()).sha;
+    const check = await fetch(api, {
+      headers: { Authorization: `token ${GITHUB_TOKEN}` }
+    });
+    if (check.status === 200) {
+      const json = await check.json();
+      sha = json.sha;
+    }
+
+    // Mã hóa nội dung
     const encodeBase64 = s => btoa(unescape(encodeURIComponent(s)));
     const content = encodeBase64(JSON.stringify({ data, platforms }, null, 2));
-    const body = { message: `Update ${DATA_FILENAME}`, content, sha, branch: "main" };
+
+    // Tạo nội dung body để PUT
+    const body = {
+      message: `Update ${DATA_FILENAME}`,
+      content,
+      sha,
+      branch: "main"
+    };
+
+    // Gửi PUT request
     const res = await fetch(api, {
       method: "PUT",
-      headers: { "Content-Type": "application/json", Authorization: `token ${GITHUB_TOKEN}` },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `token ${GITHUB_TOKEN}`
+      },
       body: JSON.stringify(body)
     });
-    if (!res.ok) throw new Error(res.statusText);
-    console.log("✅ Push GitHub ok");
+
+    if (!res.ok) throw new Error(`Push thất bại: ${res.statusText}`);
+
+    console.log("✅ Push GitHub thành công");
+    alert("✅ Dữ liệu đã được đồng bộ lên GitHub!");
   } catch (e) {
     console.error("❌ Push GitHub lỗi:", e);
+    alert("❌ Push GitHub lỗi: " + e.message);
   }
 }
+
 
 // tải dữ liệu từ GitHub raw
 async function loadFromRawGitHub() {
