@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Quản lý tài khoản — Vercel</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="top">
+<h1>Quản lý tài khoản</h1>
+<p class="subtitle">Giao diện tĩnh — Lưu local & có thể lưu lên GitHub (manual token)</p>
+</header>
+
+
+<main class="container">
+<aside class="panel left">
+<h2>Nền tảng</h2>
+<div id="platforms" class="list"></div>
+<div class="row">
+<input id="newPlatform" placeholder="Thêm nền tảng mới..." />
+<button id="addPlatform">Thêm</button>
+</div>
+</aside>
+
+
+<section class="panel middle">
+<h2>Danh sách tài khoản</h2>
+<div class="controls">
+<select id="selectPlatform"></select>
+<input id="searchBox" placeholder="Tìm theo tên hoặc mail..." />
+<button id="btnExport">Xuất JSON</button>
+<button id="btnImport">Nhập JSON</button>
+</div>
+
+
+<div id="accounts" class="list"></div>
+</section>
+
+
+<aside class="panel right">
+<h2>Thêm / Sửa</h2>
+<form id="form">
+<label>Nền tảng</label>
+<select id="formPlatform"></select>
+<label>Name</label>
+<input id="fName" />
+<label>Mail</label>
+<input id="fMail" />
+<label>Password</label>
+<input id="fPass" />
+<label>2FA</label>
+<input id="f2fa" />
+<div class="row">
+<button type="submit">Lưu</button>
+<button type="button" id="btnReset">Reset</button>
+</div>
+</form>
+
+
+<hr />
+<h3>Lưu lên GitHub</h3>
+<p class="muted">Bạn cần 1 <strong>Personal Access Token</strong> (repo scope) để lưu file `accounts.json` vào repo của bạn. <em>Token không nên lưu công khai.</em></p>
+<input id="ghToken" placeholder="GitHub Token (ghp_...)" />
+<input id="ghRepo" placeholder="Repo (owner/repo)" />
+<input id="ghPath" placeholder="File path (ví dụ: data/accounts.json)" value="accounts.json" />
+<button id="btnSaveGit">Lưu lên GitHub</button>
+<p id="ghStatus" class="muted"></p>
+</aside>
+</main>
+
+
+<input id="fileInput" type="file" accept="application/json" style="display:none" />
+
+
+<footer class="foot">Made for you • Deploy on Vercel via GitHub</footer>
+
+
+<script src="app.js"></script>
+</body>
+</html>
