@@ -1,125 +1,144 @@
 body {
-  font-family: Space Mono;
-  background: linear-gradient(135deg, #c2e9fb, #a1c4fd);
+  font-family: "Poppins", sans-serif;
+  background: #0f172a;
+  color: #f1f5f9;
   margin: 0;
   padding: 0;
-  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.container {
-  max-width: 900px;
-  margin: 30px auto;
-  background: white;
-  border-radius: 14px;
-  padding: 25px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+header {
+  width: 100%;
+  background: #1e293b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
 }
 
 h1 {
-  text-align: center;
-  color: #007bff;
-  margin-bottom: 20px;
+  font-size: 1.4rem;
 }
 
-.token-box {
-  background: #f7f9fc;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
-}
-
-label {
-  font-weight: bold;
-  display: block;
-  margin-top: 10px;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-top: 4px;
-}
-
-.github-btns button {
-  margin: 10px 5px 0 0;
-  padding: 8px 12px;
+#token {
+  background: #334155;
+  color: #fff;
   border: none;
+  padding: 6px 10px;
   border-radius: 6px;
-  background: #007bff;
+}
+
+#addBtn {
+  background: #22c55e;
+  border: none;
   color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
   transition: 0.2s;
 }
-
-.github-btns button:hover {
-  background: #0056b3;
+#addBtn:hover {
+  background: #16a34a;
 }
 
-.platforms {
-  margin-top: 25px;
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 15px;
+  width: 90%;
+  margin-top: 20px;
 }
 
-.platform-list {
+.card {
+  background: #1e293b;
+  border-radius: 14px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  position: relative;
+}
+
+.card h3 {
+  margin: 0 0 5px;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
-  margin: 10px 0;
 }
 
-.platform-card {
-  flex: 1 1 150px;
-  background: #e8f0fe;
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+.card p {
+  margin: 4px 0;
+  color: #cbd5e1;
+  font-size: 0.9rem;
 }
 
-.platform-card:hover {
-  background: #d0e0ff;
-  transform: translateY(-2px);
-}
-
-.add-btn {
-  width: 100%;
-  background: #28a745;
-  color: white;
-  font-size: 16px;
-  padding: 10px;
-  border-radius: 10px;
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
   border: none;
-  margin-top: 10px;
+  color: #f87171;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
-.add-btn:hover {
-  background: #218838;
+.modal-content {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  width: 300px;
 }
 
-.account {
-  background: #fff;
-  border-radius: 10px;
-  padding: 12px;
-  margin-top: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+#modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.account b {
-  color: #007bff;
+.hidden {
+  display: none;
 }
 
-.account button {
+.modal-content label {
+  display: block;
   margin-top: 8px;
-  background: #dc3545;
+}
+
+.modal-content input, select {
+  width: 100%;
+  padding: 6px;
   border: none;
-  color: white;
   border-radius: 6px;
-  padding: 6px 10px;
+  margin-top: 4px;
+  background: #334155;
+  color: white;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.modal-actions button {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
-.account button:hover {
-  bac
+#saveBtn {
+  background: #3b82f6;
+  color: white;
+}
+#cancelBtn {
+  background: #475569;
+  color: white;
+}
