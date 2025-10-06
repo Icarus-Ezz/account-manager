@@ -1,0 +1,21 @@
+{
+  "data": {
+    "TikTok": [],
+    "Facebook": [],
+    "Instagram": []
+  },
+  "platforms": {
+    "TikTok": {
+      "icon": "",
+      "color": "#ff0050"
+    },
+    "Facebook": {
+      "icon": "",
+      "color": "#1877f2"
+    },
+    "Instagram": {
+      "icon": "",
+      "color": "#ec4899"
+    }
+  }
+}
