@@ -2,7 +2,7 @@
 // Configuration (edit here)
 // ============================
 const GITHUB_REPO = "Icarus-Ezz/account-manager";     // <--- username/repo
-const GITHUB_TOKEN = "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"; // <--- token cá nhân hoặc để "" để tắt sync
+const GITHUB_TOKEN = ""; // <--- token cá nhân hoặc để "" để tắt sync
 const DATA_FILENAME = "data.json";
 const AUTO_PUSH = true; // auto push khi có thay đổi (true/false)
 
