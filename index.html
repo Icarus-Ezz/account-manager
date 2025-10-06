@@ -10,17 +10,27 @@
 <body>
   <header>
     <h1>📱 Quản Lý Tài Khoản MXH</h1>
-    <input type="password" id="token" placeholder="Nhập GitHub Token (tuỳ chọn)" />
-    <button id="addBtn">+ Thêm tài khoản</button>
+
+    <div class="top-controls">
+      <input type="text" id="repo" placeholder="Repo (vd: username/reponame)" />
+      <input type="password" id="token" placeholder="GitHub Token (PAT) — nhập để push (tùy chọn)" />
+      <label class="small">
+        <input type="checkbox" id="saveTokenSession" /> Lưu tạm (session)
+      </label>
+      <button id="btnLoadGit">⬇️ Tải từ GitHub</button>
+    </div>
+
+    <button id="addBtn" class="primary">+ Thêm tài khoản</button>
   </header>
 
   <main id="accountContainer"></main>
 
   <!-- Popup thêm tài khoản -->
-  <div id="modal" class="hidden">
+  <div id="modal" class="hidden" aria-hidden="true">
     <div class="modal-content">
-      <h2>Thêm tài khoản</h2>
-      <label>Tên MXH</label>
+      <h2 id="modalTitle">Thêm tài khoản</h2>
+
+      <label>Nền tảng</label>
       <select id="platform">
         <option value="Tiktok">TikTok</option>
         <option value="Face">Facebook</option>
@@ -40,9 +50,10 @@
       <input type="text" id="fa" placeholder="Nhập mã 2FA nếu có" />
 
       <div class="modal-actions">
-        <button id="saveBtn">Lưu</button>
-        <button id="cancelBtn">Hủy</button>
+        <button id="saveBtn" class="primary">Lưu (local + push nếu có token)</button>
+        <button id="cancelBtn" class="muted">Hủy</button>
       </div>
+      <p id="modalNote" class="small muted">(*) Nếu bạn nhập token & repo, hệ thống sẽ push file <code>data.json</code> lên repo.</p>
     </div>
   </div>
 
