@@ -7,21 +7,27 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Quản lý tài khoản</h1>
+  <h1>🔐 Quản lý tài khoản</h1>
 
-  <label>GitHub Token:</label>
-  <input type="password" id="token" placeholder="Nhập GitHub Token...">
-  <label>Tên Repo:</label>
-  <input type="text" id="repo" placeholder="username/reponame">
+  <div class="input-box">
+    <label>GitHub Token:</label>
+    <input type="password" id="token" placeholder="Nhập token của bạn...">
+
+    <label>Repo (username/repo):</label>
+    <input type="text" id="repo" placeholder="vd: phatdepzai/mydata">
+  </div>
+
   <hr>
 
-  <button onclick="addAccount('Tiktok')">+ TikTok</button>
-  <button onclick="addAccount('Face')">+ Facebook</button>
-  <button onclick="addAccount('IG')">+ Instagram</button>
+  <div class="buttons">
+    <button onclick="addAccount('Tiktok')">+ TikTok</button>
+    <button onclick="addAccount('Face')">+ Facebook</button>
+    <button onclick="addAccount('IG')">+ Instagram</button>
+    <button id="saveBtn" onclick="saveToGitHub()">💾 Lưu lên GitHub</button>
+    <button id="loadBtn" onclick="loadFromGitHub()">⬇️ Tải từ GitHub</button>
+  </div>
 
   <div id="accounts"></div>
-
-  <button id="saveBtn" onclick="saveToGitHub()">💾 Lưu lên GitHub</button>
 
   <script src="script.js"></script>
 </body>
