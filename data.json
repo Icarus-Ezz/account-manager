@@ -8,20 +8,27 @@
         "2fa": "LWSK7ZBZJNPTNCKLPNAOHMTQGGKAICGW"
       }
     ],
-    "Facebook": [],
+    "Facebook": [
+      {
+        "name": "Huy Duy",
+        "mail": "obitooo1@mailngon.top",
+        "mk": "PAbc12345678!",
+        "2fa": "FACV 76WO 65V6 CH2P D6NQ DBFL 2P7K L4EW"
+      }
+    ],
     "Instagram": []
   },
   "platforms": {
     "TikTok": {
-      "icon": "",
+      "icon": "https://i.pinimg.com/1200x/db/bb/57/dbbb57e4a4dd74be71504cdbac7a3095.jpg",
       "color": "#ff0050"
     },
     "Facebook": {
-      "icon": "",
+      "icon": "https://i.pinimg.com/1200x/b1/9c/b7/b19cb7de38d8fa0424cf9717aade29d8.jpg",
       "color": "#1877f2"
     },
     "Instagram": {
-      "icon": "",
+      "icon": "https://i.pinimg.com/736x/f4/1e/2d/f41e2dab621c1ee5253cef74e3642fcf.jpg",
       "color": "#ec4899"
     }
   }
