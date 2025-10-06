@@ -6,6 +6,38 @@ const GITHUB_TOKEN = "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";          // <--
 const DATA_FILENAME = "data.json";
 const AUTO_PUSH = true;                  // auto push khi có thay đổi (true/false)
 
+async function refreshFromGitHub(showAlert = true) {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/data.json`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+        Accept: "application/vnd.github.v3+json",
+      },
+    });
+
+    if (!res.ok) throw new Error("Không thể tải file từ GitHub!");
+
+    const data = await res.json();
+    const decoded = atob(data.content);
+    const jsonData = JSON.parse(decoded);
+
+    // Cập nhật localStorage
+    localStorage.setItem("accountData", JSON.stringify(jsonData));
+
+    // Cập nhật giao diện
+    loadPlatformsFromLocal();
+
+    if (showAlert) alert("✅ Đã tải dữ liệu mới nhất từ GitHub!");
+  } catch (err) {
+    console.error(err);
+    if (showAlert) alert("❌ Lỗi khi tải dữ liệu từ GitHub!");
+  }
+}
+
+// 🎯 Gắn sự kiện cho nút Refresh
+document.getElementById("refreshBtn").addEventListener("click", () => {
+  refreshFromGitHub();
+});
 // ============================
 // State & Helpers
 // ============================
