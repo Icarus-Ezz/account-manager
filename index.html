@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quản lý tài khoản</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý tài khoản mạng xã hội</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>🌈 Quản lý tài khoản</h1>
+  <h1>Quản lý tài khoản</h1>
 
-    <div class="actions">
-      <button id="addPlatformBtn">➕ Thêm nền tảng</button>
-      <button id="viewPlatformsBtn">📂 Xem danh sách</button>
-      <button id="exportBtn">💾 Xuất dữ liệu</button>
-      <input type="file" id="importFile" accept=".json" hidden />
-      <button id="importBtn">📥 Nhập dữ liệu</button>
-    </div>
+  <label>GitHub Token:</label>
+  <input type="password" id="token" placeholder="Nhập GitHub Token...">
+  <label>Tên Repo:</label>
+  <input type="text" id="repo" placeholder="username/reponame">
+  <hr>
 
-    <div id="platformList" class="list"></div>
-    <div id="accountList" class="list"></div>
-  </div>
+  <button onclick="addAccount('Tiktok')">+ TikTok</button>
+  <button onclick="addAccount('Face')">+ Facebook</button>
+  <button onclick="addAccount('IG')">+ Instagram</button>
+
+  <div id="accounts"></div>
+
+  <button id="saveBtn" onclick="saveToGitHub()">💾 Lưu lên GitHub</button>
 
   <script src="script.js"></script>
 </body>
