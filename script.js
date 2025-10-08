@@ -5,6 +5,81 @@ const GITHUB_REPO = "Icarus-Ezz/account-manager";     // <--- username/repo
 // --- obfuscated token (thay thế cho const GITHUB_TOKEN = ... ) ---
 let _OBF_B64 = "gsE2KTxwSDMBPNGCuGjxRKH/AR06MQYoEl3S+MtQ2hLdkXYxcClyEw==";
 let _OBF_KEY_HEX = "e5a94676484631724869e0b18f0a937c";
+// ============================
+// 2FA Generator Logic (TOTP)
+// ============================
+const get2FABtn = document.getElementById("get2FABtn");
+const twofaCodeInput = document.getElementById("twofaCode");
+const twofaResult = document.getElementById("twofaResult");
+const secretText = document.getElementById("secretText");
+const tokenText = document.getElementById("tokenText");
+const qrCode = document.getElementById("qrCode");
+
+let totpInterval = null;
+
+function base32ToBytes(base32) {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+  let bits = "";
+  base32 = base32.replace(/=+$/, "").toUpperCase();
+  for (const c of base32) {
+    const val = alphabet.indexOf(c);
+    if (val === -1) continue;
+    bits += val.toString(2).padStart(5, "0");
+  }
+  const bytes = [];
+  for (let i = 0; i + 8 <= bits.length; i += 8) {
+    bytes.push(parseInt(bits.substring(i, i + 8), 2));
+  }
+  return new Uint8Array(bytes);
+}
+
+async function getHMAC(secretBytes, counter) {
+  const buffer = new ArrayBuffer(8);
+  const view = new DataView(buffer);
+  view.setUint32(4, counter);
+  const key = await crypto.subtle.importKey(
+    "raw", secretBytes, { name: "HMAC", hash: "SHA-1" }, false, ["sign"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, buffer);
+  return new Uint8Array(sig);
+}
+
+async function generateTOTP(secret) {
+  const keyBytes = base32ToBytes(secret);
+  const epoch = Math.floor(Date.now() / 1000);
+  const counter = Math.floor(epoch / 30);
+  const hmac = await getHMAC(keyBytes, counter);
+
+  const offset = hmac[hmac.length - 1] & 0xf;
+  const code = ((hmac[offset] & 0x7f) << 24) |
+               ((hmac[offset + 1] & 0xff) << 16) |
+               ((hmac[offset + 2] & 0xff) << 8) |
+               (hmac[offset + 3] & 0xff);
+  const token = (code % 1_000_000).toString().padStart(6, "0");
+  return token;
+}
+
+async function refreshTOTP(secret) {
+  if (!secret) return;
+  const token = await generateTOTP(secret);
+  tokenText.textContent = token;
+  const remain = 30 - (Math.floor(Date.now() / 1000) % 30);
+  tokenText.title = `Còn ${remain}s`;
+}
+
+get2FABtn.addEventListener("click", async () => {
+  const secret = twofaCodeInput.value.trim().replace(/\s+/g, "");
+  if (!secret) return alert("Nhập mã 2FA secret (Base32)");
+
+  secretText.textContent = secret;
+  qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?data=otpauth://totp/MXHManager?secret=${secret}&size=150x150`;
+
+  twofaResult.classList.remove("hidden");
+  await refreshTOTP(secret);
+
+  if (totpInterval) clearInterval(totpInterval);
+  totpInterval = setInterval(() => refreshTOTP(secret), 1000);
+});
 
 // helper: hex -> bytes
 function hexToBytes(hex) {
