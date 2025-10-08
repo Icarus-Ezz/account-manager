@@ -184,7 +184,7 @@ body {
 
 /* Account cards */
 .card {
-  background: var(--card);
+  background: linear-gradient(135deg, var(--card), #f1f5f9);
   border-radius: var(--radius);
   padding: 14px;
   box-shadow: var(--shadow);
@@ -192,18 +192,68 @@ body {
   flex-direction: column;
   gap: 10px;
   position: relative;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease;
 }
 
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  background: linear-gradient(135deg, #f9fafb, var(--card));
+}
+
+/* Phần đầu của card (tên + hành động) */
 .card .head {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
+
+/* Tên tài khoản */
+.card .head .name {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70%;
+}
+
+/* Nút icon sửa / xóa */
+.card .head .actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card .btn-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 15px;
+  padding: 4px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.card .btn-icon:hover {
+  color: #000;
+  background: rgba(0,0,0,0.05);
+  transform: scale(1.1);
+}
+
+/* Fix tràn text ở phần nội dung */
+.card p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 .icon-small {
   width: 28px;
