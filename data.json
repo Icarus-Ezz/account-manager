@@ -1,13 +1,5 @@
 {
   "data": {
-    "TikTok": [
-      {
-        "name": "chaitaigaixiu",
-        "mail": "khongminh1836@gmail.com",
-        "mk": "PAbc123!",
-        "2fa": "LWSK7ZBZJNPTNCKLPNAOHMTQGGKAICGW"
-      }
-    ],
     "Instagram": [
       {
         "name": "khongminh1836",
@@ -44,10 +36,6 @@
     ]
   },
   "platforms": {
-    "TikTok": {
-      "icon": "https://i.pinimg.com/1200x/db/bb/57/dbbb57e4a4dd74be71504cdbac7a3095.jpg",
-      "color": "#ff0050"
-    },
     "Instagram": {
       "icon": "https://i.pinimg.com/736x/f4/1e/2d/f41e2dab621c1ee5253cef74e3642fcf.jpg",
       "color": "#ec4899"
