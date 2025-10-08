@@ -12,7 +12,7 @@
   <div class="app">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <h1 class="brand">MXH Manager</h1>
+      <h1 class="brand"><i class="fa-solid fa-layer-group"></i> MXH Manager</h1>
 
       <nav class="menu">
         <button class="menu-item active" data-page="accounts">
@@ -24,64 +24,78 @@
       </nav>
 
       <div class="sidebar-bottom">
-        <small class="muted">Lưu: localStorage • Đồng bộ: GitHub (auto)</small>
+        <small class="muted">💾 Lưu: localStorage • ☁️ Đồng bộ: GitHub (tự động)</small>
       </div>
     </aside>
 
-    <!-- Main -->
+    <!-- Main content -->
     <main class="main">
       <!-- Trang: Quản lý tài khoản -->
       <section class="page active" id="page-accounts">
         <header class="main-header">
-          <h2>Quản lý tài khoản</h2>
+          <h2><i class="fa-solid fa-users"></i> Quản lý tài khoản</h2>
           <div class="header-actions">
-            <button id="addAccountBtn" class="btn primary">+ Thêm tài khoản</button>
+            <button id="addAccountBtn" class="btn primary">
+              <i class="fa-solid fa-plus"></i> Thêm tài khoản
+            </button>
           </div>
         </header>
 
         <div id="accountGrid" class="grid">
-          <!-- danh sách tài khoản -->
+          <!-- Danh sách tài khoản sẽ được thêm ở đây -->
         </div>
       </section>
 
       <!-- Trang: Lấy mã 2FA -->
       <section class="page" id="page-twofa">
         <header class="main-header">
-          <h2>Lấy mã 2FA</h2>
+          <h2><i class="fa-solid fa-key"></i> Lấy mã 2FA</h2>
         </header>
 
         <div class="twofa-container">
-          <label>Nhập Code 2FA</label>
+          <label for="twofaCode">Nhập Code 2FA</label>
           <input type="text" id="twofaCode" placeholder="VD: ABC123" />
-          <button id="get2FABtn" class="btn primary"><i class="fa-solid fa-key"></i> Lấy mã</button>
+          <button id="get2FABtn" class="btn primary">
+            <i class="fa-solid fa-shield"></i> Lấy mã
+          </button>
 
           <div id="twofaResult" class="twofa-result hidden">
-            <h3>Kết quả</h3>
+            <h3><i class="fa-solid fa-circle-check"></i> Kết quả</h3>
             <div><strong>Secret:</strong> <span id="secretText"></span></div>
             <div><strong>Token:</strong> <span id="tokenText"></span></div>
-            <img id="qrCode" alt="QR Code" />
+            <div id="qrWrapper">
+              <img id="qrCode" alt="QR Code" />
+            </div>
           </div>
         </div>
       </section>
     </main>
   </div>
 
-  <!-- Modal thêm tài khoản -->
+  <!-- Modal: Thêm tài khoản -->
   <div class="modal hidden" id="accountModal">
     <div class="modal-card">
-      <h3>Thêm tài khoản</h3>
-      <label>Tên hiển thị</label>
-      <input id="acc_name" type="text" placeholder="Ex: PhatCrystal" />
-      <label>Email</label>
+      <h3><i class="fa-solid fa-user-plus"></i> Thêm tài khoản</h3>
+
+      <label for="acc_name">Tên hiển thị</label>
+      <input id="acc_name" type="text" placeholder="VD: PhatCrystal" />
+
+      <label for="acc_mail">Email</label>
       <input id="acc_mail" type="email" placeholder="Email đăng nhập" />
-      <label>Mật khẩu</label>
+
+      <label for="acc_pass">Mật khẩu</label>
       <input id="acc_pass" type="text" placeholder="Mật khẩu" />
-      <label>Mã 2FA</label>
-      <input id="acc_2fa" type="text" placeholder="Mã 2FA (nếu có)" />
+
+      <label for="acc_2fa">Mã 2FA (nếu có)</label>
+      <input id="acc_2fa" type="text" placeholder="Mã 2FA" />
 
       <div class="modal-actions">
-        <button id="saveAccount" class="btn primary">Lưu</button>
-        <button id="cancelAccount" class="btn ghost">Hủy</button>
+        <button id="saveAccount" class="btn primary">
+          <i class="fa-solid fa-floppy-disk"></i> Lưu
+        </button>
+        <button id="cancelAccount" class="btn ghost">
+          <i class="fa-solid fa-xmark"></i> Hủy
+        </button>
       </div>
     </div>
   </div>
