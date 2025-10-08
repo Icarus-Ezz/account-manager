@@ -33,7 +33,8 @@
         "mk": "PAbc12345678!",
         "2fa": "FACV 76WO 65V6 CH2P D6NQ DBFL 2P7K L4EW"
       }
-    ]
+    ],
+    "TikTok": []
   },
   "platforms": {
     "Instagram": {
@@ -43,6 +44,10 @@
     "Facebook": {
       "icon": "https://i.pinimg.com/736x/b1/9c/b7/b19cb7de38d8fa0424cf9717aade29d8.jpg",
       "color": "#2376fb"
+    },
+    "TikTok": {
+      "icon": "https://i.pinimg.com/736x/db/bb/57/dbbb57e4a4dd74be71504cdbac7a3095.jpg",
+      "color": "#ffccfd"
     }
   }
 }
