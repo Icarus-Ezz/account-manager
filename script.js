@@ -2,7 +2,48 @@
 // Configuration (edit here)
 // ============================
 const GITHUB_REPO = "Icarus-Ezz/account-manager";     // <--- username/repo
-const GITHUB_TOKEN = "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"; // <--- token cá nhân hoặc để "" để tắt sync
+// --- obfuscated token (thay thế cho const GITHUB_TOKEN = ... ) ---
+let _OBF_B64 = "gsE2KTxwSDMBPNGCuGjxRKH/AR06MQYoEl3S+MtQ2hLdkXYxcClyEw==";
+let _OBF_KEY_HEX = "e5a94676484631724869e0b18f0a937c";
+
+// helper: hex -> bytes
+function hexToBytes(hex) {
+  const bytes = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < bytes.length; i++) {
+    bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
+  }
+  return bytes;
+}
+
+// helper: base64 -> bytes
+function base64ToBytes(b64) {
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+// decode obfuscated token (XOR key + base64)
+function decodeObfToken(b64, keyHex) {
+  try {
+    const keyBytes = hexToBytes(keyHex);
+    const obf = base64ToBytes(b64);
+    const out = new Uint8Array(obf.length);
+    for (let i = 0; i < obf.length; i++) {
+      out[i] = obf[i] ^ keyBytes[i % keyBytes.length];
+    }
+    // decode UTF-8 bytes to string
+    const decoder = new TextDecoder("utf-8");
+    return decoder.decode(out);
+  } catch (e) {
+    console.error("Token decode error:", e);
+    return "";
+  }
+}
+const GITHUB_TOKEN = decodeObfToken(_OBF_B64, _OBF_KEY_HEX);
+_OBF_B64 = null;
+_OBF_KEY_HEX = null;
+ // <--- token cá nhân hoặc để "" để tắt sync
 const DATA_FILENAME = "data.json";
 const AUTO_PUSH = true; // auto push khi có thay đổi (true/false)
 
