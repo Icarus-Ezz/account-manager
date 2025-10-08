@@ -8,7 +8,8 @@
         "2fa": "LWSK7ZBZJNPTNCKLPNAOHMTQGGKAICGW"
       }
     ],
-    "Instagram": []
+    "Instagram": [],
+    "Facebook": []
   },
   "platforms": {
     "TikTok": {
@@ -18,6 +19,10 @@
     "Instagram": {
       "icon": "https://i.pinimg.com/736x/f4/1e/2d/f41e2dab621c1ee5253cef74e3642fcf.jpg",
       "color": "#ec4899"
+    },
+    "Facebook": {
+      "icon": "https://i.pinimg.com/736x/b1/9c/b7/b19cb7de38d8fa0424cf9717aade29d8.jpg",
+      "color": "#2376fb"
     }
   }
 }
