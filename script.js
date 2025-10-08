@@ -179,25 +179,15 @@ function renderAccounts() {
     card.style.background = `linear-gradient(135deg, ${platMeta.color}, ${shadeColor(platMeta.color, -20)})`;
 
     card.innerHTML = `
-      <div class="head">
-        <div class="info">
-          <div class="icon-small" style="background:${platMeta.color}">
-            ${platMeta.icon ? `<img src="${escapeHtml(platMeta.icon)}"/>` : currentPlatform[0].toUpperCase()}
-          </div>
-          <div>
-            <h4>${escapeHtml(acc.name)}</h4>
-            <p class="muted">${escapeHtml(acc.mail)}</p>
-          </div>
-        </div>
-        <div class="actions">
-          <button class="btn small" data-action="edit" data-idx="${idx}" title="Sửa"><i class="fas fa-edit"></i></button>
-          <button class="btn small danger" data-action="del" data-idx="${idx}" title="Xóa"><i class="fas fa-trash"></i></button>
+      <div class="account-header">
+        <h3 class="account-name" title="${acc.name}">${acc.name}</h3>
+        <div class="account-actions">
+          <button class="btn-icon edit" title="Sửa"><i class="fas fa-edit"></i></button>
+          <button class="btn-icon delete" title="Xóa"><i class="fas fa-trash"></i></button>
         </div>
       </div>
-      <div class="details">
-        <p><b>Pass:</b> <code>${escapeHtml(acc.mk)}</code></p>
-        <p><b>2FA:</b> ${escapeHtml(acc["2fa"] || '')}</p>
-      </div>
+      <p class="account-email" title="${acc.mail}">${acc.mail}</p>
+      <p class="account-pass" title="${acc.pass}">${acc.pass}</p>
     `;
 
     // Gắn sự kiện
