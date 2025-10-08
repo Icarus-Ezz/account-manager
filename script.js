@@ -193,9 +193,35 @@ function renderAccounts() {
       const act = btn.dataset.action;
       if (act === "edit") btn.addEventListener("click", e => { e.stopPropagation(); openEditAccount(idx); });
       else if (act === "del") btn.addEventListener("click", e => { e.stopPropagation(); removeAccount(idx); });
+      else if (act === "del") btn.addEventListener("click", e => { e.stopPropagation(); removeacc(currentPlatform, idx); });
     });
     accountGrid.appendChild(card);
   });
+}
+
+function removeacc(platform, index) {
+  // Kiểm tra hợp lệ
+  if (!platform || !data[platform]) return;
+
+  const list = data[platform];
+  const acc = list[index];
+  if (!acc) return;
+
+  // Hộp xác nhận
+  const confirmDelete = confirm(`Bạn có chắc muốn xóa tài khoản "${acc.name}" không?`);
+  if (!confirmDelete) return;
+
+  // Xóa 1 tài khoản khỏi danh sách
+  list.splice(index, 1);
+
+  // Cập nhật lại dữ liệu
+  data[platform] = list;
+
+  // Lưu lại vào localStorage (nếu đang sử dụng)
+  localStorage.setItem("accountData", JSON.stringify(data));
+
+  // Nếu đang xem nền tảng hiện tại, render lại
+  if (currentPlatform === platform) renderAccounts();
 }
 
 function selectPlatform(name) {
