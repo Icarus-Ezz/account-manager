@@ -200,7 +200,31 @@ body {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   background: linear-gradient(135deg, #f9fafb, var(--card));
 }
+.card .actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  padding: 5px 6px;
+  font-size: 15px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.btn-icon:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: scale(1.1);
+}
+
+.btn-icon.danger {
+  color: #ef4444;
+}
 /* Phần đầu của card (tên + hành động) */
 .card .head {
   display: flex;
