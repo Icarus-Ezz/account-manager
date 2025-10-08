@@ -3,60 +3,73 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Account Manager — MXH</title>
+  <title>MXH Manager Dashboard</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
 </head>
 <body>
   <div class="app">
+    <!-- Sidebar -->
     <aside class="sidebar">
-      <div class="sidebar-top">
-        <h1 class="brand">MXH Manager</h1>
-        <div class="sidebar-actions">
-          <button id="addPlatformBtn" class="btn small">+ Thêm nền tảng</button>
-          <label class="switch" title="Chủ đề">
-            <input id="themeToggle" type="checkbox" />
-            <span class="slider"></span>
-          </label>
-        </div>
-      </div>
+      <h1 class="brand">MXH Manager</h1>
 
-      <div class="platform-list" id="platformList">
-        <!-- platforms injected here -->
-      </div>
+      <nav class="menu">
+        <button class="menu-item active" data-page="accounts">
+          <i class="fa-solid fa-users"></i> Quản lý tài khoản
+        </button>
+        <button class="menu-item" data-page="twofa">
+          <i class="fa-solid fa-key"></i> Lấy mã 2FA
+        </button>
+      </nav>
 
       <div class="sidebar-bottom">
         <small class="muted">Lưu: localStorage • Đồng bộ: GitHub (auto)</small>
-        <button id="forceSync" class="btn ghost">Đồng bộ ngay</button>
       </div>
     </aside>
 
+    <!-- Main -->
     <main class="main">
-      <header class="main-header">
-        <div>
-          <h2 id="currentPlatformTitle">Chọn nền tảng</h2>
-          <p id="platformSummary" class="muted">Không có nền tảng được chọn</p>
-        </div>
-        <div class="header-actions">
-          <button id="refreshData" class="btn ghost">🔄 Refresh</button>
-          <button id="addAccountBtn" class="btn primary">+ Thêm tài khoản</button>
-        </div>
-      </header>
+      <!-- Trang: Quản lý tài khoản -->
+      <section class="page active" id="page-accounts">
+        <header class="main-header">
+          <h2>Quản lý tài khoản</h2>
+          <div class="header-actions">
+            <button id="addAccountBtn" class="btn primary">+ Thêm tài khoản</button>
+          </div>
+        </header>
 
-      <section class="content">
         <div id="accountGrid" class="grid">
-          <!-- cards injected here -->
+          <!-- danh sách tài khoản -->
+        </div>
+      </section>
+
+      <!-- Trang: Lấy mã 2FA -->
+      <section class="page" id="page-twofa">
+        <header class="main-header">
+          <h2>Lấy mã 2FA</h2>
+        </header>
+
+        <div class="twofa-container">
+          <label>Nhập Code 2FA</label>
+          <input type="text" id="twofaCode" placeholder="VD: ABC123" />
+          <button id="get2FABtn" class="btn primary"><i class="fa-solid fa-key"></i> Lấy mã</button>
+
+          <div id="twofaResult" class="twofa-result hidden">
+            <h3>Kết quả</h3>
+            <div><strong>Secret:</strong> <span id="secretText"></span></div>
+            <div><strong>Token:</strong> <span id="tokenText"></span></div>
+            <img id="qrCode" alt="QR Code" />
+          </div>
         </div>
       </section>
     </main>
   </div>
 
-  <!-- Modal: Add/Edit Account -->
-  <div class="modal hidden" id="accountModal" aria-hidden="true">
+  <!-- Modal thêm tài khoản -->
+  <div class="modal hidden" id="accountModal">
     <div class="modal-card">
-      <h3 id="accountModalTitle">Thêm tài khoản</h3>
+      <h3>Thêm tài khoản</h3>
       <label>Tên hiển thị</label>
       <input id="acc_name" type="text" placeholder="Ex: PhatCrystal" />
       <label>Email</label>
@@ -65,26 +78,10 @@
       <input id="acc_pass" type="text" placeholder="Mật khẩu" />
       <label>Mã 2FA</label>
       <input id="acc_2fa" type="text" placeholder="Mã 2FA (nếu có)" />
+
       <div class="modal-actions">
         <button id="saveAccount" class="btn primary">Lưu</button>
         <button id="cancelAccount" class="btn ghost">Hủy</button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Modal: Add/Edit Platform -->
-  <div class="modal hidden" id="platformModal" aria-hidden="true">
-    <div class="modal-card">
-      <h3 id="platformModalTitle">Thêm nền tảng</h3>
-      <label>Tên nền tảng</label>
-      <input id="plat_name" type="text" placeholder="Ví dụ: Threads" />
-      <label>Icon (link PNG / SVG hoặc để trống dùng auto)</label>
-      <input id="plat_icon" type="url" placeholder="https://..." />
-      <label>Màu chính (hex)</label>
-      <input id="plat_color" type="color" value="#3b82f6" />
-      <div class="modal-actions">
-        <button id="savePlatform" class="btn primary">Lưu nền tảng</button>
-        <button id="cancelPlatform" class="btn ghost">Hủy</button>
       </div>
     </div>
   </div>
