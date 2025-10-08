@@ -42,7 +42,7 @@
         </header>
 
         <div id="accountGrid" class="grid">
-          <!-- Danh sách tài khoản sẽ được thêm ở đây -->
+          <!-- Danh sách tài khoản -->
         </div>
       </section>
 
@@ -53,8 +53,8 @@
         </header>
 
         <div class="twofa-container">
-          <label for="twofaCode">Nhập Code 2FA</label>
-          <input type="text" id="twofaCode" placeholder="VD: ABC123" />
+          <label for="twofaCode">Nhập Secret 2FA</label>
+          <input type="text" id="twofaCode" placeholder="VD: JBSWY3DPEHPK3PXP" />
           <button id="get2FABtn" class="btn primary">
             <i class="fa-solid fa-shield"></i> Lấy mã
           </button>
@@ -62,7 +62,7 @@
           <div id="twofaResult" class="twofa-result hidden">
             <h3><i class="fa-solid fa-circle-check"></i> Kết quả</h3>
             <div><strong>Secret:</strong> <span id="secretText"></span></div>
-            <div><strong>Token:</strong> <span id="tokenText"></span></div>
+            <div><strong>Mã 6 số:</strong> <span id="tokenText"></span></div>
             <div id="qrWrapper">
               <img id="qrCode" alt="QR Code" />
             </div>
