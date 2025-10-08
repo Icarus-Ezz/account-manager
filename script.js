@@ -122,7 +122,7 @@ function escapeHtml(s) {
 }
 
 // ============================
-// Rendering
+// Rendering Platforms
 // ============================
 function renderPlatforms() {
   platformListEl.innerHTML = "";
@@ -156,6 +156,9 @@ function initials(name) {
   return `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:700">${escapeHtml(name.slice(0, 2).toUpperCase())}</div>`;
 }
 
+// ============================
+// Rendering Accounts
+// ============================
 function renderAccounts() {
   accountGrid.innerHTML = "";
   if (!currentPlatform) {
@@ -163,16 +166,21 @@ function renderAccounts() {
     platformSummary.innerText = "Chọn nền tảng ở sidebar để xem tài khoản.";
     return;
   }
-  currentPlatformTitle.innerText = currentPlatform;
-  platformSummary.innerText = `${(data[currentPlatform] || []).length} tài khoản`;
+
   const list = data[currentPlatform] || [];
+  const platMeta = platforms[currentPlatform] || { color: "#3b82f6", icon: "" };
+
+  currentPlatformTitle.innerText = currentPlatform;
+  platformSummary.innerText = `${list.length} tài khoản`;
+
   list.forEach((acc, idx) => {
     const card = document.createElement("div");
     card.className = "card";
-    const platMeta = platforms[currentPlatform] || { color: "#999", icon: "" };
+    card.style.background = `linear-gradient(135deg, ${platMeta.color}, ${shadeColor(platMeta.color, -20)})`;
+
     card.innerHTML = `
       <div class="head">
-        <div style="display:flex;gap:10px;align-items:center">
+        <div class="info">
           <div class="icon-small" style="background:${platMeta.color}">
             ${platMeta.icon ? `<img src="${escapeHtml(platMeta.icon)}"/>` : currentPlatform[0].toUpperCase()}
           </div>
@@ -181,49 +189,56 @@ function renderAccounts() {
             <p class="muted">${escapeHtml(acc.mail)}</p>
           </div>
         </div>
-        <div>
-          <button class="btn small" data-action="edit" data-idx="${idx}"><i class="fas fa-edit"></i></button>
-          <button class="delete-acc" data-action="del" data-idx="${idx}" title="Xóa"><i class="fas fa-trash"></i></button>
+        <div class="actions">
+          <button class="btn small" data-action="edit" data-idx="${idx}" title="Sửa"><i class="fas fa-edit"></i></button>
+          <button class="btn small danger" data-action="del" data-idx="${idx}" title="Xóa"><i class="fas fa-trash"></i></button>
         </div>
       </div>
-      <p><b>Pass:</b> <code>${escapeHtml(acc.mk)}</code></p>
-      <p><b>2FA:</b> ${escapeHtml(acc["2fa"] || '')}</p>
+      <div class="details">
+        <p><b>Pass:</b> <code>${escapeHtml(acc.mk)}</code></p>
+        <p><b>2FA:</b> ${escapeHtml(acc["2fa"] || '')}</p>
+      </div>
     `;
+
+    // Gắn sự kiện
     card.querySelectorAll("[data-action]").forEach(btn => {
       const act = btn.dataset.action;
-      if (act === "edit") btn.addEventListener("click", e => { e.stopPropagation(); openEditAccount(idx); });
-      else if (act === "del") btn.addEventListener("click", e => { e.stopPropagation(); removeAccount(idx); });
-      else if (act === "del") btn.addEventListener("click", e => { e.stopPropagation(); removeacc(currentPlatform, idx); });
+      if (act === "edit") btn.addEventListener("click", e => {
+        e.stopPropagation();
+        openEditAccount(idx);
+      });
+      else if (act === "del") btn.addEventListener("click", e => {
+        e.stopPropagation();
+        removeAccount(currentPlatform, idx);
+      });
     });
+
     accountGrid.appendChild(card);
   });
 }
 
-function removeacc(platform, index) {
-  // Kiểm tra hợp lệ
+// ============================
+// Remove Account
+// ============================
+function removeAccount(platform, index) {
   if (!platform || !data[platform]) return;
-
   const list = data[platform];
   const acc = list[index];
   if (!acc) return;
 
-  // Hộp xác nhận
-  const confirmDelete = confirm(`Bạn có chắc muốn xóa tài khoản "${acc.name}" không?`);
-  if (!confirmDelete) return;
+  if (!confirm(`Bạn có chắc muốn xóa tài khoản "${acc.name}" không?`)) return;
 
-  // Xóa 1 tài khoản khỏi danh sách
   list.splice(index, 1);
-
-  // Cập nhật lại dữ liệu
   data[platform] = list;
 
-  // Lưu lại vào localStorage (nếu đang sử dụng)
-  localStorage.setItem("accountData", JSON.stringify(data));
-
-  // Nếu đang xem nền tảng hiện tại, render lại
+  saveState();
   if (currentPlatform === platform) renderAccounts();
+  if (AUTO_PUSH) tryPush();
 }
 
+// ============================
+// Select Platform
+// ============================
 function selectPlatform(name) {
   currentPlatform = name;
   document.querySelectorAll(".platform-item").forEach(it => it.style.boxShadow = "");
@@ -233,7 +248,7 @@ function selectPlatform(name) {
 }
 
 // ============================
-// Account actions
+// Account Modals
 // ============================
 document.getElementById("addAccountBtn").addEventListener("click", () => {
   if (!currentPlatform) return alert("Vui lòng chọn nền tảng trước.");
@@ -272,16 +287,30 @@ document.getElementById("saveAccount").onclick = async () => {
   if (editAccountContext)
     data[editAccountContext.platform][editAccountContext.index] = { name, mail, mk, "2fa": fa };
   else data[currentPlatform].push({ name, mail, mk, "2fa": fa });
-  saveState(); renderAccounts(); accountModal.classList.add("hidden");
+  saveState();
+  renderAccounts();
+  accountModal.classList.add("hidden");
   if (AUTO_PUSH) await tryPush();
 };
 
-function removeAccount(idx) {
-  if (!confirm("Bạn có chắc muốn xóa tài khoản này?")) return;
-  data[currentPlatform].splice(idx, 1);
-  saveState(); renderAccounts(); if (AUTO_PUSH) tryPush();
+// ============================
+// Helper: làm đậm/nhạt màu gradient
+// ============================
+function shadeColor(color, percent) {
+  let R = parseInt(color.substring(1, 3), 16);
+  let G = parseInt(color.substring(3, 5), 16);
+  let B = parseInt(color.substring(5, 7), 16);
+  R = parseInt((R * (100 + percent)) / 100);
+  G = parseInt((G * (100 + percent)) / 100);
+  B = parseInt((B * (100 + percent)) / 100);
+  R = R < 255 ? R : 255;
+  G = G < 255 ? G : 255;
+  B = B < 255 ? B : 255;
+  const RR = R.toString(16).padStart(2, "0");
+  const GG = G.toString(16).padStart(2, "0");
+  const BB = B.toString(16).padStart(2, "0");
+  return `#${RR}${GG}${BB}`;
 }
-
 // ============================
 // Platform actions
 // ============================
