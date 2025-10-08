@@ -190,27 +190,34 @@ function renderAccounts() {
           </div>
         </div>
         <div class="actions">
-          <button class="btn small" data-action="edit" data-idx="${idx}" title="Sửa"><i class="fas fa-edit"></i></button>
-          <button class="btn small danger" data-action="del" data-idx="${idx}" title="Xóa"><i class="fas fa-trash"></i></button>
+          <button class="btn-icon" data-action="edit" data-idx="${idx}" title="Sửa tài khoản">
+            <i class="fas fa-pen"></i>
+          </button>
+          <button class="btn-icon danger" data-action="del" data-idx="${idx}" title="Xóa tài khoản">
+            <i class="fas fa-trash"></i>
+          </button>
         </div>
       </div>
       <div class="details">
         <p><b>Pass:</b> <code>${escapeHtml(acc.mk)}</code></p>
-        <p><b>2FA:</b> ${escapeHtml(acc["2fa"] || '')}</p>
+        <p><b>2FA:</b> ${escapeHtml(acc["2fa"] || "")}</p>
       </div>
     `;
 
     // Gắn sự kiện
-    card.querySelectorAll("[data-action]").forEach(btn => {
+    card.querySelectorAll("[data-action]").forEach((btn) => {
       const act = btn.dataset.action;
-      if (act === "edit") btn.addEventListener("click", e => {
-        e.stopPropagation();
-        openEditAccount(idx);
-      });
-      else if (act === "del") btn.addEventListener("click", e => {
-        e.stopPropagation();
-        removeAccount(currentPlatform, idx);
-      });
+      if (act === "edit") {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openEditAccount(idx);
+        });
+      } else if (act === "del") {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          removeAccount(currentPlatform, idx);
+        });
+      }
     });
 
     accountGrid.appendChild(card);
