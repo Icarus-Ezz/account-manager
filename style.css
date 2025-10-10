@@ -1,3 +1,9 @@
+.hidden {
+  display: none !important;
+}
+.mt-2 {
+  margin-top: 1rem;
+}
 
 :root {
   --bg: linear-gradient(135deg, #f3f7fc, #e9f0ff);
