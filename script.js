@@ -98,6 +98,15 @@ const acc2faInput = document.getElementById("acc_2fa");
 const platNameInput = document.getElementById("plat_name");
 const platIconInput = document.getElementById("plat_icon");
 const platColorInput = document.getElementById("plat_color");
+// Khi trang đã load xong
+window.addEventListener("DOMContentLoaded", () => {
+  const go2FABtn = document.getElementById("go2FA");
+  if (go2FABtn) {
+    go2FABtn.addEventListener("click", () => {
+      window.location.href = "2fa.html"; // Chuyển sang trang 2fa.html
+    });
+  }
+});
 
 // ============================
 // Load/Save State
