@@ -339,8 +339,9 @@
     const secretSpan = document.getElementById("secret");
     const tokenSpan = document.getElementById("token");
   
+    let autoUpdateInterval = null;
+  
     btn.addEventListener("click", async () => {
-      // Làm sạch code
       const code = codeInput.value.trim().toUpperCase().replace(/\s+/g, "");
   
       message.innerHTML = "";
@@ -353,38 +354,53 @@
   
       message.innerHTML = `<div class="success"><span class="loading"></span> ⏳ Đang xử lý...</div>`;
   
-      try {
-        // Dùng AllOrigins để tránh CORS
-        const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://twofa.co/api/${code}`)}`;
-  
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-  
-        const wrapped = await resp.json();
-        const data = JSON.parse(wrapped.contents || "{}");
-  
-        if (!data || (!data.secret && !data.token)) {
-          message.innerHTML = `<div class="error"><i class="fas fa-times"></i> ❌ Mã không hợp lệ hoặc API lỗi!</div>`;
-          return;
-        }
-  
-        secretSpan.textContent = data.secret || "Không có";
-        tokenSpan.textContent = data.token || "Không có";
-        result.style.display = "block";
-        message.innerHTML = `<div class="success"><i class="fas fa-check-circle"></i> ✅ Thành công!</div>`;
-      } catch (e) {
-        message.innerHTML = `<div class="error"><i class="fas fa-bug"></i> ❌ Lỗi: ${e.message}</div>`;
+      // Dừng vòng lặp cũ nếu có
+      if (autoUpdateInterval) {
+        clearInterval(autoUpdateInterval);
+        autoUpdateInterval = null;
       }
+  
+      // Hàm lấy token mới
+      async function fetchToken() {
+        try {
+          const innerUrl = `https://twofa.co/api/${encodeURIComponent(code)}?_=${Date.now()}`;
+          const url = `https://api.allorigins.win/get?url=${encodeURIComponent(innerUrl)}`;
+  
+          const resp = await fetch(url, { cache: "no-store" });
+          if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  
+          const wrapped = await resp.json();
+          const data = JSON.parse(wrapped.contents || "{}");
+  
+          if (!data || (!data.secret && !data.token)) {
+            message.innerHTML = `<div class="error"><i class="fas fa-times"></i> ❌ Mã không hợp lệ hoặc API lỗi!</div>`;
+            return;
+          }
+  
+          secretSpan.textContent = data.secret || "Không có";
+          tokenSpan.textContent = data.token || "Không có";
+          result.style.display = "block";
+          message.innerHTML = `<div class="success"><i class="fas fa-check-circle"></i> ✅ Đã cập nhật token!</div>`;
+        } catch (e) {
+          message.innerHTML = `<div class="error"><i class="fas fa-bug"></i> ❌ Lỗi: ${e.message}</div>`;
+        }
+      }
+  
+      // Gọi ngay 1 lần
+      await fetchToken();
+  
+      // Sau đó cập nhật lại mỗi 30 giây
+      autoUpdateInterval = setInterval(fetchToken, 30000);
     });
-
-    // Add input focus effect
-    codeInput.addEventListener('focus', () => {
-      codeInput.parentElement.style.transform = 'scale(1.01)';
+  
+    // Hiệu ứng focus input
+    codeInput.addEventListener("focus", () => {
+      codeInput.parentElement.style.transform = "scale(1.01)";
     });
-
-    codeInput.addEventListener('blur', () => {
-      codeInput.parentElement.style.transform = 'scale(1)';
+    codeInput.addEventListener("blur", () => {
+      codeInput.parentElement.style.transform = "scale(1)";
     });
   </script>
+
 </body>
 </html>
