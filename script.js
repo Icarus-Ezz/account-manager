@@ -5,6 +5,28 @@ const GITHUB_REPO = "Icarus-Ezz/account-manager";     // <--- username/repo
 // --- obfuscated token (thay thế cho const GITHUB_TOKEN = ... ) ---
 let _OBF_B64 = "gsE2KTxwSDMBPNGCuGjxRKH/AR06MQYoEl3S+MtQ2hLdkXYxcClyEw==";
 let _OBF_KEY_HEX = "e5a94676484631724869e0b18f0a937c";
+const mainSection = document.querySelector('.content'); // tab chính
+const twofaSection = document.getElementById('twofaSection');
+const go2FABtn = document.getElementById('go2FA');
+const backToMainBtn = document.getElementById('backToMain');
+
+go2FABtn.addEventListener('click', () => {
+  mainSection.classList.add('hidden');
+  twofaSection.classList.remove('hidden');
+  history.pushState({}, '', '/2fa'); // đổi URL sang /2fa
+});
+
+backToMainBtn.addEventListener('click', () => {
+  twofaSection.classList.add('hidden');
+  mainSection.classList.remove('hidden');
+  history.pushState({}, '', '/'); // trở lại trang chính
+});
+
+// Nếu người dùng truy cập trực tiếp /2fa thì tự mở tab 2FA
+if (window.location.pathname === '/2fa') {
+  mainSection.classList.add('hidden');
+  twofaSection.classList.remove('hidden');
+}
 
 // helper: hex -> bytes
 function hexToBytes(hex) {
