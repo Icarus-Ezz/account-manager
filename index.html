@@ -42,6 +42,7 @@
         <div class="header-actions">
           <button id="refreshData" class="btn ghost">🔄 Refresh</button>
           <button id="addAccountBtn" class="btn primary">+ Thêm tài khoản</button>
+          <button id="go2FA" class="btn ghost">🔐 2FA</button> <!-- thêm dòng này -->
         </div>
       </header>
 
@@ -50,6 +51,17 @@
           <!-- cards injected here -->
         </div>
       </section>
+      <section class="content hidden" id="twofaSection">
+        <h3>Trình quản lý mã 2FA</h3>
+        <p class="muted">Quản lý và sao lưu mã xác thực hai bước của các tài khoản.</p>
+        
+        <div class="grid" id="twofaGrid">
+          <!-- nơi hiển thị danh sách mã 2FA -->
+        </div>
+      
+        <button id="backToMain" class="btn ghost mt-2">← Quay lại quản lý tài khoản</button>
+      </section>
+
     </main>
   </div>
 
