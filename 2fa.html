@@ -99,7 +99,7 @@
     const tokenSpan = document.getElementById("token");
   
     btn.addEventListener("click", async () => {
-      // 🔧 Chuẩn hóa code: xóa khoảng trắng, viết hoa toàn bộ
+      // Làm sạch code
       const code = codeInput.value.trim().toUpperCase().replace(/\s+/g, "");
   
       message.innerHTML = "";
@@ -111,16 +111,19 @@
       }
   
       message.innerHTML = `<div class="success">⏳ Đang xử lý...</div>`;
-      try {
-        const resp = await fetch(`https://twofa.co/api/${code}`);
-        if (!resp.ok) {
-          message.innerHTML = `<div class="error">❌ API lỗi: ${resp.status}</div>`;
-          return;
-        }
   
-        const data = await resp.json().catch(() => null);
-        if (!data) {
-          message.innerHTML = `<div class="error">❌ Phản hồi không hợp lệ!</div>`;
+      try {
+        // Dùng AllOrigins để tránh CORS
+        const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://twofa.co/api/${code}`)}`;
+  
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  
+        const wrapped = await resp.json();
+        const data = JSON.parse(wrapped.contents || "{}");
+  
+        if (!data || (!data.secret && !data.token)) {
+          message.innerHTML = `<div class="error">❌ Mã không hợp lệ hoặc API lỗi!</div>`;
           return;
         }
   
