@@ -47,7 +47,8 @@
         "mk": "PAbc123!",
         "2fa": "LWSK7ZBZJNPTNCKLPNAOHMTQGGKAICGW"
       }
-    ]
+    ],
+    "Google": []
   },
   "platforms": {
     "Instagram": {
@@ -61,6 +62,10 @@
     "TikTok": {
       "icon": "https://i.pinimg.com/736x/db/bb/57/dbbb57e4a4dd74be71504cdbac7a3095.jpg",
       "color": "#ffccfd"
+    },
+    "Google": {
+      "icon": "https://i.pinimg.com/1200x/45/20/dd/4520ddfc56208707045c56232e946f7f.jpg",
+      "color": "#ffffff"
     }
   }
 }
