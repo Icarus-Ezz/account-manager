@@ -1,89 +1,21 @@
 {
   "data": {
-    "Instagram": [
-      {
-        "name": "khongminh1836",
-        "mail": "khongminh1836@gmail.com",
-        "mk": "PAbc123!",
-        "2fa": "JECC ONGK QPXM ZU5R 3CUI ANFW SUTW ZX6T"
-      },
-      {
-        "name": "khaihuyen2025",
-        "mail": "d56a5694243f@mailngon.top",
-        "mk": "PhatAbc123!",
-        "2fa": "62AT YWDQ NCRA IR5F XWBD P7XR ZDP6 D6DU"
-      },
-      {
-        "name": "phatsigma123876",
-        "mail": "d27ffa863549@mailngon.top",
-        "mk": "PhatSigma123@!",
-        "2fa": "V6YB 7DLB YV66 62FB 3ROR QWAQ XPWQ DE3T"
-      },
-      {
-        "name": "phat_sigma123876",
-        "mail": "almwwpc8zs0n@mailngon.top",
-        "mk": "PhatSigma123@!",
-        "2fa": "3Z76 3E2W VQM2 F2LV GPZN PDHO ZFRQ NNQF"
-      },
-      {
-        "name": "david527985",
-        "mail": "davidlong@mailngon.top",
-        "mk": "SkibidiSigma123!@",
-        "2fa": "BYNQ J3FJ JS2J NP2N 6KTW H6ER OVTU TJE6"
-      },
-      {
-        "name": "nguyenlong1052",
-        "mail": "nguyenlong@mailngon.top",
-        "mk": "LolSigmaBoy!@123",
-        "2fa": "MM2W AQEC YTCE PN5L WYUX PDRG EYXH 7NH2"
-      }
-    ],
-    "Facebook": [
-      {
-        "name": "Huy Duy",
-        "mail": "obitooo1@mailngon.top",
-        "mk": "PAbc12345678!",
-        "2fa": "FACV 76WO 65V6 CH2P D6NQ DBFL 2P7K L4EW"
-      }
-    ],
-    "TikTok": [
-      {
-        "name": "Chai Đẹp Bị Khờ",
-        "mail": "obitooo1@mailngon.top",
-        "mk": "PAbc12345678!",
-        "2fa": "A3VFEWG4PFVPHIW7KPMREW32WWILXC4B"
-      },
-      {
-        "name": "chaitaigaixiu",
-        "mail": "khongminh1836@gmail.com",
-        "mk": "PAbc123!",
-        "2fa": "LWSK7ZBZJNPTNCKLPNAOHMTQGGKAICGW"
-      },
-      {
-        "name": "traidepxuthanh8",
-        "mail": "skibidisigma@mailngon.top",
-        "mk": "PAbc12345678!",
-        "2fa": "ANAPCOA4OAWA57W7RUFFCCLMDGBOIVR4"
-      }
-    ],
-    "Google": []
+    "TikTok": [],
+    "Facebook": [],
+    "Instagram": []
   },
   "platforms": {
-    "Instagram": {
-      "icon": "https://i.pinimg.com/736x/f4/1e/2d/f41e2dab621c1ee5253cef74e3642fcf.jpg",
-      "color": "#ec4899"
+    "TikTok": {
+      "icon": "",
+      "color": "#ff0050"
     },
     "Facebook": {
-      "icon": "https://i.pinimg.com/736x/b1/9c/b7/b19cb7de38d8fa0424cf9717aade29d8.jpg",
-      "color": "#2376fb"
+      "icon": "",
+      "color": "#1877f2"
     },
-    "TikTok": {
-      "icon": "https://i.pinimg.com/736x/db/bb/57/dbbb57e4a4dd74be71504cdbac7a3095.jpg",
-      "color": "#ffccfd"
-    },
-    "Google": {
-      "icon": "https://i.pinimg.com/1200x/45/20/dd/4520ddfc56208707045c56232e946f7f.jpg",
-      "color": "#ffffff"
+    "Instagram": {
+      "icon": "",
+      "color": "#ec4899"
     }
   }
 }
