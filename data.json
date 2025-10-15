@@ -72,7 +72,14 @@
         "2fa": "ANAPCOA4OAWA57W7RUFFCCLMDGBOIVR4"
       }
     ],
-    "Google": []
+    "Google": [
+      {
+        "name": "Huy Hưng",
+        "mail": "huyh59098@gmail.com",
+        "mk": "PAbc123!",
+        "2fa": ""
+      }
+    ]
   },
   "platforms": {
     "Instagram": {
