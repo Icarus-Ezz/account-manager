@@ -73,7 +73,8 @@
         "mk": "PAbc123!",
         "2fa": ""
       }
-    ]
+    ],
+    "Temp Mail": []
   },
   "platforms": {
     "Instagram": {
@@ -91,6 +92,10 @@
     "Google": {
       "icon": "https://i.pinimg.com/1200x/45/20/dd/4520ddfc56208707045c56232e946f7f.jpg",
       "color": "#ffffff"
+    },
+    "Temp Mail": {
+      "icon": "https://tmailor.com/img/Logo_512x512.png",
+      "color": "#0040ff"
     }
   }
 }
