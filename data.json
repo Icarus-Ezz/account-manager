@@ -73,8 +73,7 @@
         "mk": "PAbc123!",
         "2fa": ""
       }
-    ],
-    "Temple Mail": []
+    ]
   },
   "platforms": {
     "Instagram": {
@@ -92,10 +91,6 @@
     "Google": {
       "icon": "https://i.pinimg.com/1200x/45/20/dd/4520ddfc56208707045c56232e946f7f.jpg",
       "color": "#ffffff"
-    },
-    "Temple Mail": {
-      "icon": "https://www.google.com/url?sa=i&url=https%3A%2F%2Ftmailor.com%2F&psig=AOvVaw2_BmNyWvvCUnFsLEPNAAYS&ust=1760886624905000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCPiJjoCErpADFQAAAAAdAAAAABAE",
-      "color": "#005ef5"
     }
   }
 }
