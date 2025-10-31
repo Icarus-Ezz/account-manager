@@ -123,7 +123,8 @@
         "mk": "https://tmailor.com/reuse-temp-mail-address#accesstoken/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlIjoicHprS1pUOGxNM3lpTEhIMXBTRVZxeFcySTN5aUZ5QXdvMU9KTXlNNkZKcVpGYXl6Rm1XR3JSMUlJM3lqWjFjMkRhTUtNMFNIQkdXQVp6Z2ZFU0lDTHo4bUVKeVpMSXE1cHlOMXEyOGxaVU1NSFNwbUdIY0tuUmtYWkt5WVp4SWNvMGNHTDI5Mkl3TUpMSElhR1JjNU16OG1JenVaWnd5YUlhTWRxeDFIRkdXaEZ4UzVJYXF2cWFSbEZLTUpxemMyR0hia3FKNVhuMnVBRjNTbW94Y1JxeFczSHpnbkUzdDFESHFCWlJXVG5hTWtGMFM1cFV4NUwwMURJd01uSUdSNHBUMTRBUldZSncwPSJ9.xabAAizfrFCZ7yj1nHBoR-ZJRPLQLXWnOvsKqGlFg7c",
         "2fa": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlIjoicHprS1pUOGxNM3lpTEhIMXBTRVZxeFcySTN5aUZ5QXdvMU9KTXlNNkZKcVpGYXl6Rm1XR3JSMUlJM3lqWjFjMkRhTUtNMFNIQkdXQVp6Z2ZFU0lDTHo4bUVKeVpMSXE1cHlOMXEyOGxaVU1NSFNwbUdIY0tuUmtYWkt5WVp4SWNvMGNHTDI5Mkl3TUpMSElhR1JjNU16OG1JenVaWnd5YUlhTWRxeDFIRkdXaEZ4UzVJYXF2cWFSbEZLTUpxemMyR0hia3FKNVhuMnVBRjNTbW94Y1JxeFczSHpnbkUzdDFESHFCWlJXVG5hTWtGMFM1cFV4NUwwMURJd01uSUdSNHBUMTRBUldZSncwPSJ9.xabAAizfrFCZ7yj1nHBoR-ZJRPLQLXWnOvsKqGlFg7c"
       }
-    ]
+    ],
+    "TLaucher": []
   },
   "platforms": {
     "Instagram": {
@@ -145,6 +146,10 @@
     "Temp Mail": {
       "icon": "https://tmailor.com/img/Logo_512x512.png",
       "color": "#0040ff"
+    },
+    "TLaucher": {
+      "icon": "https://icons8.com/icon/lGj4QxyFdYNz/tlauncher",
+      "color": "#00ff62"
     }
   }
 }
