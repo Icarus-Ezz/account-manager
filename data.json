@@ -174,7 +174,14 @@
         "2fa": ""
       }
     ],
-    "Roblox": []
+    "Roblox": [
+      {
+        "name": "traidep36thanhhoa2",
+        "mail": "traidep36thanhhoa2",
+        "mk": "phatdepzai",
+        "2fa": "None"
+      }
+    ]
   },
   "platforms": {
     "Instagram": {
