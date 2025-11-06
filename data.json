@@ -179,7 +179,8 @@
         "mk": "PAbc123!",
         "2fa": ""
       }
-    ]
+    ],
+    "Roblox": []
   },
   "platforms": {
     "Instagram": {
@@ -205,6 +206,10 @@
     "TLaucher": {
       "icon": "https://img.icons8.com/color/1200/tlauncher.jpg",
       "color": "#00ff33"
+    },
+    "Roblox": {
+      "icon": "https://i.pinimg.com/736x/eb/20/30/eb203036af2bf931259d9c2ae254b2cd.jpg",
+      "color": "#525252"
     }
   }
 }
