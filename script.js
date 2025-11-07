@@ -227,13 +227,37 @@ function renderAccounts() {
 // ============================
 // Remove Account
 // ============================
+let pendingRemove = null; // { platform, index }
+
 function removeAccount(platform, index) {
-  if (!platform || !data[platform]) return;
   const list = data[platform];
   const acc = list[index];
   if (!acc) return;
 
-  if (!confirm(`Bạn có chắc muốn xóa tài khoản "${acc.name}" không?`)) return;
+  // cache pending
+  pendingRemove = { platform, index };
+
+  // show popup UI
+  document.getElementById("removeModalMsg").innerText =
+    `Bạn có muốn xóa acc "${acc.name}" ?`;
+
+  document.getElementById("removeInput").value = "";
+  document.getElementById("removeModal").classList.remove("hidden");
+}
+
+// attach events
+document.getElementById("confirmRemove").onclick = () => {
+  const v = document.getElementById("removeInput").value.trim().toUpperCase();
+  if (v !== "D" && v !== "R") {
+    alert("Bạn chỉ có thể nhập D hoặc R");
+    return;
+  }
+
+  if (!pendingRemove) return;
+
+  const { platform, index } = pendingRemove;
+  const list = data[platform];
+  if (!list[index]) return;
 
   list.splice(index, 1);
   data[platform] = list;
@@ -241,7 +265,15 @@ function removeAccount(platform, index) {
   saveState();
   if (currentPlatform === platform) renderAccounts();
   if (AUTO_PUSH) tryPush();
-}
+
+  document.getElementById("removeModal").classList.add("hidden");
+  pendingRemove = null;
+};
+
+document.getElementById("cancelRemove").onclick = () => {
+  document.getElementById("removeModal").classList.add("hidden");
+  pendingRemove = null;
+};
 
 // ============================
 // Select Platform
