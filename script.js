@@ -508,6 +508,41 @@ themeToggle.addEventListener("change", () => {
     localStorage.setItem("am_theme", "light");
   }
 });
+//=========================================
+//=========================================
+const WEB_PASS = "PC"; // đổi mật khẩu ở đây
+
+document.addEventListener("DOMContentLoaded", () => {
+  checkLogin();
+});
+
+function checkLogin() {
+  const saved = localStorage.getItem("app_login_pass_saved");
+  if (saved === "1") {
+    hideLogin();
+  } else {
+    showLogin();
+  }
+}
+
+function showLogin() {
+  document.getElementById("loginModal").classList.remove("hidden");
+  document.getElementById("loginInput").focus();
+}
+
+function hideLogin() {
+  document.getElementById("loginModal").classList.add("hidden");
+}
+
+document.getElementById("loginBtn").onclick = () => {
+  const inp = document.getElementById("loginInput").value.trim();
+  if (inp === WEB_PASS) {
+    localStorage.setItem("app_login_pass_saved", "1");
+    hideLogin();
+  } else {
+    alert("Sai mật khẩu");
+  }
+};
 
 // ============================
 // Init
