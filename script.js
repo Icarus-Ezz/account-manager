@@ -202,12 +202,10 @@ function renderAccounts() {
       <div class="details">
         <p><b>Pass:</b>
           <span class="blur copyField" data-copy="${escapeHtml(acc.mk)}">${escapeHtml(acc.mk)}</span>
-          <button class="copyBtn" data-copy="${escapeHtml(acc.mk)}"><i class="fa fa-copy"></i></button>
         </p>
 
         <p><b>2FA:</b>
-          <span class="blur copyField" data-copy="${escapeHtml(acc["2fa"] || "")}">********</span>
-          <button class="copyBtn" data-copy="${escapeHtml(acc["2fa"] || "")}"><i class="fa fa-copy"></i></button>
+          <span class="blur copyField" data-copy="${escapeHtml(acc["2fa"] || "")}">••••••••••</span>
         </p>
       </div>
     `;
