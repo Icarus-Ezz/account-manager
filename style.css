@@ -495,3 +495,17 @@ body {
   .sidebar { width: 100%; flex-direction: row; gap: 12px; align-items: center; padding: 20px; }
   .platform-list { display: none; }
 }
+
+/* remove modal */
+.danger-card {
+  border-top: 4px solid #ef4444;
+}
+
+.btn.danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn.danger:hover {
+  background: #dc2626;
+}
