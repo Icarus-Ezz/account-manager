@@ -517,31 +517,30 @@ body {
 #loginModal .modal-card {
   border-top: 4px solid #3b82f6;
 }
-.blured{
-  filter: blur(5px);
-  cursor:pointer;
-  transition:.2s;
-}
-.blured.show{
-  filter:none;
-}
 .blur {
   filter: blur(6px);
   cursor: pointer;
   transition: .15s;
 }
 
-.blur:hover {
+.blur.show {
   filter: blur(0px);
 }
 
-.copyBtn{
-  background:none;
-  border:0;
-  cursor:pointer;
-  padding:3px 6px;
-  opacity:.6;
+.copyToast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #22c55e; /* xanh success */
+  color:#fff;
+  padding:8px 14px;
+  border-radius:8px;
+  font-size:14px;
+  opacity:0;
+  pointer-events:none;
+  transition: .25s;
 }
-.copyBtn:hover{
+
+.copyToast.show {
   opacity:1;
 }
