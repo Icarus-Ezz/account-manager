@@ -201,12 +201,12 @@ function renderAccounts() {
 
       <div class="details">
         <p><b>Pass:</b>
-          <span class="blur" data-raw="${escapeHtml(acc.mk)}">${escapeHtml(acc.mk)}</span>
+          <span class="blur copyField" data-copy="${escapeHtml(acc.mk)}">${escapeHtml(acc.mk)}</span>
           <button class="copyBtn" data-copy="${escapeHtml(acc.mk)}"><i class="fa fa-copy"></i></button>
         </p>
 
         <p><b>2FA:</b>
-          <span class="blured" data-raw="${escapeHtml(acc["2fa"] || "")}">*******</span>
+          <span class="blur copyField" data-copy="${escapeHtml(acc["2fa"] || "")}">********</span>
           <button class="copyBtn" data-copy="${escapeHtml(acc["2fa"] || "")}"><i class="fa fa-copy"></i></button>
         </p>
       </div>
@@ -560,6 +560,28 @@ document.addEventListener("click", e=>{
   const btn = e.target.closest(".copyBtn");
   if(btn){
     navigator.clipboard.writeText(btn.dataset.copy);
+  }
+});
+// toast
+let toast = document.createElement("div");
+toast.className = "copyToast";
+document.body.appendChild(toast);
+
+document.addEventListener("click", async(e)=>{
+  if (e.target.classList.contains("copyField")) {
+    let val = e.target.dataset.copy || "";
+    if (!val) return;
+
+    // toggle blur
+    e.target.classList.toggle("show");
+
+    // copy
+    await navigator.clipboard.writeText(val);
+
+    // toast show
+    toast.innerText = "✓ Copied";
+    toast.classList.add("show");
+    setTimeout(()=>toast.classList.remove("show"),1200);
   }
 });
 
