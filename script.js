@@ -198,13 +198,21 @@ function renderAccounts() {
           </button>
         </div>
       </div>
+
       <div class="details">
-        <p><b>Pass:</b> <code>${escapeHtml(acc.mk)}</code></p>
-        <p><b>2FA:</b> ${escapeHtml(acc["2fa"] || "")}</p>
+        <p><b>Pass:</b>
+          <span class="blured" data-raw="${escapeHtml(acc.mk)}">********</span>
+          <button class="copyBtn" data-copy="${escapeHtml(acc.mk)}"><i class="fa fa-copy"></i></button>
+        </p>
+
+        <p><b>2FA:</b>
+          <span class="blured" data-raw="${escapeHtml(acc["2fa"] || "")}">********</span>
+          <button class="copyBtn" data-copy="${escapeHtml(acc["2fa"] || "")}"><i class="fa fa-copy"></i></button>
+        </p>
       </div>
     `;
 
-    // Gắn sự kiện
+    // actions edit/delete
     card.querySelectorAll("[data-action]").forEach((btn) => {
       const act = btn.dataset.action;
       if (act === "edit") {
@@ -223,6 +231,7 @@ function renderAccounts() {
     accountGrid.appendChild(card);
   });
 }
+
 
 // ============================
 // Remove Account
@@ -543,6 +552,16 @@ document.getElementById("loginBtn").onclick = () => {
     alert("Sai mật khẩu");
   }
 };
+document.addEventListener("click", e=>{
+  if(e.target.classList.contains("blured")){
+    e.target.classList.toggle("show");
+  }
+
+  const btn = e.target.closest(".copyBtn");
+  if(btn){
+    navigator.clipboard.writeText(btn.dataset.copy);
+  }
+});
 
 // ============================
 // Init
