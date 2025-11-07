@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Account Manager — MXH</title>
+  <title>Account Manager - PhatCrystak</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -23,9 +23,7 @@
         </div>
       </div>
 
-      <div class="platform-list" id="platformList">
-        <!-- platforms injected here -->
-      </div>
+      <div class="platform-list" id="platformList"></div>
 
       <div class="sidebar-bottom">
         <small class="muted">Lưu: localStorage • Đồng bộ: GitHub (auto)</small>
@@ -41,15 +39,13 @@
         </div>
         <div class="header-actions">
           <button id="refreshData" class="btn ghost">🔄 Refresh</button>
-          <button id="addAccountBtn" class="btn primary">+ Thêm tài khoản</button>
-          <button id="go2FA" class="btn ghost">🔐 2FA</button> <!-- thêm dòng này -->
+          <button id="addAccountBtn" class="btn primary">[+] Thêm tài khoản</button>
+          <button id="go2FA" class="btn ghost">🔐 2FA</button>
         </div>
       </header>
 
       <section class="content">
-        <div id="accountGrid" class="grid">
-          <!-- cards injected here -->
-        </div>
+        <div id="accountGrid" class="grid"></div>
       </section>
     </main>
   </div>
@@ -72,7 +68,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Modal: Add/Edit Platform -->
   <div class="modal hidden" id="platformModal" aria-hidden="true">
     <div class="modal-card">
@@ -86,6 +82,22 @@
       <div class="modal-actions">
         <button id="savePlatform" class="btn primary">Lưu nền tảng</button>
         <button id="cancelPlatform" class="btn ghost">Hủy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: REMOVE ACCOUNT -->
+  <div class="modal hidden" id="removeModal" aria-hidden="true">
+    <div class="modal-card danger-card">
+      <h3 id="removeModalTitle">Xóa tài khoản</h3>
+      <p id="removeModalMsg" class="muted" style="margin-bottom:10px"></p>
+
+      <label>Nhập <b>D</b> hoặc <b>R</b> để xác nhận xóa</label>
+      <input id="removeInput" type="text" placeholder="D hoặc R" />
+
+      <div class="modal-actions">
+        <button id="confirmRemove" class="btn danger">Xóa</button>
+        <button id="cancelRemove" class="btn ghost">Hủy</button>
       </div>
     </div>
   </div>
