@@ -525,6 +525,15 @@ body {
 .blured.show{
   filter:none;
 }
+.blur {
+  filter: blur(6px);
+  cursor: pointer;
+  transition: .15s;
+}
+
+.blur:hover {
+  filter: blur(0px);
+}
 
 .copyBtn{
   background:none;
