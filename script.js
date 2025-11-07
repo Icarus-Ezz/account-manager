@@ -206,7 +206,7 @@ function renderAccounts() {
         </p>
 
         <p><b>2FA:</b>
-          <span class="blur" data-raw="${escapeHtml(acc["2fa"] || "")}">${escapeHtml(acc["2fa"] || "")}</span>
+          <span class="blured" data-raw="${escapeHtml(acc["2fa"] || "")}">*******</span>
           <button class="copyBtn" data-copy="${escapeHtml(acc["2fa"] || "")}"><i class="fa fa-copy"></i></button>
         </p>
       </div>
