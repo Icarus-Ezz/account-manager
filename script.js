@@ -201,12 +201,12 @@ function renderAccounts() {
 
       <div class="details">
         <p><b>Pass:</b>
-          <span class="blured" data-raw="${escapeHtml(acc.mk)}">********</span>
+          <span class="blur" data-raw="${escapeHtml(acc.mk)}">${escapeHtml(acc.mk)}</span>
           <button class="copyBtn" data-copy="${escapeHtml(acc.mk)}"><i class="fa fa-copy"></i></button>
         </p>
 
         <p><b>2FA:</b>
-          <span class="blured" data-raw="${escapeHtml(acc["2fa"] || "")}">********</span>
+          <span class="blur" data-raw="${escapeHtml(acc["2fa"] || "")}">${escapeHtml(acc["2fa"] || "")}</span>
           <button class="copyBtn" data-copy="${escapeHtml(acc["2fa"] || "")}"><i class="fa fa-copy"></i></button>
         </p>
       </div>
