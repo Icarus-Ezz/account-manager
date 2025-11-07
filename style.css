@@ -12,7 +12,9 @@
   --accent: linear-gradient(135deg, #0ea5e9, #2563eb);
   --text: #0f1724;
   --shadow: 0 8px 20px rgba(15, 23, 36, 0.08);
-  --radius: 14px;
+  --shadow-hover: 0 12px 32px rgba(15, 23, 36, 0.15);
+  --radius: 16px; /* Tăng radius để mềm mại hơn */
+  --glow: 0 0 20px rgba(14, 165, 233, 0.2); /* Hiệu ứng glow cho accent */
 }
 
 /* Dark theme */
@@ -23,11 +25,13 @@
   --accent: linear-gradient(135deg, #38bdf8, #2563eb);
   --text: #e2e8f0;
   --shadow: 0 8px 28px rgba(2, 6, 23, 0.6);
+  --shadow-hover: 0 12px 32px rgba(2, 6, 23, 0.8);
+  --glow: 0 0 20px rgba(56, 189, 248, 0.3);
 }
 
 * {
   box-sizing: border-box;
-  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease; /* Mượt mà hơn */
 }
 
 body {
@@ -38,75 +42,82 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
+  overflow-x: hidden; /* Tránh scroll ngang */
 }
 
 .app {
   display: flex;
   height: 100vh;
-  gap: 20px;
-  padding: 20px;
+  gap: 24px; /* Tăng gap để thoáng */
+  padding: 24px;
 }
 
 /* Sidebar */
 .sidebar {
-  width: 280px;
+  width: 300px; /* Tăng width một chút */
   background: var(--card);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 18px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  backdrop-filter: blur(10px); /* Hiệu ứng blur nhẹ */
 }
 
 .brand {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.4rem; /* Tăng size */
   background: var(--accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-actions {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
 /* Buttons */
 .btn {
   border: none;
-  padding: 8px 12px;
-  border-radius: 10px;
+  padding: 10px 14px; /* Tăng padding */
+  border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn.primary {
   background: var(--accent);
   color: #fff;
-  box-shadow: 0 6px 18px rgba(14, 165, 233, 0.18);
+  box-shadow: var(--glow);
 }
 .btn.primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.25);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3);
 }
 
 .btn.ghost {
-  background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   color: var(--muted);
 }
 .btn.ghost:hover {
   border-color: var(--accent);
   color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.05);
+  transform: translateY(-1px);
 }
 
 .btn.small {
-  padding: 6px 8px;
+  padding: 8px 10px;
   font-size: 0.9rem;
 }
 
@@ -118,39 +129,43 @@ body {
 /* Platform list */
 .platform-list {
   overflow: auto;
-  padding: 6px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .platform-item {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 12px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.5);
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
   cursor: pointer;
+  border: 1px solid transparent;
 }
 .platform-item:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(14, 165, 233, 0.2);
 }
 
 .platform-thumb {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 44px; /* Tăng size */
+  height: 44px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   color: white;
-  font-size: 1rem;
+  font-size: 1.1rem;
   flex-shrink: 0;
   overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .platform-meta {
@@ -159,6 +174,7 @@ body {
 }
 .platform-meta .title {
   font-weight: 600;
+  font-size: 1rem;
 }
 .platform-meta .count {
   font-size: 0.85rem;
@@ -170,47 +186,54 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 .main-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 6px;
+  padding: 10px 8px;
 }
 .content {
   flex: 1;
   overflow: auto;
-  padding: 12px;
+  padding: 16px;
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Tăng minmax */
+  gap: 20px;
 }
 
 /* Account cards */
 .card {
   background: linear-gradient(135deg, var(--card), #f1f5f9);
   border-radius: var(--radius);
-  padding: 14px;
+  padding: 16px;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   position: relative;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+  animation: fadeIn 0.5s ease; /* Hiệu ứng fade-in */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
   background: linear-gradient(135deg, #f9fafb, var(--card));
 }
+
 .card .actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .btn-icon {
@@ -218,32 +241,36 @@ body {
   border: none;
   color: var(--text);
   cursor: pointer;
-  padding: 5px 6px;
-  font-size: 15px;
-  border-radius: 8px;
-  transition: 0.2s;
+  padding: 6px 8px;
+  font-size: 16px;
+  border-radius: 10px;
+  transition: 0.3s ease;
 }
 
 .btn-icon:hover {
   background: rgba(0, 0, 0, 0.08);
   transform: scale(1.1);
+  color: var(--accent);
 }
 
 .btn-icon.danger {
   color: #ef4444;
 }
-/* Phần đầu của card (tên + hành động) */
+.btn-icon.danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Phần đầu của card */
 .card .head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
-/* Tên tài khoản */
 .card .head .name {
   font-weight: 600;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
@@ -251,11 +278,10 @@ body {
   max-width: 70%;
 }
 
-/* Nút icon sửa / xóa */
 .card .head .actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .card .btn-icon {
@@ -263,10 +289,10 @@ body {
   border: none;
   cursor: pointer;
   color: #666;
-  font-size: 15px;
-  padding: 4px;
-  border-radius: 6px;
-  transition: 0.2s;
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 8px;
+  transition: 0.3s ease;
 }
 
 .card .btn-icon:hover {
@@ -275,29 +301,28 @@ body {
   transform: scale(1.1);
 }
 
-/* Fix tràn text ở phần nội dung */
+/* Fix tràn text */
 .card p {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-
 .icon-small {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+  width: 32px; /* Tăng size */
+  height: 32px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   font-weight: 600;
   color: white;
-  font-size: 13px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 .icon-small img {
   width: 100%;
@@ -310,14 +335,15 @@ body {
   background: linear-gradient(135deg, #ef4444, #dc2626);
   border: none;
   color: white;
-  border-radius: 6px;
-  padding: 6px 8px;
+  border-radius: 8px;
+  padding: 8px 10px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
 }
 .delete-acc:hover {
   background: linear-gradient(135deg, #f87171, #ef4444);
   transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 /* Modal */
@@ -327,67 +353,73 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 23, 42, 0.5);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px); /* Blur backdrop */
   z-index: 60;
 }
 .modal-card {
-  width: 420px;
+  width: 450px; /* Tăng width */
   background: var(--card);
   border-radius: var(--radius);
-  padding: 18px;
-  box-shadow: var(--shadow);
+  padding: 20px;
+  box-shadow: var(--shadow-hover);
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  animation: popup 0.25s ease;
+  gap: 12px;
+  animation: popup 0.3s ease;
 }
 @keyframes popup {
   from { transform: scale(0.95); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 .modal-card input {
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 10px;
   border: 1px solid rgba(0,0,0,0.1);
-  font-size: 0.95rem;
+  font-size: 1rem;
   background: rgba(255,255,255,0.6);
   color: var(--text);
+  transition: border-color 0.3s ease;
+}
+.modal-card input:focus {
+  border-color: var(--accent);
+  box-shadow: var(--glow);
 }
 
 /* Hidden class */
 .hidden { display: none; }
 
 /* Switch toggle */
-.switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+.switch { position: relative; display: inline-block; width: 48px; height: 26px; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider {
   position: absolute; inset: 0;
   cursor: pointer;
   background: #e2e8f0;
   border-radius: 999px;
-  transition: .2s;
+  transition: .3s ease;
 }
 .slider:before {
   content: "";
   position: absolute;
-  height: 18px;
-  width: 18px;
+  height: 20px;
+  width: 20px;
   border-radius: 50%;
   left: 3px;
   top: 3px;
   background: white;
-  transition: .2s;
+  transition: .3s ease;
 }
 .switch input:checked + .slider {
   background: var(--accent);
 }
 .switch input:checked + .slider:before {
-  transform: translateX(20px);
+  transform: translateX(22px);
 }
 
 /* Responsive */
 @media (max-width: 900px) {
-  .app { flex-direction: column; padding: 12px; }
-  .sidebar { width: 100%; flex-direction: row; gap: 8px; align-items: center; padding: 12px; }
+  .app { flex-direction: column; padding: 16px; gap: 16px; }
+  .sidebar { width: 100%; flex-direction: row; gap: 10px; align-items: center; padding: 16px; }
   .platform-list { display: none; }
 }
