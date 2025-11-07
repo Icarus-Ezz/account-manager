@@ -509,3 +509,11 @@ body {
 .btn.danger:hover {
   background: #dc2626;
 }
+/* login modal forced display */
+#loginModal {
+  backdrop-filter: blur(6px);
+}
+
+#loginModal .modal-card {
+  border-top: 4px solid #3b82f6;
+}
