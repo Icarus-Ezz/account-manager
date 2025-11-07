@@ -144,6 +144,12 @@
         "mail": "phatlocrystal@gmail.com",
         "mk": "PAbc12345678@",
         "2fa": ""
+      },
+      {
+        "name": "Komodo",
+        "mail": "komododragon016@gmail.com",
+        "mk": "komodo12345679",
+        "2fa": "None"
       }
     ],
     "Temp Mail": [
