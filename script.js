@@ -487,12 +487,18 @@ function init() {
   const first = Object.keys(platforms)[0];
   if (first) selectPlatform(first);
 }
-init();
+
+// bỏ init() cũ ở ngoài nếu đang có
+// init();
+
 window.addEventListener("DOMContentLoaded", () => {
+  init();
+
   const go2FABtn = document.getElementById("go2FA");
   if (go2FABtn) {
     go2FABtn.addEventListener("click", () => {
-      window.location.href = "2fa.html"; // Chuyển sang trang 2fa.html
+      window.open("https://2fa.live/", "_blank");
     });
   }
 });
+
