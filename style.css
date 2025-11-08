@@ -5,91 +5,65 @@
   margin-top: 1rem;
 }
 
-/* ---------- Scrollbar custom (WebKit + Firefox fallback) ---------- */
-/* Thêm biến màu (nếu chưa có) — sẽ kế thừa/ghi đè từ :root */
-:root {
-  --scrollbar-track: rgba(15, 23, 36, 0.04);
-  --scrollbar-thumb: rgba(14, 165, 233, 0.85); /* chính */
-  --scrollbar-thumb-hover: rgba(14, 165, 233, 1);
-  --scrollbar-thumb-border: rgba(255,255,255,0.12);
-  --scrollbar-size: 12px;
+/* =========================
+   CUSTOM SCROLLBAR (glassy + match accent)
+   ========================= */
+
+/* Áp dụng cho toàn bộ giao diện */
+* {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(14,165,233,0.8) transparent; /* thumb + track */
 }
 
-/* Dark theme overrides */
-:root[data-theme="dark"] {
-  --scrollbar-track: rgba(255, 255, 255, 0.03);
-  --scrollbar-thumb: rgba(56, 189, 248, 0.85);
-  --scrollbar-thumb-hover: rgba(56, 189, 248, 1);
-  --scrollbar-thumb-border: rgba(0,0,0,0.18);
-}
-
-/* 1) WebKit browsers (Chrome, Edge, Safari) */
+/* WebKit browsers (Chrome, Edge, Safari) */
 *::-webkit-scrollbar {
-  width: var(--scrollbar-size);
-  height: var(--scrollbar-size);
+  width: 12px;
+  height: 12px;
 }
 
-/* Track */
+/* Track (phần nền sau scrollbar) */
 *::-webkit-scrollbar-track {
-  background: transparent;            /* để thấy background glass */
-  border-radius: 999px;
-  margin: 4px;                        /* tránh sát viền */
+  background: transparent;
+  border-radius: var(--radius);
+  margin: 4px;
 }
 
-/* Thumb (thanh kéo) */
+/* Thumb (thanh trượt chính) */
 *::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
+  background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(37,99,235,0.9)); /* accent */
   border-radius: 999px;
-  border: 3px solid var(--scrollbar-track); /* tạo khoảng padding xung quanh thumb */
-  min-height: 36px;                    /* tiện lợi khi cuộn bằng chuột */
-  box-shadow: 0 4px 10px rgba(2,6,23,0.16), inset 0 1px 0 rgba(255,255,255,0.06);
-  transition: background-color 0.18s ease, transform 0.18s ease;
+  border: 3px solid rgba(255,255,255,0.15);
+  box-shadow: var(--shadow-inset), var(--glow);
+  transition: all 0.25s ease;
 }
 
-/* Thumb hover / active */
+/* Hover effect */
 *::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
-  transform: scale(1.02);
+  background: linear-gradient(135deg, rgba(37,99,235,1), rgba(14,165,233,1));
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(14,165,233,0.5);
 }
 
-/* Corner (nếu có ngang + dọc) */
+/* Scrollbar góc (nếu có ngang + dọc) */
 *::-webkit-scrollbar-corner {
   background: transparent;
 }
 
-/* 2) Firefox fallback */
-* {
-  scrollbar-width: thin; /* auto | thin | none */
-  scrollbar-color: var(--scrollbar-thumb) transparent;
+/* Giới hạn vùng riêng nếu muốn (tuỳ chọn)
+   Nếu bạn chỉ muốn áp dụng cho content hoặc platform list:
+   .platform-list, .content { scrollbar-gutter: stable; }
+*/
+
+/* Dark theme tự động hoà hợp */
+:root[data-theme="dark"] *::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(56,189,248,0.85), rgba(37,99,235,0.85));
+  border: 3px solid rgba(0,0,0,0.2);
+}
+:root[data-theme="dark"] *::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgba(37,99,235,1), rgba(56,189,248,1));
+  box-shadow: 0 0 14px rgba(56,189,248,0.6);
 }
 
-/* 3) Giới hạn cho phần tử cụ thể (ví dụ chỉ .platform-list và .content)
-   nếu bạn không muốn áp dụng toàn cục, dùng đoạn này và xóa phần global trên. */
-.platform-list::-webkit-scrollbar,
-.content::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-.platform-list::-webkit-scrollbar-thumb,
-.content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(14,165,233,0.95), rgba(37,99,235,0.9));
-  border-radius: 999px;
-  border: 2px solid rgba(255,255,255,0.06);
-}
-
-/* 4) Tránh animation nếu user bật reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *::-webkit-scrollbar-thumb,
-  *::-webkit-scrollbar-thumb:hover {
-    transition: none;
-    transform: none;
-  }
-}
-
-* {
-  box-sizing: border-box;
-  transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
-}
 
 body {
   margin: 0;
