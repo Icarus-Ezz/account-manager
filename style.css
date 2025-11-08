@@ -54,15 +54,31 @@
    .platform-list, .content { scrollbar-gutter: stable; }
 */
 
-/* Dark theme tự động hoà hợp */
-:root[data-theme="dark"] *::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, rgba(56,189,248,0.85), rgba(37,99,235,0.85));
-  border: 3px solid rgba(0,0,0,0.2);
+:root[data-theme="dark"] {
+  /* Nền đen pha xanh nhẹ, kiểu hiện đại */
+  --bg: linear-gradient(135deg, #0b0f1a, #0f1724);
+  --card: linear-gradient(135deg, rgba(20, 25, 38, 0.9), rgba(15, 20, 30, 0.9));
+
+  /* Màu chữ và phụ */
+  --text: #e3e8ef;
+  --muted: #94a3b8;
+
+  /* Màu nhấn xanh electric như Linear/Vercel */
+  --accent: linear-gradient(135deg, #3b82f6, #0ea5e9);
+
+  /* Đổ bóng và glow */
+  --shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 12px 36px rgba(0, 0, 0, 0.8);
+  --shadow-inset: inset 0 2px 4px rgba(255, 255, 255, 0.05);
+
+  /* Glow nhẹ xanh dương */
+  --glow: 0 0 25px rgba(37, 99, 235, 0.35);
+
+  /* Bo góc và hiệu ứng kính */
+  --radius: 20px;
+  --blur: blur(15px);
 }
-:root[data-theme="dark"] *::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, rgba(37,99,235,1), rgba(56,189,248,1));
-  box-shadow: 0 0 14px rgba(56,189,248,0.6);
-}
+
 
 
 body {
