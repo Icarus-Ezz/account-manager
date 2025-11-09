@@ -205,7 +205,7 @@ function renderAccounts() {
         </p>
 
         <p><b>2FA:</b>
-          <span class="blur copyField" data-copy="${escapeHtml(acc["2fa"] || "")}">••••••••••</span>
+          <span class="blur copyField" data-copy="${escapeHtml(acc["2fa"] || "")}">••••••••••••••••••••••••••••••</span>
         </p>
       </div>
     `;
