@@ -5,6 +5,31 @@
   margin-top: 1rem;
 }
 
+.input-with-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.input-with-btn input {
+  flex: 1;
+}
+
+.input-with-btn .btn.small {
+  padding: 6px 10px;
+  font-size: 14px;
+  background: var(--primary, #3b82f6);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.input-with-btn .btn.small:hover {
+  opacity: 0.9;
+}
+
 /* =========================
    CUSTOM SCROLLBAR (glassy + match accent)
    ========================= */
