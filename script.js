@@ -597,36 +597,40 @@ function init() {
 // bỏ init() cũ ở ngoài nếu đang có
 // init();
 // --- RANDOM NAME GENERATOR by PhatCrystal ---
+// --- ADVANCED RANDOM NAME GENERATOR by PhatCrystal ---
 (() => {
   const genBtn = document.getElementById("genNameBtn");
   if (!genBtn) return;
 
-  // Danh sách họ, đệm, tên mở rộng
   const list_ten = {
     first: ['Nguyễn', 'Trần', 'Lê', 'Phạm', 'Hoàng', 'Huỳnh', 'Phan', 'Vũ', 'Võ', 'Đặng', 'Bùi', 'Đỗ', 'Hồ', 'Ngô', 'Dương', 'Mai', 'Tạ', 'Đoàn', 'Cao', 'Trương', 'Đinh', 'Lý', 'Châu', 'Vương', 'Đào'],
-    mid: ['Văn', 'Thị', 'Minh', 'Thanh', 'Quốc', 'Tuấn', 'Đức', 'Hồng', 'Hải', 'Xuân', 'Kim', 'Bảo', 'Gia', 'Nhật', 'Thái', 'Ngọc', 'Anh', 'Hoàng', 'Khánh', 'Phương'],
-    last_male: ['Anh', 'An', 'Bảo', 'Bình', 'Dũng', 'Huy', 'Khánh', 'Long', 'Phúc', 'Quang', 'Sơn', 'Tùng', 'Vinh', 'Đạt', 'Trung', 'Khang', 'Nam', 'Phong', 'Hiếu'],
-    last_female: ['Linh', 'Ngọc', 'Trang', 'Hương', 'Thảo', 'Yến', 'Như', 'Vy', 'Mai', 'Châu', 'Lan', 'Nhi', 'Phương', 'Hà', 'My', 'Hằng', 'Diễm', 'Giang', 'Tuyết']
+    mid: ['Văn', 'Thị', 'Minh', 'Thanh', 'Quốc', 'Tuấn', 'Đức', 'Hồng', 'Hải', 'Xuân', 'Kim', 'Bảo', 'Gia', 'Nhật', 'Thái', 'Ngọc', 'Anh', 'Hoàng', 'Khánh', 'Phương', 'Thiên', 'Trung', 'Hữu', 'Diệu', 'Tường', 'Anh', 'Thảo', 'Như', 'Cẩm', 'Hà'],
+    last_male: ['Anh', 'An', 'Bảo', 'Bình', 'Dũng', 'Huy', 'Khánh', 'Long', 'Phúc', 'Quang', 'Sơn', 'Tùng', 'Vinh', 'Đạt', 'Trung', 'Khang', 'Nam', 'Phong', 'Hiếu', 'Thắng', 'Tuấn'],
+    last_female: ['Linh', 'Ngọc', 'Trang', 'Hương', 'Thảo', 'Yến', 'Như', 'Vy', 'Mai', 'Châu', 'Lan', 'Nhi', 'Phương', 'Hà', 'My', 'Hằng', 'Diễm', 'Giang', 'Tuyết', 'Thư', 'Ngân']
   };
 
   const rand = arr => arr[Math.floor(Math.random() * arr.length)];
-
   let usedNames = new Set();
 
   function genRandomName() {
-    // Random giới tính 50/50
     const isMale = Math.random() < 0.5;
     const lastList = isMale ? list_ten.last_male : list_ten.last_female;
 
-    let fullName;
-    let tries = 0;
+    let fullName, tries = 0;
 
-    // Đảm bảo không trùng trong 50 lần thử
     do {
       const first = rand(list_ten.first);
-      const mid = rand(list_ten.mid);
+      
+      // Số lượng mid ngẫu nhiên: 1 hoặc 2
+      const midCount = Math.random() < 0.5 ? 1 : 2;
+      const mids = [];
+      for (let i = 0; i < midCount; i++) mids.push(rand(list_ten.mid));
+
       const last = rand(lastList);
-      fullName = `${first} ${mid} ${last}`;
+
+      // Xác định xem tên có 3 hay 4 phần
+      const nameParts = [first, ...mids, last];
+      fullName = nameParts.join(" ");
       tries++;
     } while (usedNames.has(fullName) && tries < 50);
 
@@ -641,10 +645,10 @@ function init() {
     const ten = genRandomName();
     input.value = ten;
 
-    // Hiệu ứng nhỏ: nháy sáng khi đổi tên
+    // Hiệu ứng sáng nhẹ khi thay đổi
     input.style.transition = "background 0.3s";
     input.style.background = "#d1fae5";
-    setTimeout(() => input.style.background = "", 400);
+    setTimeout(() => (input.style.background = ""), 400);
   });
 })();
 
