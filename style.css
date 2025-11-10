@@ -30,6 +30,31 @@
   opacity: 0.9;
 }
 
+.input-with-icon {
+  position: relative;
+  width: 100%;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding-right: 40px; /* chừa chỗ cho icon */
+  padding-left: 10px;
+  height: 38px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.input-with-icon .icon-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  user-select: none;
+}
+
 /* =========================
    CUSTOM SCROLLBAR (glassy + match accent)
    ========================= */
