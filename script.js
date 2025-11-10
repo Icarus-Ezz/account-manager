@@ -634,6 +634,61 @@ function init() {
     setTimeout(() => (input.style.background = ""), 400);
   });
 })();
+(() => {
+  const genMkBtn = document.getElementById("genMkBtn");
+  if (!genMkBtn) return;
+
+  const LOWER = "abcdefghijklmnopqrstuvwxyz";
+  const UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const DIGITS = "0123456789";
+  const SPECIAL = "!@#$%^&*()_+[]{}|;:,.<>?/`~-=";
+  const ALL = LOWER + UPPER + DIGITS + SPECIAL;
+
+  // Shuffle chuỗi (Fisher-Yates)
+  const shuffle = (arr) => {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
+
+  function genRandomPassword(length = 14) {
+    // đảm bảo tối thiểu 1 ký tự của mỗi loại
+    const passwordChars = [
+      LOWER[Math.floor(Math.random() * LOWER.length)],
+      UPPER[Math.floor(Math.random() * UPPER.length)],
+      DIGITS[Math.floor(Math.random() * DIGITS.length)],
+      SPECIAL[Math.floor(Math.random() * SPECIAL.length)]
+    ];
+
+    // thêm ký tự ngẫu nhiên cho đến đủ độ dài
+    for (let i = passwordChars.length; i < length; i++) {
+      passwordChars.push(ALL[Math.floor(Math.random() * ALL.length)]);
+    }
+
+    // xáo trộn để không cố định vị trí các ký tự bắt buộc
+    return shuffle(passwordChars).join("");
+  }
+
+  genMkBtn.addEventListener("click", () => {
+    const input = document.getElementById("acc_pass");
+    if (!input) return;
+
+    // bạn có thể đổi số 14 bên dưới để tăng/giảm độ dài mặc định
+    const password = genRandomPassword(14);
+    input.value = password;
+
+    // hiệu ứng hiển thị
+    input.style.transition = "background 0.3s, box-shadow 0.3s";
+    input.style.background = "#fef3c7";
+    input.style.boxShadow = "0 0 6px rgba(0,0,0,0.08)";
+    setTimeout(() => {
+      input.style.background = "";
+      input.style.boxShadow = "";
+    }, 400);
+  });
+})();
 
 window.addEventListener("DOMContentLoaded", () => {
   init();
