@@ -634,6 +634,7 @@ function init() {
     setTimeout(() => (input.style.background = ""), 400);
   });
 })();
+
 (() => {
   const genMkBtn = document.getElementById("genMkBtn");
   if (!genMkBtn) return;
@@ -689,6 +690,21 @@ function init() {
     }, 400);
   });
 })();
+document.getElementById("genMkBtn").addEventListener("click", () => {
+  const input = document.getElementById("acc_pass");
+  if (!input) return;
+
+  // password random từ script trước
+  input.value = genRandomPassword(14);
+
+  input.style.transition = "background 0.3s, box-shadow 0.3s";
+  input.style.background = "#fef3c7";
+  input.style.boxShadow = "0 0 6px rgba(0,0,0,0.08)";
+  setTimeout(() => {
+    input.style.background = "";
+    input.style.boxShadow = "";
+  }, 400);
+});
 
 window.addEventListener("DOMContentLoaded", () => {
   init();
