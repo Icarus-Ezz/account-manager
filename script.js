@@ -410,33 +410,33 @@ platformListEl.addEventListener("click", e => {
 });
 
 // ============================
-// GitHub Sync + Refresh (Full Fixed)
+// GitHub Sync + Refresh
 // ============================
-
 async function tryPush() {
   if (!GITHUB_REPO) {
     console.warn("⚠️ GitHub: chưa cấu hình repo");
     return;
   }
 
-  // nếu không có token => chỉ lưu local
+  // nếu không có token => cảnh báo
   if (!GITHUB_TOKEN) {
-    alert("⚠️ Không có token GitHub — chỉ lưu dữ liệu local.");
+    alert("⚠️ Repo public nhưng không có token nên không thể push. Chỉ lưu local.");
     saveState();
     return;
   }
 
   const api = `https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILENAME}`;
   try {
-    // Lấy SHA hiện tại nếu file tồn tại
     let sha = null;
-    const check = await fetch(api, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
-    if (check.ok) {
+    const check = await fetch(api, {
+      headers: { Authorization: `token ${GITHUB_TOKEN}` }
+    });
+    if (check.status === 200) {
       const json = await check.json();
       sha = json.sha;
     }
 
-    // Mã hoá nội dung file JSON
+    // encode nội dung
     const content = btoa(unescape(encodeURIComponent(JSON.stringify({ data, platforms }, null, 2))));
 
     const body = {
@@ -464,63 +464,20 @@ async function tryPush() {
     alert("❌ Không thể push GitHub: " + e.message);
   }
 }
-
-async function pullPrivateData() {
-  if (!GITHUB_TOKEN) {
-    alert("⚠️ Thiếu token — không thể tải từ repo private!");
-    return;
-  }
-
-  const api = `https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILENAME}`;
-  try {
-    const res = await fetch(api, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-        Accept: "application/vnd.github.v3+json"
-      }
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const json = await res.json();
-
-    // Decode base64 content
-    const decoded = decodeURIComponent(escape(atob(json.content)));
-    const parsed = JSON.parse(decoded);
-
-    if (parsed.data && parsed.platforms) {
-      data = parsed.data;
-      platforms = parsed.platforms;
-      saveState();
-      renderPlatforms();
-      renderAccounts();
-      alert("✅ Đã tải dữ liệu từ GitHub private repo!");
-    } else {
-      throw new Error("Cấu trúc JSON không hợp lệ.");
-    }
-  } catch (e) {
-    console.error("❌ Pull private lỗi:", e);
-    alert("❌ Không thể tải từ GitHub private: " + e.message);
-  }
-}
-
 async function loadFromRawGitHub() {
   try {
     const res = await fetch(GITHUB_RAW_URL + "?_=" + Date.now());
     if (!res.ok) throw new Error("HTTP " + res.status);
     const json = await res.json();
-
     if (json.data && json.platforms) {
-      data = json.data;
-      platforms = json.platforms;
+      data = json.data; platforms = json.platforms;
     } else if (json.platforms && json.accounts) {
       data = json.accounts;
       platforms = {};
       json.platforms.forEach(p => platforms[p.name] = { icon: p.icon, color: p.color });
     } else throw new Error("Sai cấu trúc JSON");
-
-    saveState();
-    renderPlatforms();
-    renderAccounts();
-    alert("✅ Đã tải dữ liệu từ GitHub (public)!");
+    saveState(); renderPlatforms(); renderAccounts();
+    alert("✅ Đã tải dữ liệu từ GitHub!");
   } catch (err) {
     console.error("❌ Lỗi load:", err);
     alert("❌ Không thể tải dữ liệu từ GitHub, vẫn dùng dữ liệu local.");
@@ -528,23 +485,12 @@ async function loadFromRawGitHub() {
   }
 }
 
-// ============================
-// Gắn sự kiện nút đồng bộ & tải
-// ============================
 document.getElementById("forceSync").onclick = async () => {
   await tryPush();
+  alert("Đã đồng bộ lên GitHub (xem console).");
 };
-
 const refreshBtn = document.getElementById("refreshData");
-if (refreshBtn) {
-  refreshBtn.onclick = async () => {
-    if (GITHUB_TOKEN) {
-      await pullPrivateData();
-    } else {
-      await loadFromRawGitHub();
-    }
-  };
-}
+if (refreshBtn) refreshBtn.onclick = loadFromRawGitHub;
 
 const themeToggle = document.getElementById("themeToggle");
 (function initTheme() {
