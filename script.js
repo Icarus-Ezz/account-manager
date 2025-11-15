@@ -651,11 +651,13 @@ const DOMAINS = [
     "tempmail.ckvn.edu.vn"
 ];
 
+// Random username + domain
 document.getElementById("btn_random").onclick = () => {
     let mail = randomString(10) + "@" + DOMAINS[Math.floor(Math.random() * DOMAINS.length)];
     document.getElementById("acc_mail").value = mail;
 };
 
+// Check OTP
 document.getElementById("btn_check").onclick = async () => {
     const token = "mHxzxzG1oUkyfOWWU8OHuaU8ws7qn4msrBdBHc2I70c2fffa";
     const email = document.getElementById("acc_mail").value;
@@ -663,41 +665,61 @@ document.getElementById("btn_check").onclick = async () => {
     if (!email) return alert("Chưa nhập email!");
 
     try {
-        // Lấy danh sách email
+        // Tách user + domain
+        const [user, domain] = email.split("@");
+
+        // 1. Lấy danh sách mail
         let listRes = await fetch("https://tempmail.id.vn/api/email", {
             headers: { "Authorization": `Bearer ${token}` }
         });
         let listJson = await listRes.json();
 
-        // Kiểm tra data tồn tại và là array
-        let mailList = Array.isArray(listJson?.data) ? listJson.data : [];
+        let mailList = listJson?.data || [];
 
         let mailObj = mailList.find(m => m.email === email);
-        if (!mailObj) return alert("Email chưa tồn tại trên tempmail!");
 
-        // Lấy inbox
+        // 2. Nếu email chưa tồn tại → tạo mới bằng API thật
+        if (!mailObj) {
+            let createRes = await fetch("https://tempmail.id.vn/api/email/create", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({ user, domain })
+            });
+
+            let createJson = await createRes.json();
+            mailObj = createJson?.data;
+
+            if (!mailObj) return alert("Không thể tạo email!");
+        }
+
+        // 3. Lấy danh sách thư của mail
         let inboxRes = await fetch(`https://tempmail.id.vn/api/email/${mailObj.id}`, {
             headers: { "Authorization": `Bearer ${token}` }
         });
         let inboxJson = await inboxRes.json();
 
-        let messages = inboxJson?.data?.items;
-        if (!Array.isArray(messages) || messages.length === 0) {
-            return alert("Chưa có thư!");
-        }
+        let messages = inboxJson?.data?.items || [];
 
-        let latest = messages[0]; // thư mới nhất
+        if (!messages.length) return alert("Chưa có thư!");
 
-        // Đọc nội dung thư
+        // Lấy thư mới nhất
+        let latest = messages[0];
+
+        // 4. Đọc nội dung thư
         let msgRes = await fetch(`https://tempmail.id.vn/api/message/${latest.id}`, {
             headers: { "Authorization": `Bearer ${token}` }
         });
-        let msgJson = await msgRes.json();
 
-        let html = msgJson?.data?.html || "";
+        let msgJson = await msgRes.json();
+        let html = msgJson?.data?.html || msgJson?.data?.body || "";
+
         if (!html) return alert("Không đọc được nội dung thư!");
 
-        // Regex bắt OTP 6 số
+        // Regex tìm OTP 6 số
         let otp = (html.match(/\b\d{6}\b/) || ["Không tìm thấy OTP"])[0];
 
         document.getElementById("otp_code").value = otp;
@@ -707,7 +729,6 @@ document.getElementById("btn_check").onclick = async () => {
         alert("Lỗi API: " + e.message);
     }
 };
-
 
 (() => {
   const genMkBtn = document.getElementById("genMkBtn");
