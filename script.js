@@ -634,6 +634,73 @@ function init() {
     setTimeout(() => (input.style.background = ""), 400);
   });
 })();
+function randomString(length = 10) {
+    let chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    let s = "";
+    for (let i = 0; i < length; i++) {
+        s += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return s;
+}
+
+const DOMAINS = [
+    "tempmail.id.vn",
+    "1trick.net",
+    "hathitrannhien.edu.vn",
+    "nghienplus.io.vn",
+    "tempmail.ckvn.edu.vn"
+];
+
+// Random username + domain
+document.getElementById("btn_random").onclick = () => {
+    let mail = randomString(10) + "@" + DOMAINS[Math.floor(Math.random() * DOMAINS.length)];
+    document.getElementById("acc_mail").value = mail;
+};
+
+// Check OTP
+document.getElementById("btn_check").onclick = async () => {
+    const token = "YOUR_TOKEN";
+    const email = document.getElementById("acc_mail").value;
+
+    if (!email) return alert("Chưa nhập email!");
+
+    try {
+        // Lấy danh sách email đã tạo
+        let listRes = await fetch("https://tempmail.id.vn/api/email", {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+        let listJson = await listRes.json();
+
+        let mailObj = listJson.data.find(m => m.email === email);
+        if (!mailObj) return alert("Email chưa tồn tại trên tempmail!");
+
+        // Lấy danh sách thư của email đó
+        let inboxRes = await fetch(`https://tempmail.id.vn/api/email/${mailObj.id}`, {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+        let inboxJson = await inboxRes.json();
+        let messages = inboxJson.data.items;
+
+        if (!messages.length) return alert("Chưa có thư!");
+
+        let latest = messages[0]; // thư mới nhất
+
+        // Đọc nội dung thư
+        let msgRes = await fetch(`https://tempmail.id.vn/api/message/${latest.id}`, {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+        let msgJson = await msgRes.json();
+
+        // Tìm mã OTP (6 chữ số)
+        let html = msgJson.data.html;
+        let otp = (html.match(/\b\d{6}\b/) || ["Không tìm thấy OTP"])[0];
+
+        document.getElementById("otp_code").value = otp;
+
+    } catch (e) {
+        alert("Lỗi API: " + e);
+    }
+};
 
 (() => {
   const genMkBtn = document.getElementById("genMkBtn");
@@ -690,21 +757,6 @@ function init() {
     }, 400);
   });
 })();
-document.getElementById("genMkBtn").addEventListener("click", () => {
-  const input = document.getElementById("acc_pass");
-  if (!input) return;
-
-  // password random từ script trước
-  input.value = genRandomPassword(14);
-
-  input.style.transition = "background 0.3s, box-shadow 0.3s";
-  input.style.background = "#fef3c7";
-  input.style.boxShadow = "0 0 6px rgba(0,0,0,0.08)";
-  setTimeout(() => {
-    input.style.background = "";
-    input.style.boxShadow = "";
-  }, 400);
-});
 
 window.addEventListener("DOMContentLoaded", () => {
   init();
