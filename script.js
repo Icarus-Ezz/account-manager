@@ -651,37 +651,40 @@ const DOMAINS = [
     "tempmail.ckvn.edu.vn"
 ];
 
-// Random username + domain
 document.getElementById("btn_random").onclick = () => {
     let mail = randomString(10) + "@" + DOMAINS[Math.floor(Math.random() * DOMAINS.length)];
     document.getElementById("acc_mail").value = mail;
 };
 
-// Check OTP
 document.getElementById("btn_check").onclick = async () => {
-    const token = "YOUR_TOKEN";
+    const token = "mHxzxzG1oUkyfOWWU8OHuaU8ws7qn4msrBdBHc2I70c2fffa";
     const email = document.getElementById("acc_mail").value;
 
     if (!email) return alert("Chưa nhập email!");
 
     try {
-        // Lấy danh sách email đã tạo
+        // Lấy danh sách email
         let listRes = await fetch("https://tempmail.id.vn/api/email", {
             headers: { "Authorization": `Bearer ${token}` }
         });
         let listJson = await listRes.json();
 
-        let mailObj = listJson.data.find(m => m.email === email);
+        // Kiểm tra data tồn tại và là array
+        let mailList = Array.isArray(listJson?.data) ? listJson.data : [];
+
+        let mailObj = mailList.find(m => m.email === email);
         if (!mailObj) return alert("Email chưa tồn tại trên tempmail!");
 
-        // Lấy danh sách thư của email đó
+        // Lấy inbox
         let inboxRes = await fetch(`https://tempmail.id.vn/api/email/${mailObj.id}`, {
             headers: { "Authorization": `Bearer ${token}` }
         });
         let inboxJson = await inboxRes.json();
-        let messages = inboxJson.data.items;
 
-        if (!messages.length) return alert("Chưa có thư!");
+        let messages = inboxJson?.data?.items;
+        if (!Array.isArray(messages) || messages.length === 0) {
+            return alert("Chưa có thư!");
+        }
 
         let latest = messages[0]; // thư mới nhất
 
@@ -691,16 +694,20 @@ document.getElementById("btn_check").onclick = async () => {
         });
         let msgJson = await msgRes.json();
 
-        // Tìm mã OTP (6 chữ số)
-        let html = msgJson.data.html;
+        let html = msgJson?.data?.html || "";
+        if (!html) return alert("Không đọc được nội dung thư!");
+
+        // Regex bắt OTP 6 số
         let otp = (html.match(/\b\d{6}\b/) || ["Không tìm thấy OTP"])[0];
 
         document.getElementById("otp_code").value = otp;
 
     } catch (e) {
-        alert("Lỗi API: " + e);
+        console.error(e);
+        alert("Lỗi API: " + e.message);
     }
 };
+
 
 (() => {
   const genMkBtn = document.getElementById("genMkBtn");
