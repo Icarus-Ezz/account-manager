@@ -60,16 +60,14 @@
         <input id="acc_name" type="text" placeholder="Ex: PhatCrystal" />
         <button id="genNameBtn" class="btn small">🎲</button>
       </div>  
-      <label>Email</label>
-      <div style="display: flex; gap: 8px; align-items: center;">
-          <input id="acc_mail" type="email" placeholder="Email đăng nhập" style="flex: 1;" />
+      <label>Email & OTP</label>
+      <div class="email-otp-row">
+          <input id="acc_mail" type="email" placeholder="Email đăng nhập" class="mail-input" />
+          <input id="otp_code" type="text" placeholder="OTP" readonly class="otp-input" />
 
-          <button id="btn_random" style="padding: 5px 10px;">Random</button>
-          <button id="btn_check" style="padding: 5px 10px;">Check</button>
+          <button id="btn_random" class="btn-round">🎲</button>
+          <button id="btn_check" class="btn-round">✔</button>
       </div>
-
-      <label style="margin-top: 10px;">OTP Instagram</label>
-      <input id="otp_code" type="text" placeholder="Mã OTP sẽ hiện ở đây" readonly />
       <label>Mật khẩu</label>
       <div class="input-with-icon">
         <input id="acc_pass" type="text" placeholder="Mật khẩu" />
