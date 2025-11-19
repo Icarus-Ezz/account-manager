@@ -638,3 +638,35 @@ body {
 .copyToast.show {
   opacity:1;
 }
+/* Đảm bảo các action trong card luôn nằm gọn */
+.account-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap; /* Ngăn tràn ra ngoài */
+  margin-top: 10px;
+}
+
+/* Nút nhỏ gọn hơn */
+.account-actions button {
+  padding: 6px 10px;
+  font-size: 13px;
+  white-space: nowrap; /* Không cho text xuống dòng linh tinh */
+}
+
+/* Nếu nút vẫn có nguy cơ tràn, ép card tự co nội dung */
+.account-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding-bottom: 14px;
+}
+
+/* Giảm overflow trong grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
