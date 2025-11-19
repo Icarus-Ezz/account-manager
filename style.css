@@ -395,6 +395,32 @@ body {
 /* =======================
     FIX TRÀN NÚT SỬA / XOÁ
    ======================= */
+.card .head .info {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex: 1; /* chiếm không gian còn lại */
+  min-width: 0; /* quan trọng để text-overflow hoạt động */
+}
+
+.card .head .info h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.card .head .info p.muted {
+  margin: 0;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
 
 .card .head {
   display: flex;
