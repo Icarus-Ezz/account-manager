@@ -313,7 +313,8 @@
         "mk": "phatdepzai",
         "2fa": "None"
       }
-    ]
+    ],
+    "DenoApiMail": []
   },
   "platforms": {
     "Instagram": {
@@ -343,6 +344,10 @@
     "Roblox": {
       "icon": "https://i.pinimg.com/736x/eb/20/30/eb203036af2bf931259d9c2ae254b2cd.jpg",
       "color": "#525252"
+    },
+    "DenoApiMail": {
+      "icon": "",
+      "color": "#008015"
     }
   }
 }
