@@ -377,6 +377,8 @@ body {
   animation: fadeIn 0.6s ease;
   border: 1px solid rgba(255, 255, 255, 0.2);
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @keyframes fadeIn {
@@ -390,43 +392,16 @@ body {
   background: linear-gradient(135deg, rgba(249, 250, 251, 0.95), var(--card));
 }
 
-.card .actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+/* =======================
+    FIX TRÀN NÚT SỬA / XOÁ
+   ======================= */
 
-.btn-icon {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  color: var(--text);
-  cursor: pointer;
-  padding: 8px 10px;
-  font-size: 18px;
-  border-radius: 12px;
-  transition: 0.4s ease;
-  box-shadow: var(--shadow-inset);
-}
-
-.btn-icon:hover {
-  background: rgba(0, 0, 0, 0.08);
-  transform: scale(1.15) rotate(10deg);
-  color: var(--accent);
-}
-
-.btn-icon.danger {
-  color: #ef4444;
-}
-.btn-icon.danger:hover {
-  background: rgba(239, 68, 68, 0.1);
-}
-
-/* Card head */
 .card .head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  width: 100%;
 }
 
 .card .head .name {
@@ -436,13 +411,18 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 70%;
+
+  /* Giới hạn lại chiều rộng để không đẩy nút ra ngoài */
+  max-width: calc(100% - 70px);
 }
 
 .card .head .actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+
+  /* TRÁNH TRÀN – kích thước cố định */
+  flex-shrink: 0;
 }
 
 .card .btn-icon {
@@ -451,10 +431,14 @@ body {
   cursor: pointer;
   color: #666;
   font-size: 18px;
-  padding: 6px;
+  padding: 8px;
   border-radius: 10px;
   transition: 0.4s ease;
   box-shadow: var(--shadow-inset);
+
+  /* Giới hạn kích thước nút */
+  width: 34px;
+  height: 34px;
 }
 
 .card .btn-icon:hover {
