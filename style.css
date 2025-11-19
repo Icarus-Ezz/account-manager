@@ -395,12 +395,20 @@ body {
 /* =======================
     FIX TRÀN NÚT SỬA / XOÁ
    ======================= */
+.card .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: nowrap; /* không xuống dòng */
+}
+
 .card .head .info {
   display: flex;
-  gap: 10px;
-  align-items: center;
-  flex: 1; /* chiếm không gian còn lại */
-  min-width: 0; /* quan trọng để text-overflow hoạt động */
+  flex-direction: column;
+  min-width: 200px; /* đảm bảo card đủ rộng cho mail bình thường */
+  max-width: calc(100% - 80px); /* 80px cho nút actions */
+  overflow: hidden;
 }
 
 .card .head .info h4 {
@@ -410,7 +418,6 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
 }
 
 .card .head .info p.muted {
@@ -419,15 +426,6 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
-}
-
-.card .head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
 }
 
 .card .head .name {
