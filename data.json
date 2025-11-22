@@ -60,14 +60,7 @@
     ],
     "Facebook": [],
     "Instagram": {
-      "normal": [
-        {
-          "name": "None",
-          "mail": "A",
-          "mk": "Â",
-          "2fa": "A"
-        }
-      ],
+      "normal": [],
       "special": []
     }
   },
