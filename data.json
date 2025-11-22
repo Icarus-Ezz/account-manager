@@ -60,7 +60,14 @@
     ],
     "Facebook": [],
     "Instagram": {
-      "normal": [],
+      "normal": [
+        {
+          "name": "chaitaigaixiu",
+          "mail": "khongminh1836@gmail.com",
+          "mk": "PAbc123!",
+          "2fa": "FACV 76WO 65V6 CH2P D6NQ DBFL 2P7K L4EW"
+        }
+      ],
       "special": []
     }
   },
