@@ -59,14 +59,17 @@
       }
     ],
     "Facebook": [],
-    "Instagram": [
-      {
-        "name": "None",
-        "mail": "A",
-        "mk": "Â",
-        "2fa": "A"
-      }
-    ]
+    "Instagram": {
+      "normal": [
+        {
+          "name": "None",
+          "mail": "A",
+          "mk": "Â",
+          "2fa": "A"
+        }
+      ],
+      "special": []
+    }
   },
   "platforms": {
     "TikTok": {
