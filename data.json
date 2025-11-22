@@ -382,8 +382,7 @@
         "mk": "None",
         "2fa": "token_khovenucuoi_fce12a8099fbdc8f"
       }
-    ],
-    "AA": []
+    ]
   },
   "platforms": {
     "Instagram": {
@@ -417,10 +416,6 @@
     "DenoApiMail": {
       "icon": "",
       "color": "#008015"
-    },
-    "AA": {
-      "icon": "https://i.pinimg.com/736x/b1/9c/b7/b19cb7de38d8fa0424cf9717aade29d8.jpg",
-      "color": "#3b82f6"
     }
   }
 }
