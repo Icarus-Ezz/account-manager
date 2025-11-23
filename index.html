@@ -1,130 +1,156 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Account Manager - PhatCrystak</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <link rel="icon" type="image/png" href="https://i.pinimg.com/1200x/43/18/c8/4318c8a791d56c892d897ba003f2aad4.jpg" />
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Account Manager - PhatCrystak</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="icon" type="image/png" href="https://i.pinimg.com/1200x/43/18/c8/4318c8a791d56c892d897ba003f2aad4.jpg" />
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="sidebar-top">
-        <h1 class="brand">MXH Manager</h1>
-        <div class="sidebar-actions">
-          <button id="addPlatformBtn" class="btn small">+ Thêm nền tảng</button>
-          <label class="switch" title="Chủ đề">
-            <input id="themeToggle" type="checkbox" />
-            <span class="slider"></span>
-          </label>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <h1 class="brand">MXH Manager</h1>
+                <div class="sidebar-actions">
+                    <button id="addPlatformBtn" class="btn small">+ Thêm nền tảng</button>
+                    <label class="switch" title="Chủ đề">
+                        <input id="themeToggle" type="checkbox" />
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="platform-list" id="platformList"></div>
+
+            <div class="sidebar-bottom">
+                <small class="muted">Lưu: localStorage • Đồng bộ: GitHub (auto)</small>
+                <button id="forceSync" class="btn ghost">Đồng bộ ngay</button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="main-header">
+                <div>
+                    <h2 id="currentPlatformTitle">Chọn nền tảng</h2>
+                    <p id="platformSummary" class="muted">Không có nền tảng được chọn</p>
+                </div>
+                <div class="header-actions">
+                    <button id="refreshData" class="btn ghost">🔄 Refresh</button>
+                    <button id="addAccountBtn" class="btn primary">[+] Thêm tài khoản</button>
+                    <button id="go2FA" class="btn ghost">🔐 2FA</button>
+                </div>
+            </header>
+
+            <section class="content">
+                <div class="grid-container">
+                    <div class="grid-wrapper full-width">
+                        <h3 class="grid-title">Tất cả tài khoản</h3>
+                        <div id="accountGrid" class="grid dropzone">
+                            </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="unNurtureIcon" class="dropzone hidden" title="Kéo tài khoản vào đây để đẩy ra khỏi Vùng Nuôi">
+        <i class="fas fa-sign-out-alt"></i> 
+    </div>
+    
+    <div id="nurtureIcon" class="dropzone hidden" title="Mở Vùng Nuôi (Kéo thả vào đây để nuôi)">
+        <div id="nurtureIconContent">
+            <i class="fas fa-seedling"></i>
+            <span id="nurtureCount">0</span>
         </div>
-      </div>
-
-      <div class="platform-list" id="platformList"></div>
-
-      <div class="sidebar-bottom">
-        <small class="muted">Lưu: localStorage • Đồng bộ: GitHub (auto)</small>
-        <button id="forceSync" class="btn ghost">Đồng bộ ngay</button>
-      </div>
-    </aside>
-
-    <main class="main">
-      <header class="main-header">
-        <div>
-          <h2 id="currentPlatformTitle">Chọn nền tảng</h2>
-          <p id="platformSummary" class="muted">Không có nền tảng được chọn</p>
+    </div>
+    
+    <div id="nurtureModal" class="modal hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>🌱 Vùng Nuôi (Nurture Area)</h3>
+                <button id="exitNurtureDropzone" class="btn-icon ghost" title="Đẩy tài khoản vào đây để thoát khỏi Vùng Nuôi"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="nurture-modal-content">
+                <div id="nurtureAccountGrid" class="grid dropzone">
+                    </div>
+            </div>
         </div>
-        <div class="header-actions">
-          <button id="refreshData" class="btn ghost">🔄 Refresh</button>
-          <button id="addAccountBtn" class="btn primary">[+] Thêm tài khoản</button>
-          <button id="go2FA" class="btn ghost">🔐 2FA</button>
+    </div>
+
+    <div class="modal hidden" id="accountModal" aria-hidden="true">
+        <div class="modal-card">
+            <h3 id="accountModalTitle">Thêm tài khoản</h3>
+            <label>Tên hiển thị</label>
+            <div class="input-with-btn">
+                <input id="acc_name" type="text" placeholder="Ex: PhatCrystal" />
+                <button id="genNameBtn" class="btn small">🎲</button>
+            </div> 
+            <label>Email & OTP</label>
+            <div class="email-otp-row">
+                <input id="acc_mail" type="email" placeholder="Email đăng nhập" class="mail-input" />
+                <input id="otp_code" type="text" placeholder="OTP" readonly class="otp-input" />
+
+                <button id="btn_random" class="btn-round">🎲</button>
+                <button id="btn_check" class="btn-round">✔</button>
+            </div>
+            <label>Mật khẩu</label>
+            <div class="input-with-icon">
+                <input id="acc_pass" type="text" placeholder="Mật khẩu" />
+                <button id="genMkBtn" class="btn small">🎲</button>
+            </div>        
+            <label>Mã 2FA</label>
+            <input id="acc_2fa" type="text" placeholder="Mã 2FA (nếu có)" />
+            <div class="modal-actions">
+                <button id="saveAccount" class="btn primary">Lưu</button>
+                <button id="cancelAccount" class="btn ghost">Hủy</button>
+            </div>
         </div>
-      </header>
-
-      <section class="content">
-        <div id="accountGrid" class="grid"></div>
-      </section>
-    </main>
-  </div>
-
-  <!-- Modal: Add/Edit Account -->
-  <div class="modal hidden" id="accountModal" aria-hidden="true">
-    <div class="modal-card">
-      <h3 id="accountModalTitle">Thêm tài khoản</h3>
-      <label>Tên hiển thị</label>
-      <div class="input-with-btn">
-        <input id="acc_name" type="text" placeholder="Ex: PhatCrystal" />
-        <button id="genNameBtn" class="btn small">🎲</button>
-      </div>  
-      <label>Email & OTP</label>
-      <div class="email-otp-row">
-          <input id="acc_mail" type="email" placeholder="Email đăng nhập" class="mail-input" />
-          <input id="otp_code" type="text" placeholder="OTP" readonly class="otp-input" />
-
-          <button id="btn_random" class="btn-round">🎲</button>
-          <button id="btn_check" class="btn-round">✔</button>
-      </div>
-      <label>Mật khẩu</label>
-      <div class="input-with-icon">
-        <input id="acc_pass" type="text" placeholder="Mật khẩu" />
-        <button id="genMkBtn" class="btn small">🎲</button>
-      </div>        
-      <label>Mã 2FA</label>
-      <input id="acc_2fa" type="text" placeholder="Mã 2FA (nếu có)" />
-      <div class="modal-actions">
-        <button id="saveAccount" class="btn primary">Lưu</button>
-        <button id="cancelAccount" class="btn ghost">Hủy</button>
-      </div>
     </div>
-  </div>
 
-  <!-- Modal: Add/Edit Platform -->
-  <div class="modal hidden" id="platformModal" aria-hidden="true">
-    <div class="modal-card">
-      <h3 id="platformModalTitle">Thêm nền tảng</h3>
-      <label>Tên nền tảng</label>
-      <input id="plat_name" type="text" placeholder="Ví dụ: Threads" />
-      <label>Icon (link PNG / SVG hoặc để trống dùng auto)</label>
-      <input id="plat_icon" type="url" placeholder="https://..." />
-      <label>Màu chính (hex)</label>
-      <input id="plat_color" type="color" value="#3b82f6" />
-      <div class="modal-actions">
-        <button id="savePlatform" class="btn primary">Lưu nền tảng</button>
-        <button id="cancelPlatform" class="btn ghost">Hủy</button>
-      </div>
+    <div class="modal hidden" id="platformModal" aria-hidden="true">
+        <div class="modal-card">
+            <h3 id="platformModalTitle">Thêm nền tảng</h3>
+            <label>Tên nền tảng</label>
+            <input id="plat_name" type="text" placeholder="Ví dụ: Threads" />
+            <label>Icon (link PNG / SVG hoặc để trống dùng auto)</label>
+            <input id="plat_icon" type="url" placeholder="https://..." />
+            <label>Màu chính (hex)</label>
+            <input id="plat_color" type="color" value="#3b82f6" />
+            <div class="modal-actions">
+                <button id="savePlatform" class="btn primary">Lưu nền tảng</button>
+                <button id="cancelPlatform" class="btn ghost">Hủy</button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Modal: REMOVE ACCOUNT -->
-  <div class="modal hidden" id="removeModal" aria-hidden="true">
-    <div class="modal-card danger-card">
-      <h3 id="removeModalTitle">Xóa tài khoản</h3>
-      <p id="removeModalMsg" class="muted" style="margin-bottom:10px"></p>
+    <div class="modal hidden" id="removeModal" aria-hidden="true">
+        <div class="modal-card danger-card">
+            <h3 id="removeModalTitle">Xóa tài khoản</h3>
+            <p id="removeModalMsg" class="muted" style="margin-bottom:10px"></p>
 
-      <label>Nhập <b>D</b> hoặc <b>R</b> để xác nhận xóa</label>
-      <input id="removeInput" type="text" placeholder="D hoặc R" />
+            <label>Nhập <b>D</b> hoặc <b>R</b> để xác nhận xóa</label>
+            <input id="removeInput" type="text" placeholder="D hoặc R" />
 
-      <div class="modal-actions">
-        <button id="confirmRemove" class="btn danger">Xóa</button>
-        <button id="cancelRemove" class="btn ghost">Hủy</button>
-      </div>
+            <div class="modal-actions">
+                <button id="confirmRemove" class="btn danger">Xóa</button>
+                <button id="cancelRemove" class="btn ghost">Hủy</button>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- Modal: LOGIN -->
-  <div class="modal" id="loginModal">
-    <div class="modal-card">
-      <h3>Nhập mật khẩu</h3>
-      <input id="loginInput" type="password" placeholder="Mật khẩu đăng nhập web" />
-      <div class="modal-actions">
-        <button id="loginBtn" class="btn primary">Đăng nhập</button>
-      </div>
+    
+    <div class="modal" id="loginModal">
+        <div class="modal-card">
+            <h3>Nhập mật khẩu</h3>
+            <input id="loginInput" type="password" placeholder="Mật khẩu đăng nhập web" />
+            <div class="modal-actions">
+                <button id="loginBtn" class="btn primary">Đăng nhập</button>
+            </div>
+        </div>
     </div>
-  </div>
-  
-  <script src="script.js"></script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
