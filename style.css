@@ -4,43 +4,43 @@
 
 /* Dark Theme Variables */
 :root[data-theme="dark"] {
-    /* Nền đen pha xanh nhẹ, kiểu hiện đại */
-    --bg: linear-gradient(135deg, #0b0f1a, #0f1724);
-    --card: linear-gradient(135deg, rgba(20, 25, 38, 0.9), rgba(15, 20, 30, 0.9));
+    /* Nền đen pha xanh nhẹ, phẳng hơn */
+    --bg: #0b0f1a; /* Màu nền tĩnh, không gradient */
+    --card: rgba(20, 25, 38, 0.95); /* Màu card gần như tĩnh, ít hiệu ứng */
 
     /* Màu chữ và phụ */
     --text: #e3e8ef;
     --muted: #94a3b8;
-    --border: rgba(255, 255, 255, 0.2);
+    --border: rgba(255, 255, 255, 0.1); /* Giảm độ sáng của viền */
 
-    /* Màu nhấn xanh electric như Linear/Vercel */
-    --primary: #3b82f6; /* Xanh dương */
-    --accent: linear-gradient(135deg, #3b82f6, #0ea5e9);
+    /* Màu nhấn xanh electric */
+    --primary: #3b82f6;
+    --accent: #0ea5e9; /* Dùng màu đơn cho accent */
     --accent-light: rgba(14, 165, 233, 0.1);
     
     /* Màu Nuôi Dưỡng (Green) */
     --nurture-color: #22c55e; 
     --nurture-light: rgba(34, 197, 94, 0.1);
-    --nurture-gradient: linear-gradient(135deg, #22c55e, #10b981);
+    --nurture-gradient: #22c55e; /* Dùng màu đơn */
 
     /* Màu Đẩy Ra (Orange) */
     --unnurture-color: #f97316;
-    --unnurture-gradient: linear-gradient(135deg, #f97316, #ea580c);
+    --unnurture-gradient: #f97316; /* Dùng màu đơn */
 
     /* Màu Nguy hiểm (Red) */
     --danger-color: #ef4444;
 
-    /* Đổ bóng và glow (GIỮ CƠ BẢN) */
-    --shadow: 0 4px 14px rgba(0, 0, 0, 0.4); /* Giảm độ đậm */
-    --shadow-hover: 0 6px 18px rgba(0, 0, 0, 0.5); /* Giảm độ đậm */
-    --shadow-inset: inset 0 1px 3px rgba(255, 255, 255, 0.05); /* Giảm độ đậm */
+    /* Đổ bóng và glow (Rất cơ bản, ít đậm) */
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.3); 
+    --shadow-hover: 0 4px 15px rgba(0, 0, 0, 0.4); 
+    --shadow-inset: inset 0 1px 2px rgba(255, 255, 255, 0.03); 
 
-    /* Glow nhẹ xanh dương */
-    --glow: 0 0 15px rgba(37, 99, 235, 0.25); /* Giảm độ sáng */
+    /* Glow nhẹ */
+    --glow: 0 0 8px rgba(37, 99, 235, 0.2); 
 
     /* Bo góc và hiệu ứng kính */
-    --radius: 16px; /* Giảm bo góc nhẹ */
-    --blur: blur(10px); /* Giảm blur nhẹ */
+    --radius: 12px; /* Giảm bo góc */
+    --blur: blur(5px); /* Giảm Blur tối thiểu */
 }
 
 /* Base Styles */
@@ -58,8 +58,8 @@ body {
 .app {
     display: flex;
     height: 100vh;
-    gap: 20px; /* Giảm khoảng cách */
-    padding: 20px;
+    gap: 16px; 
+    padding: 16px;
 }
 
 /* Utilities */
@@ -75,21 +75,22 @@ body {
 }
 
 /* =========================================================================
-   SIDEBAR (Glassmorphism)
+   SIDEBAR (Glassmorphism Đơn Giản)
    ========================================================================= */
 .sidebar {
-    width: 300px; /* Giảm chiều rộng */
+    width: 280px; 
     background: var(--card);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    padding: 20px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur); /* GIỮ LẠI HIỆU ỨNG KÍNH NHẸ */
     border: 1px solid var(--border);
     position: relative;
     z-index: 50;
+    /* LOẠI BỎ HIỆU ỨNG CHUYỂN ĐỘNG */
 }
 .sidebar::before {
     content: '';
@@ -99,54 +100,50 @@ body {
     right: 0;
     bottom: 0;
     border-radius: var(--radius);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.05)); /* Giảm độ sáng */
+    background: rgba(255, 255, 255, 0.03); /* Tối giản hóa lớp phủ */
     pointer-events: none;
 }
 
 .brand {
     margin: 0;
-    font-size: 1.4rem; /* Giảm kích thước */
-    background: var(--accent);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 1.3rem; 
+    color: var(--primary); /* Dùng màu đơn */
     font-weight: 700;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* Giảm bóng */
     position: relative;
     z-index: 1;
 }
 
 .sidebar-actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 8px;
     position: relative;
     z-index: 1;
 }
 
-/* Platform list - Tab-like modern design */
+/* Platform list - Tĩnh */
 .platform-list {
     overflow-y: auto;
-    padding: 8px;
+    padding: 6px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     position: relative;
     z-index: 1;
 }
 
 .platform-item {
     display: flex;
-    gap: 10px; /* Giảm khoảng cách */
+    gap: 10px;
     align-items: center;
-    padding: 12px; /* Giảm padding */
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    transition: all 0.2s ease; /* Giảm thời gian chuyển động */
+    padding: 10px; 
+    border-radius: 10px;
+    background: transparent; /* Mặc định trong suốt */
+    transition: background 0.15s ease, border-color 0.15s ease; /* GIỮ TRANSITION CƠ BẢN */
     cursor: pointer;
     border: 1px solid transparent;
     position: relative;
-    box-shadow: var(--shadow-inset);
 }
 .platform-item::after {
     content: '';
@@ -154,20 +151,19 @@ body {
     bottom: 0;
     left: 50%;
     width: 0;
-    height: 2px; /* Giảm độ dày */
+    height: 2px;
     background: var(--accent);
     border-radius: 1px;
-    transition: width 0.2s ease, left 0.2s ease;
+    transition: width 0.15s ease, left 0.15s ease;
 }
 .platform-item.active::after {
-    width: 80%;
-    left: 10%;
+    width: 70%;
+    left: 15%;
 }
 .platform-item:hover {
-    transform: none; /* LOẠI BỎ HIỆU ỨNG DỊCH CHUYỂN */
-    box-shadow: var(--shadow-hover);
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(14, 165, 233, 0.3);
+    box-shadow: none; /* LOẠI BỎ BÓNG KHI HOVER */
+    background: rgba(255, 255, 255, 0.05); /* HIỆU ỨNG HOVER ĐƠN GIẢN */
+    border-color: rgba(14, 165, 233, 0.1);
 }
 .platform-item.active {
     background: var(--accent-light);
@@ -175,19 +171,19 @@ body {
 }
 
 .platform-thumb {
-    width: 40px; /* Giảm kích thước */
-    height: 40px; /* Giảm kích thước */
-    border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
     color: white;
-    font-size: 1rem;
+    font-size: 0.9rem;
     flex-shrink: 0;
     overflow: hidden; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Giảm bóng */
-    transition: transform 0.2s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    transition: none; /* LOẠI BỎ CHUYỂN ĐỘNG */
 }
 
 .platform-thumb img {
@@ -197,7 +193,7 @@ body {
 }
 
 .platform-item:hover .platform-thumb {
-    transform: none; /* LOẠI BỎ HIỆU ỨNG XOAY */
+    transform: none;
 }
 
 .platform-meta {
@@ -206,7 +202,7 @@ body {
 }
 .platform-meta .title {
     font-weight: 600;
-    font-size: 1rem; /* Giảm kích thước */
+    font-size: 1rem; 
 }
 .platform-meta .count {
     font-size: 0.8rem;
@@ -221,18 +217,18 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 .main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 8px 10px;
 }
 .content {
     flex: 1;
     overflow-y: auto;
-    padding: 16px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
 }
@@ -242,23 +238,23 @@ body {
     padding: 10px 14px;
     border-radius: 10px;
     border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
     color: var(--text);
     font-size: 0.95rem;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease; /* GIỮ TRANSITION CƠ BẢN */
     width: 280px;
 }
 .search-input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: var(--glow);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Giảm min size */
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
     flex-grow: 1;
 }
 
@@ -266,26 +262,26 @@ body {
 .placeholder {
     text-align: center;
     width: 100%;
-    padding: 30px;
+    padding: 20px;
     font-style: italic;
     color: var(--muted);
 }
 
 /* =========================================================================
-   ACCOUNT CARDS (Neumorphism / Glass)
+   ACCOUNT CARDS (Tĩnh)
    ========================================================================= */
 
 .card {
     background: var(--card);
     border-radius: var(--radius);
-    padding: 16px;
-    box-shadow: var(--shadow), var(--shadow-inset);
+    padding: 14px;
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     position: relative;
-    transition: box-shadow 0.3s ease, background 0.3s ease; /* GIẢM TRANSITION */
-    animation: fadeIn 0.4s ease; /* Giảm thời gian animation */
+    transition: box-shadow 0.2s ease, background 0.2s ease;
+    animation: fadeIn 0.3s ease; /* Giảm thời gian animation */
     border: 1px solid var(--border);
     overflow: hidden;
     width: 100%;
@@ -294,21 +290,21 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); } /* Giảm dịch chuyển */
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; } 
+    to { opacity: 1; }
 }
 
 .card:hover {
-    transform: none; /* LOẠI BỎ HIỆU ỨNG DỊCH CHUYỂN/SCALE */
+    transform: none;
     box-shadow: var(--shadow-hover);
-    background: linear-gradient(135deg, rgba(20, 25, 38, 0.95), rgba(15, 20, 30, 0.95));
+    background: rgba(20, 25, 38, 1); /* Nền hover đậm hơn một chút */
 }
 
 .card:active {
     cursor: grabbing;
 }
 
-/* Card Header (Head) */
+/* Card Header (Head) - Đã giữ các quy tắc chống tràn */
 .card .head {
     display: flex;
     justify-content: space-between;
@@ -317,18 +313,47 @@ body {
     flex-wrap: nowrap;
 }
 
-/* ... (Giữ nguyên các chi tiết Card Head) ... */
+.card .head .info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.card .head .info h4 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card .head .info p.muted {
+    margin: 0;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card .head .actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
 
 .card .btn-icon {
-    background: rgba(255, 255, 255, 0.05); /* Giảm độ sáng */
+    background: rgba(255, 255, 255, 0.05);
     border: none;
     cursor: pointer;
     color: var(--muted);
     font-size: 16px;
     padding: 6px;
     border-radius: 8px;
-    transition: 0.3s ease;
-    box-shadow: var(--shadow-inset);
+    transition: background 0.15s ease, color 0.15s ease;
     width: 30px;
     height: 30px;
     display: flex;
@@ -338,12 +363,12 @@ body {
 
 .card .btn-icon:hover {
     color: var(--text);
-    background: rgba(14, 165, 233, 0.1);
-    transform: none; /* LOẠI BỎ HIỆU ỨNG SCALE */
+    background: var(--accent-light);
+    transform: none;
 }
 
 .icon-small {
-    width: 30px; /* Giảm kích thước */
+    width: 30px;
     height: 30px;
     border-radius: 8px;
     display: flex;
@@ -353,201 +378,316 @@ body {
     font-weight: 600;
     color: white;
     font-size: 14px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
-/* ... (Giữ nguyên các thẻ input, email-otp-row, btn-round) ... */
+.icon-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 /* =========================================================================
-   BUTTONS (Modern with Ripple Effect)
+   EMAIL + OTP ROW
+   ========================================================================= */
+.email-otp-row {
+    display: grid;
+    grid-template-columns: 1fr 70px 40px 40px; /* Giảm kích thước */
+    gap: 8px;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.email-otp-row input {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    transition: 0.15s ease;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text);
+}
+
+.email-otp-row input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px rgba(59,130,246,0.15);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.email-otp-row input:nth-child(2) {
+    text-align: center;
+}
+
+.btn-round {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--primary);
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-round:hover {
+    transform: none;
+    box-shadow: 0 1px 4px rgba(59, 130, 246, 0.4);
+}
+
+
+/* =========================================================================
+   BUTTONS (Phẳng, ít chuyển động)
    ========================================================================= */
 
 .btn {
     border: none;
-    padding: 10px 14px; /* Giảm padding */
-    border-radius: 12px;
+    padding: 10px 14px; 
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.2s ease; /* GIẢM THỜI GIAN CHUYỂN ĐỘNG */
+    transition: all 0.15s ease;
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-inset);
+    box-shadow: none; /* LOẠI BỎ INSET SHADOW */
     color: var(--text);
 }
-/* Giữ nguyên hiệu ứng Ripple (active::before) */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2); /* Giảm hiệu ứng Ripple */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+}
+.btn:active::before {
+    width: 200px; /* Giảm kích thước */
+    height: 200px;
+}
 
 .btn.primary {
-    background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+    background: var(--primary); /* Dùng màu đơn */
     color: #fff;
-    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
+    box-shadow: 0 2px 6px rgba(14, 165, 233, 0.3);
 }
 .btn.primary:hover {
-    transform: translateY(-1px); /* GIẢM DỊCH CHUYỂN */
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.6);
+    transform: none;
+    box-shadow: 0 3px 10px rgba(14, 165, 233, 0.4);
 }
 
 .btn.ghost {
-    background: rgba(255, 255, 255, 0.05); /* Giảm độ sáng */
+    background: transparent;
     border: 1px solid var(--border);
     color: var(--muted);
 }
 .btn.ghost:hover {
     border-color: var(--primary);
-    color: #0ea5e9;
+    color: var(--primary);
     background: var(--accent-light);
-    transform: none; /* LOẠI BỎ DỊCH CHUYỂN */
+    transform: none;
 }
 
 .btn.danger {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
+    background: var(--danger-color);
     color: white;
-    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
 }
 .btn.danger:hover {
-    background: linear-gradient(135deg, #f87171, #ef4444);
-    transform: translateY(-1px); /* GIẢM DỊCH CHUYỂN */
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.6);
+    background: #dc2626;
+    transform: none;
+    box-shadow: 0 3px 10px rgba(239, 68, 68, 0.4);
 }
 
 .btn.small {
     padding: 8px 10px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 
 /* Delete account button in card */
 .delete-acc {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
+    background: var(--danger-color);
     border: none;
     color: white;
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 8px 10px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
 }
 .delete-acc:hover {
-    background: linear-gradient(135deg, #f87171, #ef4444);
-    transform: scale(1.05); /* Giảm scale */
-    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.6);
+    background: #dc2626;
+    transform: none;
+    box-shadow: 0 3px 10px rgba(239, 68, 68, 0.4);
 }
 
 /* =========================================================================
-   MODALS (Enhanced Glassmorphism)
+   MODALS (Phẳng hơn)
    ========================================================================= */
 
-/* Giữ nguyên Modal và Modal Card (Chỉ cần giảm animation) */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: var(--blur); 
+    z-index: 100;
+}
+.modal-card {
+    width: 450px;
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow-hover);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: popup 0.25s ease;
+    border: 1px solid var(--border);
+}
 @keyframes popup {
-    from { transform: scale(0.95); opacity: 0; } /* Loại bỏ xoay, giảm scale */
+    from { transform: scale(0.98); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
+.modal-card input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text);
+    transition: border-color 0.15s ease;
+}
+.modal-card input:focus {
+    border-color: var(--primary);
+    box-shadow: var(--glow);
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+#loginModal .modal-card {
+    border-top: 3px solid var(--primary);
+}
+.danger-card {
+    border-top: 3px solid var(--danger-color);
+}
+
 /* =========================================================================
-   VÙNG NUÔI CỐ ĐỊNH (#nurtureIcon) - GREEN
+   VÙNG NUÔI CỐ ĐỊNH (#nurtureIcon) - Tĩnh
    ========================================================================= */
 #nurtureIcon {
     position: fixed;
-    bottom: 25px; /* Giảm vị trí */
-    right: 25px;
-    width: 60px; /* Giảm kích thước */
-    height: 60px;
+    bottom: 20px; 
+    right: 20px;
+    width: 55px; 
+    height: 55px;
     border-radius: 50%;
-    background: var(--nurture-gradient); 
+    background: var(--nurture-color); 
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
     cursor: pointer;
     z-index: 1000;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
     backdrop-filter: var(--blur);
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 #nurtureIcon:hover {
-    transform: scale(1.05); /* Giảm scale, loại bỏ dịch chuyển */
-    box-shadow: 0 6px 18px rgba(34, 197, 94, 0.6);
+    transform: none;
+    box-shadow: 0 6px 15px rgba(34, 197, 94, 0.5);
 }
 
 #nurtureIconContent {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
 }
 
 /* Hiệu ứng khi kéo thẻ vào Icon Vùng Nuôi */
 #nurtureIcon.drag-over {
-    background: var(--unnurture-gradient);
-    transform: scale(1.1); /* Giảm scale, loại bỏ xoay */
-    box-shadow: 0 0 15px rgba(245, 158, 11, 0.8), 0 0 0 6px rgba(245, 158, 11, 0.2); /* Giảm hiệu ứng glow */
+    background: var(--unnurture-color);
+    transform: scale(1.05); 
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
     border: 2px solid white;
 }
 
 #nurtureCount {
     position: absolute;
-    top: -3px; /* Giảm vị trí */
-    right: -3px;
-    background: linear-gradient(45deg, var(--danger-color), #dc2626);
+    top: -2px; 
+    right: -2px;
+    background: var(--danger-color);
     color: white;
     font-size: 12px;
-    padding: 2px 8px; /* Giảm padding */
+    padding: 2px 7px;
     border-radius: 10px;
     font-weight: 700;
-    box-shadow: 0 1px 6px rgba(220, 38, 38, 0.5);
-    min-width: 20px;
+    box-shadow: 0 1px 4px rgba(220, 38, 38, 0.5);
+    min-width: 18px;
     text-align: center;
 }
 
 /* =========================================================================
-   NÚT ĐẨY RA (#unNurtureIcon) - ORANGE
+   NÚT ĐẨY RA (#unNurtureIcon) - Tĩnh
    ========================================================================= */
 #unNurtureIcon {
     position: fixed;
-    bottom: 90px; /* Giảm vị trí */
-    right: 30px;
-    width: 50px; /* Giảm kích thước */
-    height: 50px;
+    bottom: 80px; 
+    right: 25px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    background: var(--unnurture-gradient); 
+    background: var(--unnurture-color); 
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 10px rgba(249, 115, 22, 0.4);
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.4);
     cursor: pointer;
     z-index: 1000;
-    transition: all 0.2s ease;
-    font-size: 1.2rem;
+    transition: all 0.15s ease;
+    font-size: 1.1rem;
     backdrop-filter: var(--blur);
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 #unNurtureIcon:hover {
-    transform: scale(1.08); /* Giảm scale */
-    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.6);
+    transform: none;
+    box-shadow: 0 4px 10px rgba(249, 115, 22, 0.5);
 }
 
 /* Hiệu ứng khi kéo thẻ vào nút Đẩy Ra */
 #unNurtureIcon.drag-over {
     background: var(--danger-color);
-    transform: scale(1.15); /* Giảm scale */
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.8);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.7);
     border: 2px solid white;
 }
 
 /* =========================================================================
-   NÚT THOÁT VÙNG NUÔI (EXIT NURTURE DROPZONE - Nút X trong Modal)
+   NÚT THOÁT VÙNG NUÔI
    ========================================================================= */
 #exitNurtureDropzone {
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
     border-radius: 50%;
     color: var(--muted);
-    background: rgba(255, 255, 255, 0.05); /* Giảm độ sáng */
+    background: rgba(255, 255, 255, 0.05);
 }
 
-/* Hiệu ứng khi kéo thẻ vào NÚT X (DROPZONE RA NGOÀI) */
+/* Hiệu ứng khi kéo thẻ vào NÚT X */
 #exitNurtureDropzone.drag-over { 
     background: var(--danger-color);
     color: white;
-    transform: scale(1.05); /* Giảm scale */
-    box-shadow: 0 0 8px rgba(239, 68, 68, 0.8); 
+    transform: scale(1.05);
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.7); 
     border: 1px solid white;
 }
 
@@ -560,21 +700,37 @@ body {
 /* =========================================================================
    MODAL VÙNG NUÔI (NURTURE MODAL)
    ========================================================================= */
-/* Giữ nguyên cấu trúc, chỉ thay đổi grid nhẹ */
+#nurtureModal .modal-card {
+    width: 90%;
+    max-width: 1000px;
+    height: 85vh;
+}
+
+.nurture-modal-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+}
+
 #nurtureAccountGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Giảm min size */
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 14px;
     padding: 10px;
     min-height: 150px;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
 }
 
 /* Hiệu ứng khi kéo thẻ vào Grid Nurture (Khu vực thả trong Modal) */
 #nurtureAccountGrid.drag-over { 
-    background-color: rgba(249, 115, 22, 0.03); /* Rất nhạt */
-    border: 1px dashed var(--unnurture-color); /* Giảm độ dày border */
+    background-color: rgba(249, 115, 22, 0.05);
+    border: 1px dashed var(--unnurture-color);
     border-radius: var(--radius);
+}
+
+#nurtureModal .placeholder {
+    padding: 30px;
+    font-size: 1rem;
 }
 
 /* =========================================================================
@@ -583,8 +739,8 @@ body {
 
 /* Thẻ đang được kéo */
 .account-card.dragging {
-    opacity: 0.5;
-    transform: scale(0.98); /* Giảm hiệu ứng */
+    opacity: 0.6;
+    transform: none;
     transition: none;
 }
 
@@ -593,41 +749,40 @@ body {
     background-color: var(--nurture-light); 
     border: 1px dashed var(--nurture-color);
     border-radius: var(--radius);
-    outline: 2px solid rgba(34, 197, 94, 0.1); /* Giảm hiệu ứng glow */
+    outline: none;
 }
-
 
 /* =========================================================================
    CUSTOM SCROLLBAR
    ========================================================================= */
 * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(68, 68, 68, 0.8) transparent;
+    scrollbar-color: rgba(68, 68, 68, 0.6) transparent;
 }
 
 *::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
 }
 
 *::-webkit-scrollbar-track {
     background: transparent;
     border-radius: var(--radius);
-    margin: 4px;
+    margin: 3px;
 }
 
 *::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(37,99,235,0.9));
+    background: rgba(14, 165, 233, 0.8); /* Màu thumb đơn sắc hơn */
     border-radius: 999px;
-    border: 3px solid rgba(255,255,255,0.15);
-    box-shadow: var(--shadow-inset), var(--glow);
-    transition: all 0.25s ease;
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.15s ease;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, rgba(37,99,235,1), rgba(14,165,233,1));
-    transform: scale(1.05);
-    box-shadow: 0 0 12px rgba(14,165,233,0.5);
+    background: var(--primary);
+    transform: none;
+    box-shadow: 0 0 8px rgba(14,165,233,0.5);
 }
 
 *::-webkit-scrollbar-corner {
@@ -640,16 +795,16 @@ body {
 @media (max-width: 900px) {
     .app { 
         flex-direction: column; 
-        padding: 20px; 
-        gap: 20px; 
+        padding: 16px; 
+        gap: 16px; 
         height: auto;
     }
     .sidebar { 
         width: 100%; 
         flex-direction: row; 
-        gap: 12px; 
+        gap: 8px; 
         align-items: center; 
-        padding: 20px;
+        padding: 14px;
         height: auto;
     }
     .platform-list { 
@@ -659,7 +814,7 @@ body {
         overflow: visible;
     }
     .content {
-        padding: 10px 0;
+        padding: 8px 0;
     }
     .grid {
         grid-template-columns: 1fr;
@@ -670,16 +825,16 @@ body {
     }
     /* Vị trí Vùng Nuôi trên mobile */
     #nurtureIcon {
-        bottom: 10px;
-        right: 10px;
-        width: 55px;
-        height: 55px;
+        bottom: 8px;
+        right: 8px;
+        width: 50px;
+        height: 50px;
     }
     #unNurtureIcon {
-        bottom: 75px; 
-        right: 18px; 
-        width: 45px;
-        height: 45px;
-        font-size: 1.1rem;
+        bottom: 65px; 
+        right: 12px; 
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
 }
