@@ -1,650 +1,852 @@
-.hidden {
-  display: none !important;
-}
-.mt-2 {
-  margin-top: 1rem;
-}
+/* =========================================================================
+   CÁC BIẾN CHUNG VÀ CHỦ ĐỀ TỐI (DARK THEME)
+   ========================================================================= */
 
-/* ================================
-   EMAIL + OTP ROW (siêu gọn)
-   ================================ */
-.email-otp-row {
-  display: grid;
-  grid-template-columns: 1fr 80px 48px 48px; /* OTP nhỏ 80px */
-  gap: 10px;
-  align-items: center;
-  margin-top: 6px;
-}
-
-.email-otp-row input {
-  padding: 10px 12px;
-  border: 1px solid var(--border, #d1d5db);
-  border-radius: 10px;
-  font-size: 14px;
-  transition: 0.25s ease;
-}
-
-.email-otp-row input:focus {
-  border-color: var(--primary, #3b82f6);
-  box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
-}
-
-/* OTP luôn căn giữa */
-.email-otp-row input:nth-child(2) {
-  text-align: center;
-}
-
-/* Nút mini */
-.btn-round {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: var(--primary, #3b82f6);
-  border: none;
-  color: #fff;
-  font-size: 18px;
-  cursor: pointer;
-  transition: 0.25s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-round:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
-}
-
-
-/* =========================
-   CUSTOM SCROLLBAR (glassy + match accent)
-   ========================= */
-
-/* Áp dụng cho toàn bộ giao diện */
-* {
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: rgba(68, 68, 68, 0.8) transparent; /* thumb + track */
-}
-
-/* WebKit browsers (Chrome, Edge, Safari) */
-*::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-
-/* Track (phần nền sau scrollbar) */
-*::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: var(--radius);
-  margin: 4px;
-}
-
-/* Thumb (thanh trượt chính) */
-*::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(37,99,235,0.9)); /* accent */
-  border-radius: 999px;
-  border: 3px solid rgba(255,255,255,0.15);
-  box-shadow: var(--shadow-inset), var(--glow);
-  transition: all 0.25s ease;
-}
-
-/* Hover effect */
-*::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, rgba(37,99,235,1), rgba(14,165,233,1));
-  transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(14,165,233,0.5);
-}
-
-/* Scrollbar góc (nếu có ngang + dọc) */
-*::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-/* Giới hạn vùng riêng nếu muốn (tuỳ chọn)
-   Nếu bạn chỉ muốn áp dụng cho content hoặc platform list:
-   .platform-list, .content { scrollbar-gutter: stable; }
-*/
-
+/* Dark Theme Variables */
 :root[data-theme="dark"] {
-  /* Nền đen pha xanh nhẹ, kiểu hiện đại */
-  --bg: linear-gradient(135deg, #0b0f1a, #0f1724);
-  --card: linear-gradient(135deg, rgba(20, 25, 38, 0.9), rgba(15, 20, 30, 0.9));
+    /* Nền đen pha xanh nhẹ, kiểu hiện đại */
+    --bg: linear-gradient(135deg, #0b0f1a, #0f1724);
+    --card: linear-gradient(135deg, rgba(20, 25, 38, 0.9), rgba(15, 20, 30, 0.9));
 
-  /* Màu chữ và phụ */
-  --text: #e3e8ef;
-  --muted: #94a3b8;
+    /* Màu chữ và phụ */
+    --text: #e3e8ef;
+    --muted: #94a3b8;
+    --border: rgba(255, 255, 255, 0.2);
 
-  /* Màu nhấn xanh electric như Linear/Vercel */
-  --accent: linear-gradient(135deg, #3b82f6, #0ea5e9);
+    /* Màu nhấn xanh electric như Linear/Vercel */
+    --primary: #3b82f6; /* Xanh dương */
+    --accent: linear-gradient(135deg, #3b82f6, #0ea5e9);
+    --accent-light: rgba(14, 165, 233, 0.1);
+    
+    /* Màu Nuôi Dưỡng (Green) */
+    --nurture-color: #22c55e; 
+    --nurture-light: rgba(34, 197, 94, 0.1);
+    --nurture-gradient: linear-gradient(135deg, #22c55e, #10b981);
 
-  /* Đổ bóng và glow */
-  --shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
-  --shadow-hover: 0 12px 36px rgba(0, 0, 0, 0.8);
-  --shadow-inset: inset 0 2px 4px rgba(255, 255, 255, 0.05);
+    /* Màu Đẩy Ra (Orange) */
+    --unnurture-color: #f97316;
+    --unnurture-gradient: linear-gradient(135deg, #f97316, #ea580c);
 
-  /* Glow nhẹ xanh dương */
-  --glow: 0 0 25px rgba(37, 99, 235, 0.35);
+    /* Màu Nguy hiểm (Red) */
+    --danger-color: #ef4444;
 
-  /* Bo góc và hiệu ứng kính */
-  --radius: 20px;
-  --blur: blur(15px);
+    /* Đổ bóng và glow */
+    --shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+    --shadow-hover: 0 12px 36px rgba(0, 0, 0, 0.8);
+    --shadow-inset: inset 0 2px 4px rgba(255, 255, 255, 0.05);
+
+    /* Glow nhẹ xanh dương */
+    --glow: 0 0 25px rgba(37, 99, 235, 0.35);
+
+    /* Bo góc và hiệu ứng kính */
+    --radius: 20px;
+    --blur: blur(15px);
 }
 
-
-
+/* Base Styles */
 body {
-  margin: 0;
-  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;  background: var(--bg);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
-  overflow-x: hidden;
+    margin: 0;
+    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100vh;
+    overflow-x: hidden;
 }
 
 .app {
-  display: flex;
-  height: 100vh;
-  gap: 28px; /* Thoáng hơn */
-  padding: 28px;
+    display: flex;
+    height: 100vh;
+    gap: 28px;
+    padding: 28px;
 }
 
-/* Sidebar - Glassmorphism effect */
+/* Utilities */
+.hidden {
+    display: none !important;
+}
+.mt-2 {
+    margin-top: 1rem;
+}
+.muted {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* =========================================================================
+   SIDEBAR (Glassmorphism)
+   ========================================================================= */
 .sidebar {
-  width: 320px; /* Rộng hơn cho đẳng cấp */
-  background: var(--card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow), var(--shadow-inset);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  backdrop-filter: var(--blur);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  position: relative;
+    width: 320px;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow), var(--shadow-inset);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    backdrop-filter: var(--blur);
+    border: 1px solid var(--border);
+    position: relative;
+    z-index: 50;
 }
 .sidebar::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.05));
-  pointer-events: none;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.05));
+    pointer-events: none;
 }
 
 .brand {
-  margin: 0;
-  font-size: 1.5rem;
-  background: var(--accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 700;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  position: relative;
-  z-index: 1;
+    margin: 0;
+    font-size: 1.5rem;
+    background: var(--accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
 }
 
 .sidebar-actions {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-top: 10px;
-  position: relative;
-  z-index: 1;
-}
-
-/* Buttons - Modern with ripple effect */
-.btn {
-  border: none;
-  padding: 12px 16px;
-  border-radius: 14px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--shadow-inset);
-}
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-.btn:active::before {
-  width: 300px;
-  height: 300px;
-}
-
-.btn.primary {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  box-shadow: var(--glow), var(--shadow-inset);
-}
-.btn.primary:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.4);
-}
-
-.btn.ghost {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  color: var(--muted);
-}
-.btn.ghost:hover {
-  border-color: var(--accent);
-  color: #0ea5e9;
-  background: rgba(14, 165, 233, 0.05);
-  transform: translateY(-2px);
-}
-
-.btn.small {
-  padding: 10px 12px;
-  font-size: 0.9rem;
-}
-
-.muted {
-  color: var(--muted);
-  font-size: 0.9rem;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
 }
 
 /* Platform list - Tab-like modern design */
 .platform-list {
-  overflow: auto;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  position: relative;
-  z-index: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
 }
 
 .platform-item {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  padding: 14px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.2);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  border: 1px solid transparent;
-  position: relative;
-  box-shadow: var(--shadow-inset);
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: 1px solid transparent;
+    position: relative;
+    box-shadow: var(--shadow-inset);
 }
 .platform-item::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 3px;
-  background: var(--accent);
-  border-radius: 2px;
-  transition: width 0.3s ease, left 0.3s ease;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.3s ease, left 0.3s ease;
 }
 .platform-item.active::after {
-  width: 80%;
-  left: 10%;
+    width: 80%;
+    left: 10%;
 }
 .platform-item:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--shadow-hover);
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(14, 165, 233, 0.3);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-hover);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(14, 165, 233, 0.3);
 }
 .platform-item.active {
-  background: rgba(14, 165, 233, 0.1);
-  border-color: var(--accent);
+    background: var(--accent-light);
+    border-color: var(--primary);
 }
 
 .platform-thumb {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  color: white;
-  font-size: 1.2rem;
-  flex-shrink: 0;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    /* Đây là quy tắc quan trọng: Đảm bảo hình ảnh/icon không bị tràn */
+    overflow: hidden; 
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+/* Quy tắc mới CẦN PHẢI THÊM/KIỂM TRA */
+.platform-thumb img {
+    /* Ép hình ảnh chiếm toàn bộ kích thước của khung chứa */
+    width: 100%;
+    height: 100%;
+    /* Đảm bảo hình ảnh được căn chỉnh và cắt xén (crop) nếu cần để vừa khung mà không bị méo */
+    object-fit: cover; 
 }
 .platform-item:hover .platform-thumb {
-  transform: rotate(5deg) scale(1.1);
+    transform: rotate(5deg) scale(1.1);
 }
 
 .platform-meta {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 .platform-meta .title {
-  font-weight: 600;
-  font-size: 1.1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 .platform-meta .count {
-  font-size: 0.85rem;
-  color: var(--muted);
+    font-size: 0.85rem;
+    color: var(--muted);
 }
 
-/* Main area */
+/* =========================================================================
+   MAIN CONTENT & GRID
+   ========================================================================= */
+
 .main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
 }
 .main-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 10px;
 }
 .content {
-  flex: 1;
-  overflow: auto;
-  padding: 18px;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Account cards - Neumorphism style */
+/* Search input */
+.search-input {
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 300px;
+}
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: var(--glow);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    flex-grow: 1;
+}
+
+/* Placeholder */
+.placeholder {
+    text-align: center;
+    width: 100%;
+    padding: 40px;
+    font-style: italic;
+    color: var(--muted);
+}
+
+/* =========================================================================
+   ACCOUNT CARDS (Neumorphism / Glass)
+   ========================================================================= */
+
 .card {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 18px;
-  box-shadow: var(--shadow), var(--shadow-inset);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  position: relative;
-  transition: transform 0.3s ease, box-shadow 0.4s ease, background 0.4s ease;
-  animation: fadeIn 0.6s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  overflow: hidden;
-  width: 100%;
-  box-sizing: border-box;
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow), var(--shadow-inset);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.4s ease, background 0.4s ease;
+    animation: fadeIn 0.6s ease;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: grab;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+    from { opacity: 0; transform: translateY(15px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .card:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: var(--shadow-hover), inset 0 4px 8px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, rgba(249, 250, 251, 0.95), var(--card));
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--shadow-hover), inset 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, rgba(20, 25, 38, 0.95), rgba(15, 20, 30, 0.95));
 }
 
-/* =======================
-    FIX TRÀN NÚT SỬA / XOÁ
-   ======================= */
+.card:active {
+    cursor: grabbing;
+}
+
+/* Card Header (Head) - Fix overflow */
 .card .head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: nowrap; /* không xuống dòng */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: nowrap;
 }
 
 .card .head .info {
-  display: flex;
-  flex-direction: column;
-  min-width: 200px; /* đảm bảo card đủ rộng cho mail bình thường */
-  max-width: calc(100% - 80px); /* 80px cho nút actions */
-  overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .card .head .info h4 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card .head .info p.muted {
-  margin: 0;
-  font-size: 14px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.card .head .name {
-  font-weight: 600;
-  font-size: 17px;
-  color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  /* Giới hạn lại chiều rộng để không đẩy nút ra ngoài */
-  max-width: calc(100% - 70px);
+    margin: 0;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card .head .actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  /* TRÁNH TRÀN – kích thước cố định */
-  flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
 }
 
 .card .btn-icon {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  cursor: pointer;
-  color: #666;
-  font-size: 18px;
-  padding: 8px;
-  border-radius: 10px;
-  transition: 0.4s ease;
-  box-shadow: var(--shadow-inset);
-
-  /* Giới hạn kích thước nút */
-  width: 34px;
-  height: 34px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 10px;
+    transition: 0.4s ease;
+    box-shadow: var(--shadow-inset);
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card .btn-icon:hover {
-  color: #000;
-  background: rgba(0,0,0,0.05);
-  transform: scale(1.15);
-}
-
-/* Card text */
-.card p {
-  margin: 0;
-  font-size: 15px;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    color: var(--text);
+    background: rgba(14, 165, 233, 0.1);
+    transform: scale(1.15);
 }
 
 .icon-small {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  font-weight: 600;
-  color: white;
-  font-size: 15px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-weight: 600;
+    color: white;
+    font-size: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 .icon-small img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-/* Delete button */
-.delete-acc {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  border: none;
-  color: white;
-  border-radius: 10px;
-  padding: 10px 12px;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  box-shadow: var(--glow), var(--shadow-inset);
-}
-.delete-acc:hover {
-  background: linear-gradient(135deg, #f87171, #ef4444);
-  transform: scale(1.08);
-  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.4);
+/* =========================================================================
+   EMAIL + OTP ROW
+   ========================================================================= */
+.email-otp-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 48px 48px;
+    gap: 10px;
+    align-items: center;
+    margin-top: 6px;
 }
 
-/* Modal - Enhanced glassmorphism */
-.modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: var(--blur);
-  z-index: 60;
-}
-.modal-card {
-  width: 480px;
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: var(--shadow-hover), var(--shadow-inset);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  animation: popup 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-@keyframes popup {
-  from { transform: scale(0.9) rotate(-2deg); opacity: 0; }
-  to { transform: scale(1) rotate(0); opacity: 1; }
-}
-.modal-card input {
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.1);
-  font-size: 1rem;
-  background: rgba(255,255,255,0.6);
-  color: var(--text);
-  transition: border-color 0.4s ease, box-shadow 0.4s ease;
-}
-.modal-card input:focus {
-  border-color: var(--accent);
-  box-shadow: var(--glow);
-  outline: none;
+.email-otp-row input {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    transition: 0.25s ease;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
 }
 
-/* Hidden class */
-.hidden { display: none; }
-
-/* Switch toggle - Sleek */
-.switch { position: relative; display: inline-block; width: 52px; height: 28px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider {
-  position: absolute; inset: 0;
-  cursor: pointer;
-  background: #e2e8f0;
-  border-radius: 999px;
-  transition: .4s ease;
-  box-shadow: var(--shadow-inset);
-}
-.slider:before {
-  content: "";
-  position: absolute;
-  height: 22px;
-  width: 22px;
-  border-radius: 50%;
-  left: 3px;
-  top: 3px;
-  background: white;
-  transition: .4s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-.switch input:checked + .slider {
-  background: var(--accent);
-}
-.switch input:checked + .slider:before {
-  transform: translateX(24px);
+.email-otp-row input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+    background: rgba(255, 255, 255, 0.1);
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .app { flex-direction: column; padding: 20px; gap: 20px; }
-  .sidebar { width: 100%; flex-direction: row; gap: 12px; align-items: center; padding: 20px; }
-  .platform-list { display: none; }
+.email-otp-row input:nth-child(2) {
+    text-align: center;
 }
 
-/* remove modal */
-.danger-card {
-  border-top: 4px solid #ef4444;
+.btn-round {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--primary);
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-round:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+}
+
+
+/* =========================================================================
+   BUTTONS (Modern with Ripple Effect)
+   ========================================================================= */
+
+.btn {
+    border: none;
+    padding: 12px 16px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-inset);
+    color: var(--text);
+}
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn.primary {
+    background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4), var(--shadow-inset);
+}
+.btn.primary:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 30px rgba(14, 165, 233, 0.6);
+}
+
+.btn.ghost {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
+    color: var(--muted);
+}
+.btn.ghost:hover {
+    border-color: var(--primary);
+    color: #0ea5e9;
+    background: var(--accent-light);
+    transform: translateY(-2px);
 }
 
 .btn.danger {
-  background: #ef4444;
-  color: white;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4), var(--shadow-inset);
+}
+.btn.danger:hover {
+    background: linear-gradient(135deg, #f87171, #ef4444);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 30px rgba(239, 68, 68, 0.6);
 }
 
-.btn.danger:hover {
-  background: #dc2626;
+.btn.small {
+    padding: 10px 12px;
+    font-size: 0.9rem;
 }
-/* login modal forced display */
-#loginModal {
-  backdrop-filter: blur(6px);
+
+/* Delete account button in card */
+.delete-acc {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border: none;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+}
+.delete-acc:hover {
+    background: linear-gradient(135deg, #f87171, #ef4444);
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.6);
+}
+
+/* =========================================================================
+   MODALS (Enhanced Glassmorphism)
+   ========================================================================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: var(--blur);
+    z-index: 100;
+}
+.modal-card {
+    width: 480px;
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow-hover), var(--shadow-inset);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    animation: popup 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border);
+}
+@keyframes popup {
+    from { transform: scale(0.9) rotate(-2deg); opacity: 0; }
+    to { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.modal-card input {
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.modal-card input:focus {
+    border-color: var(--primary);
+    box-shadow: var(--glow);
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 #loginModal .modal-card {
-  border-top: 4px solid #3b82f6;
+    border-top: 4px solid var(--primary);
 }
-.blur {
-  filter: blur(6px);
-  cursor: pointer;
-  transition: .15s;
+.danger-card {
+    border-top: 4px solid var(--danger-color);
 }
 
-.blur.show {
-  filter: blur(0px);
+/* =========================================================================
+   VÙNG NUÔI CỐ ĐỊNH (#nurtureIcon) - GREEN
+   ========================================================================= */
+#nurtureIcon {
+    position: fixed;
+    bottom: 30px; 
+    right: 30px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: var(--nurture-gradient); 
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.copyToast {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #22c55e; /* xanh success */
-  color:#fff;
-  padding:8px 14px;
-  border-radius:8px;
-  font-size:14px;
-  opacity:0;
-  pointer-events:none;
-  transition: .25s;
+#nurtureIcon:hover {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 12px 30px rgba(34, 197, 94, 0.6);
 }
 
-.copyToast.show {
-  opacity:1;
+#nurtureIconContent {
+    font-size: 1.5rem;
 }
 
+/* Hiệu ứng khi kéo thẻ vào Icon Vùng Nuôi */
+#nurtureIcon.drag-over {
+    background: var(--unnurture-gradient); /* Màu Cam/Orange khi drop */
+    transform: scale(1.15) rotate(5deg); 
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.8), 0 0 0 8px rgba(245, 158, 11, 0.2);
+    border: 3px solid white;
+}
+
+#nurtureCount {
+    position: absolute;
+    top: -5px; 
+    right: -5px;
+    background: linear-gradient(45deg, var(--danger-color), #dc2626);
+    color: white;
+    font-size: 13px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.5);
+    min-width: 28px;
+    text-align: center;
+}
+
+/* =========================================================================
+   NÚT ĐẨY RA (#unNurtureIcon) - ORANGE
+   ========================================================================= */
+#unNurtureIcon {
+    position: fixed;
+    bottom: 110px; 
+    right: 38px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: var(--unnurture-gradient); 
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.5);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    font-size: 1.3rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#unNurtureIcon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.7);
+}
+
+/* Hiệu ứng khi kéo thẻ vào nút Đẩy Ra */
+#unNurtureIcon.drag-over {
+    background: var(--danger-color); /* Màu đỏ (Danger) khi drop */
+    transform: scale(1.25); 
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
+    border: 3px solid white;
+}
+
+/* =========================================================================
+   NÚT THOÁT VÙNG NUÔI (EXIT NURTURE DROPZONE - Nút X trong Modal)
+   ========================================================================= */
+#exitNurtureDropzone {
+    transition: all 0.2s ease;
+    border-radius: 50%;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Hiệu ứng khi kéo thẻ vào NÚT X (DROPZONE RA NGOÀI) */
+#exitNurtureDropzone.drag-over { 
+    background: var(--danger-color); /* Màu đỏ nổi bật */
+    color: white;
+    transform: scale(1.15); 
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.8); 
+    border: 2px solid white;
+}
+
+/* Hiệu ứng khi hover bình thường (Đóng Modal) */
+#exitNurtureDropzone:hover {
+    color: var(--danger-color); 
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* =========================================================================
+   MODAL VÙNG NUÔI (NURTURE MODAL)
+   ========================================================================= */
+#nurtureModal .modal-card {
+    width: 95%;
+    max-width: 1200px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.nurture-modal-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+#nurtureAccountGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 15px;
+    min-height: 200px;
+    transition: all 0.3s ease;
+}
+
+/* Hiệu ứng khi kéo thẻ vào Grid Nurture (Khu vực thả trong Modal) */
+#nurtureAccountGrid.drag-over { 
+    background-color: rgba(249, 115, 22, 0.05); /* Màu cam nhạt */
+    border: 2px dashed var(--unnurture-color); /* Viền cam */
+    border-radius: var(--radius);
+}
+
+#nurtureModal .placeholder {
+    padding: 50px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--muted);
+}
+
+/* =========================================================================
+   HIỆU ỨNG KÉO THẢ (DRAG & DROP)
+   ========================================================================= */
+
+/* Thẻ đang được kéo */
+.account-card.dragging {
+    opacity: 0.4;
+    transform: scale(0.95) rotate(-1deg);
+    transition: none;
+}
+
+/* Kéo vào Lưới Chính (#accountGrid) */
+#accountGrid.drag-over { 
+    background-color: var(--nurture-light); /* Màu xanh lá nhạt */
+    border: 2px dashed var(--nurture-color);
+    border-radius: var(--radius);
+    outline: 4px solid rgba(34, 197, 94, 0.2);
+}
+
+/* =========================================================================
+   CUSTOM SCROLLBAR
+   ========================================================================= */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(68, 68, 68, 0.8) transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: var(--radius);
+    margin: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(37,99,235,0.9));
+    border-radius: 999px;
+    border: 3px solid rgba(255,255,255,0.15);
+    box-shadow: var(--shadow-inset), var(--glow);
+    transition: all 0.25s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, rgba(37,99,235,1), rgba(14,165,233,1));
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(14,165,233,0.5);
+}
+
+*::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* =========================================================================
+   RESPONSIVE
+   ========================================================================= */
+@media (max-width: 900px) {
+    .app { 
+        flex-direction: column; 
+        padding: 20px; 
+        gap: 20px; 
+        height: auto;
+    }
+    .sidebar { 
+        width: 100%; 
+        flex-direction: row; 
+        gap: 12px; 
+        align-items: center; 
+        padding: 20px;
+        height: auto;
+    }
+    .platform-list { 
+        display: none;
+    }
+    .main {
+        overflow: visible;
+    }
+    .content {
+        padding: 10px 0;
+    }
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    .search-input {
+        width: 100%;
+        max-width: none;
+    }
+    /* Vị trí Vùng Nuôi trên mobile */
+    #nurtureIcon {
+        bottom: 10px;
+        right: 10px;
+        width: 55px;
+        height: 55px;
+    }
+    #unNurtureIcon {
+        bottom: 75px; 
+        right: 18px; 
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+}
