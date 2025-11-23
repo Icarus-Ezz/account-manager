@@ -344,28 +344,32 @@
         "mail": "huynhthutien@denocloudmail.store",
         "mk": "j3R0<G0_{Uuyq{",
         "2fa": "",
-        "id": "mib5etmrrm0z6mihvxd"
+        "id": "mib5etmrrm0z6mihvxd",
+        "isNurtured": true
       },
       {
         "name": "tungbuituong",
         "mail": "phanminhngan@denocloudmail.store",
         "mk": "ZXO:vw:OBp3s1f",
         "2fa": "",
-        "id": "mib5etms6qmbfcp97dd"
+        "id": "mib5etms6qmbfcp97dd",
+        "isNurtured": true
       },
       {
         "name": "doductrang",
         "mail": "chauthaithao@denocloudmail.store",
         "mk": "#^[duiZ+I4_^$v",
         "2fa": "",
-        "id": "mib5etmtyxg29dci9tn"
+        "id": "mib5etmtyxg29dci9tn",
+        "isNurtured": true
       },
       {
         "name": "hotrungtuongha",
         "mail": "trantrungthang@denocloudmail.store",
         "mk": "w_9[dr]qSM45~T",
         "2fa": "",
-        "id": "mib5etmuv3sxuvdur8r"
+        "id": "mib5etmuv3sxuvdur8r",
+        "isNurtured": true
       }
     ],
     "Facebook": [
