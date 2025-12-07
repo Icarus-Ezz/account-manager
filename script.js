@@ -39,11 +39,71 @@ const platNameInput = document.getElementById("plat_name");
 const platIconInput = document.getElementById("plat_icon");
 const platColorInput = document.getElementById("plat_color");
 const nurtureCountElement = document.getElementById('nurtureCount'); // Đã thêm để sử dụng trong updateNurtureCount
+let initialAccountFormData = null; 
+let initialPlatformFormData = null;
+let currentEditingModalElement = null; // Theo dõi modal hiện tại (accountModal hoặc platformModal)
 
+// Khai báo các biến DOM của Modal Xác nhận (đã có ở bản HTML trước)
+const confirmChangesModal = document.getElementById('confirmChangesModal');
+const confirmSaveBtn = document.getElementById('confirmSave');
+const confirmDiscardBtn = document.getElementById('confirmDiscard');
+const cancelConfirmBtn = document.getElementById('cancelConfirm');
+const confirmChangesModalMsg = document.getElementById('confirmChangesModalMsg');
 // =========================================================================
 // 2. Hàm Tiện ích (Utils)
 // =========================================================================
+// Hàm lấy dữ liệu hiện tại của form Tài khoản
+function getCurrentAccountFormData() {
+    return {
+        name: accNameInput.value.trim(),
+        mail: accMailInput.value.trim(),
+        mk: accPassInput.value.trim(),
+        '2fa': acc2faInput.value.trim()
+    };
+}
 
+// Hàm lấy dữ liệu hiện tại của form Nền tảng
+function getCurrentPlatformFormData() {
+    return {
+        name: platNameInput.value.trim(),
+        icon: platIconInput.value.trim(),
+        color: platColorInput.value || "#3b82f6"
+    };
+}
+
+// Hàm kiểm tra form Tài khoản đã thay đổi chưa
+function isAccountFormModified() {
+    if (!initialAccountFormData) return false;
+    const currentData = getCurrentAccountFormData();
+    
+    // So sánh từng trường
+    for (const key in currentData) {
+        if (currentData[key] !== initialAccountFormData[key]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Hàm kiểm tra form Nền tảng đã thay đổi chưa
+function isPlatformFormModified() {
+    if (!initialPlatformFormData) return false;
+    const currentData = getCurrentPlatformFormData();
+    
+    // So sánh từng trường
+    for (const key in currentData) {
+        if (currentData[key] !== initialPlatformFormData[key]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Hàm đóng Modal
+function closeModal(modalElement) {
+    modalElement.classList.add("hidden");
+    currentEditingModalElement = null; // Reset khi đóng
+}
 function hexToBytes(hex) {
     const bytes = new Uint8Array(hex.length / 2);
     for (let i = 0; i < bytes.length; i++) {
@@ -384,6 +444,21 @@ function selectPlatform(name, doRender = true) {
 // =========================================================================
 // 5. CRUD Logic (Sửa/Xóa/Lưu)
 // =========================================================================
+function openEditPlatform(plat) {
+    editPlatformContext = { old: plat };
+    document.getElementById("platformModalTitle").innerText = `Sửa nền tảng — ${plat}`;
+    platNameInput.value = plat;
+    platIconInput.value = platforms[plat].icon || "";
+    platColorInput.value = platforms[plat].color || "#3b82f6";
+
+    // 1. Lưu trạng thái form ban đầu
+    initialPlatformFormData = getCurrentPlatformFormData();
+    
+    // 2. Đánh dấu modal đang được chỉnh sửa
+    currentEditingModalElement = platformModal;
+    
+    platformModal.classList.remove("hidden");
+}
 
 // Xử lý Xóa Tài khoản
 function removeAccount(platform, index) {
@@ -423,11 +498,17 @@ document.getElementById("addAccountBtn").addEventListener("click", () => {
     if (!currentPlatform) return alert("Vui lòng chọn nền tảng trước.");
     openAddAccount();
 });
+// Vị trí: Khu vực Xử lý sự kiện Tài khoản (Account Modal)
 function openAddAccount() {
     editAccountContext = null;
     document.getElementById("accountModalTitle").innerText = `Thêm tài khoản — ${currentPlatform}`;
     accNameInput.value = accMailInput.value = accPassInput.value = acc2faInput.value = "";
     document.getElementById("otp_code").value = "";
+    
+    // SỬA: Lưu trạng thái form rỗng
+    initialAccountFormData = getCurrentAccountFormData();
+    currentEditingModalElement = accountModal;
+    
     accountModal.classList.remove("hidden");
 }
 function openEditAccount(idx) {
@@ -439,11 +520,21 @@ function openEditAccount(idx) {
     accPassInput.value = acc.mk || "";
     acc2faInput.value = acc["2fa"] || "";
     document.getElementById("otp_code").value = "";
+    initialAccountFormData = getCurrentAccountFormData();
+    currentEditingModalElement = accountModal;
+    
     accountModal.classList.remove("hidden");
 }
 document.getElementById("cancelAccount").onclick = () => {
-    accountModal.classList.add("hidden");
-    editAccountContext = null;
+    // SỬA: Kiểm tra nếu có thay đổi
+    if (isAccountFormModified()) {
+        confirmChangesModalMsg.innerText = "Bạn có thay đổi chưa lưu trong form Tài khoản. Bạn muốn làm gì?";
+        confirmChangesModal.classList.remove("hidden");
+    } else {
+        // Không có thay đổi, đóng thẳng
+        closeModal(accountModal);
+        editAccountContext = null;
+    }
 };
 document.getElementById("saveAccount").onclick = async () => {
     const name = accNameInput.value.trim();
@@ -468,7 +559,8 @@ document.getElementById("saveAccount").onclick = async () => {
 
     saveState();
     renderAccounts();
-    accountModal.classList.add("hidden");
+    closeModal(accountModal); // Dùng hàm mới để reset currentEditingModalElement
+    editAccountContext = null; // Reset context
     if (AUTO_PUSH) await tryPush();
 };
 
@@ -478,11 +570,23 @@ document.getElementById("addPlatformBtn").onclick = () => {
     platNameInput.value = platIconInput.value = "";
     platColorInput.value = "#3b82f6";
     document.getElementById("platformModalTitle").innerText = "Thêm nền tảng";
+    
+    // SỬA: Lưu trạng thái form rỗng
+    initialPlatformFormData = getCurrentPlatformFormData();
+    currentEditingModalElement = platformModal;
+    
     platformModal.classList.remove("hidden");
 };
 document.getElementById("cancelPlatform").onclick = () => {
-    platformModal.classList.add("hidden");
-    editPlatformContext = null;
+    // SỬA: Kiểm tra nếu có thay đổi
+    if (isPlatformFormModified()) {
+        confirmChangesModalMsg.innerText = "Bạn có thay đổi chưa lưu trong form Nền tảng. Bạn muốn làm gì?";
+        confirmChangesModal.classList.remove("hidden");
+    } else {
+        // Không có thay đổi, đóng thẳng
+        closeModal(platformModal);
+        editPlatformContext = null;
+    }
 };
 document.getElementById("savePlatform").onclick = async () => {
     const name = platNameInput.value.trim();
@@ -506,7 +610,8 @@ document.getElementById("savePlatform").onclick = async () => {
     }
     
     saveState(); renderPlatforms(); renderAccounts();
-    platformModal.classList.add("hidden");
+    closeModal(platformModal); // Dùng hàm mới để reset currentEditingModalElement
+    editPlatformContext = null;
     if (AUTO_PUSH) await tryPush();
 };
 
@@ -518,12 +623,9 @@ platformListEl.addEventListener("click", e => {
     const plat = target.dataset.plat;
 
     if (action === "edit-plat") {
-        editPlatformContext = { old: plat };
-        document.getElementById("platformModalTitle").innerText = `Sửa nền tảng — ${plat}`;
-        platNameInput.value = plat;
-        platIconInput.value = platforms[plat].icon || "";
-        platColorInput.value = platforms[plat].color || "#3b82f6";
-        platformModal.classList.remove("hidden");
+        // SỬA: Thay thế toàn bộ logic chỉnh sửa bằng lời gọi hàm
+        openEditPlatform(plat);
+        
     } else if (action === "del-plat") {
         if (!confirm(`Xóa "${plat}" và toàn bộ tài khoản trong đó?`)) return;
         delete platforms[plat]; delete data[plat];
@@ -1027,7 +1129,39 @@ document.getElementById("btn_check").onclick = async () => {
 // =========================================================================
 // 11. Khởi chạy 🚀
 // =========================================================================
+// =========================================================================
+// Xử lý Modal Xác nhận Thay đổi
+// =========================================================================
 
+// Nút LƯU THAY ĐỔI
+confirmSaveBtn.addEventListener('click', async () => {
+    if (currentEditingModalElement === accountModal) {
+        await document.getElementById("saveAccount").click(); // Kích hoạt nút Lưu Tài khoản
+    } else if (currentEditingModalElement === platformModal) {
+        await document.getElementById("savePlatform").click(); // Kích hoạt nút Lưu Nền tảng
+    }
+    
+    closeModal(confirmChangesModal);
+});
+
+// Nút HỦY BỎ (Không lưu, đóng form chỉnh sửa)
+confirmDiscardBtn.addEventListener('click', () => {
+    if (currentEditingModalElement === accountModal) {
+        closeModal(accountModal);
+        editAccountContext = null; // Đảm bảo reset context
+    } else if (currentEditingModalElement === platformModal) {
+        closeModal(platformModal);
+        editPlatformContext = null; // Đảm bảo reset context
+    }
+    
+    closeModal(confirmChangesModal);
+});
+
+// Nút TIẾP TỤC CHỈNH SỬA
+cancelConfirmBtn.addEventListener('click', () => {
+    closeModal(confirmChangesModal);
+    // Modal chỉnh sửa (accountModal/platformModal) vẫn mở
+});
 function init() {
     loadState();
     renderPlatforms();
