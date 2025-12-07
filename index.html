@@ -100,7 +100,7 @@
             <div class="input-with-icon">
                 <input id="acc_pass" type="text" placeholder="Mật khẩu" />
                 <button id="genMkBtn" class="btn small">🎲</button>
-            </div>        
+            </div>  
             <label>Mã 2FA</label>
             <input id="acc_2fa" type="text" placeholder="Mã 2FA (nếu có)" />
             <div class="modal-actions">
@@ -137,6 +137,19 @@
             <div class="modal-actions">
                 <button id="confirmRemove" class="btn danger">Xóa</button>
                 <button id="cancelRemove" class="btn ghost">Hủy</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal hidden" id="confirmChangesModal" aria-hidden="true">
+        <div class="modal-card">
+            <h3 id="confirmChangesModalTitle">Xác nhận</h3>
+            <p id="confirmChangesModalMsg" class="muted" style="margin-bottom:15px">Bạn có muốn lưu các thay đổi không?</p>
+
+            <div class="modal-actions">
+                <button id="confirmSave" class="btn primary">Lưu Thay đổi</button>
+                <button id="confirmDiscard" class="btn ghost">Hủy Bỏ</button>
+                <button id="cancelConfirm" class="btn secondary">Tiếp tục Chỉnh sửa</button>
             </div>
         </div>
     </div>
