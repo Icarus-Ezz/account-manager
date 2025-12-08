@@ -975,19 +975,19 @@ document.addEventListener("click", async(e)=>{
 // =========================================================================
 
 // Tên ngẫu nhiên
+// ✅ Tên Đa Dạng (Anh, Việt, ... và giữ lại logic cũ)
 (() => {
     const genBtn = document.getElementById("genNameBtn");
     if (!genBtn) return;
-    // ... (Giữ nguyên logic list_ten và genRandomName) ...
+
+    // --- Logic Tên Việt (Giữ nguyên cho việc tạo tên ngẫu nhiên Việt Nam) ---
     const list_ten = {
         first: ['Nguyễn', 'Trần', 'Lê', 'Phạm', 'Hoàng', 'Huỳnh', 'Phan', 'Vũ', 'Võ', 'Đặng', 'Bùi', 'Đỗ', 'Hồ', 'Ngô', 'Dương', 'Mai', 'Tạ', 'Đoàn', 'Cao', 'Trương', 'Đinh', 'Lý', 'Châu', 'Vương', 'Đào'],
         mid: ['Văn', 'Thị', 'Minh', 'Thanh', 'Quốc', 'Tuấn', 'Đức', 'Hồng', 'Hải', 'Xuân', 'Kim', 'Bảo', 'Gia', 'Nhật', 'Thái', 'Ngọc', 'Anh', 'Hoàng', 'Khánh', 'Phương', 'Thiên', 'Trung', 'Hữu', 'Diệu', 'Tường', 'Anh', 'Thảo', 'Như', 'Cẩm', 'Hà'],
         last_male: ['Anh', 'An', 'Bảo', 'Bình', 'Dũng', 'Huy', 'Khánh', 'Long', 'Phúc', 'Quang', 'Sơn', 'Tùng', 'Vinh', 'Đạt', 'Trung', 'Khang', 'Nam', 'Phong', 'Hiếu', 'Thắng', 'Tuấn'],
         last_female: ['Linh', 'Ngọc', 'Trang', 'Hương', 'Thảo', 'Yến', 'Như', 'Vy', 'Mai', 'Châu', 'Lan', 'Nhi', 'Phương', 'Hà', 'My', 'Hằng', 'Diễm', 'Giang', 'Tuyết', 'Thư', 'Ngân']
     };
-    const rand = arr => arr[Math.floor(Math.random() * arr.length)];
-    let usedNames = new Set();
-    function genRandomName() {
+    function genRandomVietName(rand, usedNames) {
         const isMale = Math.random() < 0.5;
         const lastList = isMale ? list_ten.last_male : list_ten.last_female;
         let fullName, tries = 0;
@@ -1001,9 +1001,45 @@ document.addEventListener("click", async(e)=>{
             fullName = nameParts.join(" ");
             tries++;
         } while (usedNames.has(fullName) && tries < 50);
-        usedNames.add(fullName);
         return fullName;
     }
+
+    // --- Logic Tên Anh/Quốc Tế Mới ---
+    const englishNames = {
+        male: ['Liam', 'Noah', 'Oliver', 'Elijah', 'William', 'James', 'Benjamin', 'Lucas', 'Henry', 'Alexander'],
+        female: ['Emma', 'Olivia', 'Ava', 'Isabella', 'Sophia', 'Charlotte', 'Amelia', 'Mia', 'Harper', 'Evelyn'],
+        surnames: ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez']
+    };
+    function genRandomEnglishName(rand, usedNames) {
+        const isMale = Math.random() < 0.5;
+        const firstList = isMale ? englishNames.male : englishNames.female;
+        let fullName, tries = 0;
+        do {
+            const first = rand(firstList);
+            const last = rand(englishNames.surnames);
+            fullName = `${first} ${last}`;
+            tries++;
+        } while (usedNames.has(fullName) && tries < 50);
+        return fullName;
+    }
+    // --- Hàm Tổng Hợp Tạo Tên ---
+    const rand = arr => arr[Math.floor(Math.random() * arr.length)];
+    let usedNames = new Set();
+    function genRandomName() {
+        // 70% tên Việt, 30% tên Anh/Quốc tế
+        const nameType = Math.random() < 0.7 ? 'viet' : 'english';
+        let newName;
+
+        if (nameType === 'viet') {
+            newName = genRandomVietName(rand, usedNames);
+        } else {
+            newName = genRandomEnglishName(rand, usedNames);
+        }
+
+        usedNames.add(newName);
+        return newName;
+    }
+
     genBtn.addEventListener("click", () => {
         const input = document.getElementById("acc_name");
         if (!input) return;
@@ -1015,16 +1051,18 @@ document.addEventListener("click", async(e)=>{
     });
 })();
 
-// Mật khẩu ngẫu nhiên
+// ✅ Mật Khẩu Ngẫu Nhiên Đa Dạng/Mạnh hơn
 (() => {
     const genMkBtn = document.getElementById("genMkBtn");
     if (!genMkBtn) return;
-    // ... (Giữ nguyên logic genRandomPassword) ...
+    
+    // --- Logic Mật Khẩu Mới, Mạnh hơn, Tùy chỉnh độ dài ---
     const LOWER = "abcdefghijklmnopqrstuvwxyz";
     const UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const DIGITS = "0123456789";
     const SPECIAL = "!@#$%^&*()_+[]{}|;:,.<>?/`~-=";
     const ALL = LOWER + UPPER + DIGITS + SPECIAL;
+
     const shuffle = (arr) => {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -1032,22 +1070,31 @@ document.addEventListener("click", async(e)=>{
         }
         return arr;
     };
-    function genRandomPassword(length = 14) {
-        const passwordChars = [
-            LOWER[Math.floor(Math.random() * LOWER.length)],
-            UPPER[Math.floor(Math.random() * UPPER.length)],
-            DIGITS[Math.floor(Math.random() * DIGITS.length)],
-            SPECIAL[Math.floor(Math.random() * SPECIAL.length)]
-        ];
+    
+    function genRandomPassword(length = 16) { // Mặc định tăng lên 16 ký tự để mạnh hơn
+        // Đảm bảo có ít nhất 1 ký tự từ mỗi loại
+        const charSets = [LOWER, UPPER, DIGITS, SPECIAL];
+        const passwordChars = [];
+
+        // 1. Thêm 1 ký tự bắt buộc từ mỗi loại
+        charSets.forEach(set => {
+            passwordChars.push(set[Math.floor(Math.random() * set.length)]);
+        });
+
+        // 2. Thêm các ký tự còn lại
         for (let i = passwordChars.length; i < length; i++) {
             passwordChars.push(ALL[Math.floor(Math.random() * ALL.length)]);
         }
+
+        // 3. Xáo trộn để tăng tính ngẫu nhiên
         return shuffle(passwordChars).join("");
     }
+
     genMkBtn.addEventListener("click", () => {
         const input = document.getElementById("acc_pass");
         if (!input) return;
-        const password = genRandomPassword(14);
+        // Gọi hàm với độ dài mặc định là 16 hoặc bạn có thể thay đổi
+        const password = genRandomPassword(16); 
         input.value = password;
         input.style.transition = "background 0.3s, box-shadow 0.3s";
         input.style.background = "#fef3c7";
@@ -1058,7 +1105,6 @@ document.addEventListener("click", async(e)=>{
         }, 400);
     });
 })();
-
 // Email & OTP
 const DOMAINS = [
     "tempmail.id.vn", "1trick.net", "hathitrannhien.edu.vn", 
