@@ -350,30 +350,6 @@
         "2fa": "None",
         "id": "mib5eofym1ap706hxxo"
       }
-    ],
-    "DenoApiMail": [
-      {
-        "name": "sigma@denocloudmail.store",
-        "mail": "sigma@denocloudmail.store",
-        "mk": "None",
-        "2fa": "token_sigma_36ed3db286eef2d5",
-        "id": "mib5erx4jkd9e6utiu",
-        "isNurtured": false
-      },
-      {
-        "name": "traidepxuthanh@denocloudmail.store",
-        "mail": "traidepxuthanh@denocloudmail.store",
-        "mk": "None",
-        "2fa": "token_traidepxuthanh_450254d8e50d159f",
-        "id": "mib5erx5r92o14lyn79"
-      },
-      {
-        "name": "khovenucuoi@denocloudmail.store",
-        "mail": "khovenucuoi@denocloudmail.store",
-        "mk": "None",
-        "2fa": "token_khovenucuoi_fce12a8099fbdc8f",
-        "id": "mib5erx5jyffpbdrrz8"
-      }
     ]
   },
   "platforms": {
@@ -404,10 +380,6 @@
     "Roblox": {
       "icon": "https://i.pinimg.com/736x/eb/20/30/eb203036af2bf931259d9c2ae254b2cd.jpg",
       "color": "#525252"
-    },
-    "DenoApiMail": {
-      "icon": "",
-      "color": "#008015"
     }
   }
 }
